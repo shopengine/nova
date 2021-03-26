@@ -2,13 +2,11 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use App\Models\StatsPurchaseCode;
-use App\Nova\Resource;
 use App\Nova\ShopResource;
 use Brainspin\Novashopengine\Fields\CodepoolActions;
 use Brainspin\Novashopengine\Fields\CodepoolGroupCodepools;
 use Brainspin\Novashopengine\Fields\CodepoolStatistics;
-use Brainspin\Novashopengine\Http\Controllers\ShopEngineNovaController;
+use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Text;
@@ -17,14 +15,21 @@ use Laravel\Nova\Panel;
 use OptimistDigital\MultiselectField\Multiselect;
 use SSB\Api\Model\Codepool as CodepoolModel;
 
+// Outsource Shopresource
 class CodepoolGroup extends ShopResource
 {
-    public static $model = \App\Models\CodepoolGroup::class;
+
     public static $canUseFallbackShop = false;
 
     public static $globallySearchable = false;
     public static $displayInNavigation = false;
     public static $canImportResource = false;
+
+    // Make Model dynamic to Configs
+    public static function newModel() {
+        $model = ConfiguredClassFactory::createCodepoolClass();
+        return new $model;
+    }
 
     public static $search = [
         'title',
@@ -32,7 +37,10 @@ class CodepoolGroup extends ShopResource
 
     public function fields(Request $request)
     {
-        $api = \Shop::shopEngineClient();
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+        $api = $shopService->shopEngineClient(
+            $shopService->shopEngineSettings()
+        );
 
         $isFormAction =
             Str::after($request->route()->getAction()['controller'], '@') === 'fields' ||

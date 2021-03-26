@@ -69,11 +69,6 @@
                 min: null
             }
         },
-        computed: {
-            currency() {
-                return Nova.config.shop.currency
-            }
-        },
         mounted() {
             this.$refs.firstInput.focus()
         },
@@ -87,11 +82,7 @@
                     return
                 }
 
-                let currency = 'EUR'
-                if (this.shop === 'reishunger-chf') {
-                    currency = 'CHF'
-                }
-
+                const currency =  Nova.config.shopCurrency
                 const data = {
                     price: {amount: Math.round(this.price * 100), currency},
                     validation: {sub: {amount: Math.round(this.min * 100), currency}}

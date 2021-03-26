@@ -7,6 +7,7 @@ use Brainspin\Novashopengine\Fields\Money;
 use Brainspin\Novashopengine\Fields\ShippingCostOptions;
 use Brainspin\Novashopengine\Fields\ShippingCostValidations;
 use Brainspin\Novashopengine\Models\ShippingCostModel;
+use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -25,6 +26,8 @@ class ShippingCost extends ShopEngineResource
 
     public function fields(\Illuminate\Http\Request $request)
     {
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+
         return [
             Text::make('Name', 'name')
                 ->required(true)->rules('required')
@@ -51,7 +54,7 @@ class ShippingCost extends ShopEngineResource
                 ]),
 
             Money::make('Preis', 'price')
-                ->currency(\Shop::currency())
+                ->currency($shopService->shopCurrency())
                 ->required(true)->rules('required'),
 
             Number::make('Sortierungs Gewicht', 'sortWeight')

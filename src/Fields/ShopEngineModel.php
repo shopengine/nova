@@ -1,6 +1,5 @@
 <?php namespace Brainspin\Novashopengine\Fields;
 
-use Brainspin\Novashopengine\Resources\ShopEngineResource;
 use Laravel\Nova\Fields\Field;
 
 class ShopEngineModel extends Field

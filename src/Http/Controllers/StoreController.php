@@ -6,7 +6,6 @@ use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Brainspin\Novashopengine\Resources\Codepool;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use ShopEngineApiClient;
 
 class StoreController extends ShopEngineNovaController
 {

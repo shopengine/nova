@@ -1,8 +1,6 @@
 <?php
-
 namespace Brainspin\Novashopengine\Resources;
 
-use App\Models\ShopSetting;
 use App\Models\StatsPurchaseCode;
 use Brainspin\Novashopengine\Fields\CodepoolActions;
 use Brainspin\Novashopengine\Fields\CodepoolLink;
@@ -11,6 +9,7 @@ use Brainspin\Novashopengine\Fields\CodeValidation;
 use Brainspin\Novashopengine\Fields\ShopEngineModel;
 use Brainspin\Novashopengine\Filter\ActiveCodes;
 use Brainspin\Novashopengine\Models\CodeModel;
+use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Boolean;
@@ -33,9 +32,8 @@ class Code extends ShopEngineResource
 
     public function fields(Request $request)
     {
-        /** @var ShopSetting $shopSetting */
-        $shopSetting = \Shop::settings();
-        $shop_setting_slug = $shopSetting->getSlug();
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+        $shop_setting_slug = $shopService->shopRegion();
 
         return [
             Text::make('Code', 'code'),

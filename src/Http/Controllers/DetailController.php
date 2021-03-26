@@ -6,7 +6,6 @@ use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Brainspin\Novashopengine\Resources\CodepoolGroup;
 use Illuminate\Http\JsonResponse;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use ShopEngineApiClient;
 
 class DetailController extends ShopEngineNovaController
 {

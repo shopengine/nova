@@ -2,12 +2,9 @@
 
 namespace Brainspin\Novashopengine\Http\Controllers;
 
-use App\Models\ShopSetting;
-use App\Models\StatsPurchaseCode;
 use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use ShopEngineApiClient;
 
 class UpdateController extends ShopEngineNovaController
 {

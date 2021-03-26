@@ -2,32 +2,31 @@
 
 namespace Brainspin\Novashopengine\Http\Controllers;
 
-use App\Services\ShopService;
+use Brainspin\Novashopengine\Contracts\NovaShopEngineInterface;
+use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Illuminate\Routing\Controller;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;
-use SSB\Api\LaravelClient;
+use SSB\Api\Client;
 use SSB\Api\Model\Code;
 
 class ShopEngineNovaController extends Controller
 {
-    /** @var ShopService */
-    protected $shop;
+    /** @var NovaShopEngineInterface */
+    protected $shopService;
 
     public function __construct()
     {
-        $this->shop = app()->make('shop');
+        $this->shopService =  ConfiguredClassFactory::getShopEngineService();
     }
 
     protected function getShopSettings(): ShopEngineSettingsInterface
     {
-        return $this->shop->settings();
+        return $this->shopService->shopEngineSettings();
     }
 
-    protected function getClient(): LaravelClient
+    protected function getClient(): Client
     {
-        $clientFactory = app()->make('ShopEngineApiClient');
-
-        return $clientFactory->make($this->getShopSettings());
+        return $this->shopService->shopEngineClient($this->getShopSettings());
     }
 
     protected function fixTypes($value, string $type)

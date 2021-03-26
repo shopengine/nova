@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\FilterDecoder;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use ShopEngineApiClient;
 
 class IndexController extends ShopEngineNovaController
 {
     public function index(NovaRequest $request)
     {
         $resource = $request->resource();
+
 
         if ($resource === CodepoolGroup::class) {
             /** @var JsonResponse $response */
@@ -30,7 +30,6 @@ class IndexController extends ShopEngineNovaController
         }
 
         $shopEnginePath = $resource::$shopEnginePath;
-
         $seRequest = $request->all();
 
         $sort = false;

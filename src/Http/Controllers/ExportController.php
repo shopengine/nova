@@ -3,6 +3,7 @@
 namespace Brainspin\Novashopengine\Http\Controllers;
 
 use App\Models\CodepoolGroup;
+use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Illuminate\Support\Facades\DB;
 
 class ExportController extends ShopEngineNovaController
@@ -171,7 +172,8 @@ class ExportController extends ShopEngineNovaController
         $codepoolGroup = CodepoolGroup::find($id);
         $codepoolIds = implode(',', $codepoolGroup->getCodepoolIds());
 
-        $shop_setting_slug = \Shop::settings()->getSlug();
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+        $shop_setting_slug = $shopService->shopRegion();
 
         $emails = DB::select("
             SELECT DISTINCT p.customer_email, pcp.name
@@ -194,7 +196,9 @@ class ExportController extends ShopEngineNovaController
 
         $codepoolGroup = CodepoolGroup::find($id);
         $codepoolIds = implode(',', $codepoolGroup->getCodepoolIds());
-        $shop_setting_slug = \Shop::settings()->getSlug();
+
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+        $shop_setting_slug = $shopService->shopRegion();
 
         $emails = DB::select("
             SELECT DISTINCT p.customer_email, pcp.name

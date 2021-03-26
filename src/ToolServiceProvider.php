@@ -13,6 +13,10 @@ class ToolServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+
+
+        $this->registerPublishing();
+
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'novashopengine');
 
         $this->app->booted(function () {
@@ -36,7 +40,25 @@ class ToolServiceProvider extends ServiceProvider
         });
     }
 
-    protected function routes()
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    private function registerPublishing() : void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/nova-shopengine.php' => config_path('shopengine-nova.php'),
+            ], 'shopengine-nova-config');
+            return;
+        }
+
+        $configPath = __DIR__ . '/../config/nova-shopengine.php';
+        $this->mergeConfigFrom($configPath, 'nova-shopengine');
+    }
+
+    protected function routes() : void
     {
         if ($this->app->routesAreCached()) {
             return;
