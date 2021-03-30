@@ -1,6 +1,6 @@
 {
     "name": "brainspin/shopengine-nova",
-    "description": "A Laravel Nova tool.",
+    "description": "Shopengine Nova Integration",
     "keywords": [
         "laravel",
         "nova"
