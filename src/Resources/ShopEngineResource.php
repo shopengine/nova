@@ -1,8 +1,10 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
+use Brainspin\Novashopengine\Api\RequestBuilder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
+use Laravel\Nova\TrashedStatus;
 
 abstract class ShopEngineResource extends Resource
 {
@@ -34,5 +36,28 @@ abstract class ShopEngineResource extends Resource
         $resourceKey = $resource->getKey();
 
         return "/novashopengine/$uriKey/$resourceKey";
+    }
+
+    /**
+     *
+     * Replaces the Eloquent Builder with SE Api Client Builder
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param null $query
+     * @param null $search
+     * @param array $filters
+     * @param array $orderings
+     * @param string $withTrashed
+     *
+     * @return \Brainspin\Novashopengine\Api\RequestBuilder
+     */
+    public static function buildIndexQuery(NovaRequest $request,
+        $query = null,
+        $search = null,
+        array $filters = [],
+        array $orderings = [],
+        $withTrashed = TrashedStatus::DEFAULT)
+    {
+        return new RequestBuilder($request);
     }
 }

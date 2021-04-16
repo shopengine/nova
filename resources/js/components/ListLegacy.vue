@@ -1,21 +1,7 @@
 <template>
-    <div v-if="resourceName">
+    <div>
         <div class="mb-3"></div>
         <heading :level="1" class="mb-3" v-html="label"></heading>
-
-
-        <resource-index
-            :field="field"
-            :resource-name="resourceName"
-            :via-resource="resourceName"
-            :via-resource-id="null"
-            :via-relationship="null"
-            :relationship-type="null"
-            :load-cards="false"
-            :disable-pagination="false"
-        />
-
-        <!--            @actionExecuted="actionExecuted"-->
 
         <div class="flex">
             <div class="relative h-9 flex-no-shrink mb-6" v-if="isSearchable">
@@ -103,7 +89,7 @@ export default {
     components: {ListTable},
     data() {
         return {
-            resourceName: null,
+            resourceName: '',
             label: '&nbsp;',
             resources: [],
 
@@ -128,6 +114,10 @@ export default {
             shopSettings: [],
             isSearchable: true,
         }
+    },
+    async created() {
+        this.resourceName = this.$route.params.resourceName
+        await this.initializeFilters()
     },
     computed: {
         fields() {
@@ -156,6 +146,29 @@ export default {
         shop() {
             return Nova.config.shopEngineIdentifier
         }
+    },
+    mounted() {
+        this.resourceName = this.$route.params.resourceName
+        this.setDataFromRouter(this.$route.query)
+        this.list()
+    },
+    beforeRouteUpdate(to, from, next) {
+        if (to.params.resourceName !== from.params.resourceName) {
+            this.query.sort = undefined
+            this.query.search = undefined
+        }
+
+        this.resourceName = to.params.resourceName
+        //this.shop = to.params.shop
+
+        if (to.query) {
+            this.setDataFromRouter(to.query)
+            if (to.params.resourceName === from.params.resourceName) {
+                this.list()
+            }
+        }
+
+        next()
     },
     methods: {
         orderChange(query) {
@@ -285,29 +298,6 @@ export default {
                     resourceName: this.resourceName,
                 })
         },
-    },
-    async created() {
-        this.resourceName = this.$route.params.resourceName
-        await this.initializeFilters()
-    },
-    mounted() {
-        this.resourceName = this.$route.params.resourceName
-        this.setDataFromRouter(this.$route.query)
-        this.list()
-    },
-    beforeRouteUpdate(to, from, next) {
-        if (to.params.resourceName !== from.params.resourceName) {
-            this.query.sort = undefined
-            this.query.search = undefined
-        }
-        this.resourceName = to.params.resourceName
-        if (to.query) {
-            this.setDataFromRouter(to.query)
-            if (to.params.resourceName === from.params.resourceName) {
-                this.list()
-            }
-        }
-        next()
     },
 }
 </script>

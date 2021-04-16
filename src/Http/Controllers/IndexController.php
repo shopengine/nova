@@ -86,15 +86,16 @@ class IndexController extends ShopEngineNovaController
             ->join('|');
 
         $client = $this->getClient();
-
         $count = $client->get($shopEnginePath . '/count', $seRequestCount);
+        dump($request->all());
+        dd($seRequest);
         $rawResponse = $client->get($shopEnginePath, $seRequest);
 
         $resources = collect($rawResponse)->map(function ($seModel) {
             return new ShopEngineModel($seModel);
         })->mapInto($resource)->map->serializeForIndex($request);
 
-        return [
+        return response()->json([
             'label' => $resource::label(),
             'resources' => $resources,
             'prev_page_url' => null,
@@ -107,7 +108,7 @@ class IndexController extends ShopEngineNovaController
             'defaultSort' => $resource::$defaultSort,
 
             'shopSettings' => $this->getShopSettings()->toArray()
-        ];
+        ]);
     }
 
     public function filter(NovaRequest $request)
@@ -243,9 +244,11 @@ class IndexController extends ShopEngineNovaController
             ];
         }
 
+
         $orderCount = count($orders);
 
         $totalCount = count($list);
+
         $list = array_slice($list, $seRequest['pageSize'] * $seRequest['page'], $seRequest['pageSize']);
 
         return [

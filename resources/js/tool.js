@@ -1,5 +1,9 @@
 Nova.booting((Vue, router, store) => {
     router.addRoutes([
+        // {
+        //     path: '/novashopengine/resources/:resourceName',
+        //     component: require('./components/List'),
+        // },
         {
             path: '/novashopengine/:resourceName',
             component: require('./components/List'),

@@ -21,6 +21,13 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         $this->model = $model;
     }
 
+    /**
+     * @return mixed
+     */
+    public function newQuery() {
+        return null;
+    }
+
     public function getKeyName()
     {
         return isset($this->model::swaggerTypes()['aggregateId']) ? 'aggregateId' : 'id';

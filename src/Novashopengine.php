@@ -17,6 +17,7 @@ class Novashopengine extends Tool
             "shopEngineIdentifier" => $shopService->shopEngineSettings()->getShopEngineShopIdentifier(),
             "shopCurrency" => $shopService->shopCurrency()
         ]);
+
         Nova::script('novashopengine', __DIR__.'/../dist/js/tool.js');
     }
 

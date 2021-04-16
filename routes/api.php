@@ -16,6 +16,9 @@ Route::get('/lastCodes', 'IndexController@lastCodes');
 
 Route::get('/{resource}/filters', 'IndexController@filter');
 
+// nova-vender/novaschopengine/purchased
+// nova-api/resources/puse
+
 Route::get('/{resource}', 'IndexController@index');
 Route::get('/{resource}/{resourceId}', 'DetailController@show');
 
