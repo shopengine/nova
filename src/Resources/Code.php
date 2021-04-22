@@ -26,9 +26,13 @@ class Code extends ShopEngineResource
     public static $title = 'code';
     public static $search = ['code'];
 
-    public static $shopEnginePath = 'code';
     public static $defaultSort = '-updatedAt';
     public static $id = 'aggregateId';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'code';
+    }
 
     public function fields(Request $request)
     {

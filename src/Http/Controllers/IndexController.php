@@ -17,7 +17,6 @@ class IndexController extends ShopEngineNovaController
     {
         $resource = $request->resource();
 
-
         if ($resource === CodepoolGroup::class) {
             /** @var JsonResponse $response */
             $response = app()->call('Laravel\Nova\Http\Controllers\ResourceIndexController@handle');
@@ -87,8 +86,6 @@ class IndexController extends ShopEngineNovaController
 
         $client = $this->getClient();
         $count = $client->get($shopEnginePath . '/count', $seRequestCount);
-        dump($request->all());
-        dd($seRequest);
         $rawResponse = $client->get($shopEnginePath, $seRequest);
 
         $resources = collect($rawResponse)->map(function ($seModel) {
@@ -118,6 +115,7 @@ class IndexController extends ShopEngineNovaController
 
     public function lastCodes(NovaRequest $request)
     {
+        dd('xx');
         $seRequest = $request->all();
 
         $days = 30;

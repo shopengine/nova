@@ -23,9 +23,13 @@ class Purchase extends ShopEngineResource
     public static $title = 'orderId';
     public static $search = ['orderId'];
 
-    public static $shopEnginePath = 'purchase';
     public static $defaultSort = '-orderDate';
     public static $id = 'aggregateId';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'purchase';
+    }
 
     public function fields(\Illuminate\Http\Request $request)
     {

@@ -10,6 +10,7 @@ use Illuminate\Pagination\Paginator;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\FilterDecoder;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Nova;
 use SSB\Api\Client;
 
 class RequestBuilder
@@ -39,12 +40,9 @@ class RequestBuilder
     public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
     {
         $page = $page ?: Paginator::resolveCurrentPage($pageName);
-
         $perPage = $perPage ?: PER_PAGE_COUNT;
 
-        //$this->skip(($page - 1) * $perPage)->take($perPage + 1);
-
-        return $this->simplePaginator($this->loadItems(), $perPage, $page, [
+        return $this->simplePaginator($this->loadItems($this->request, $perPage), $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => $pageName,
         ]);
@@ -68,80 +66,85 @@ class RequestBuilder
 
     /**
      * Execute the query statement on ShopEngine API.
+     *
      * @todo Refactor me please (its old stuff)
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */
-    private function loadItems() {
-        $resource = $this->request->resource();
-
-        $seRequest = $this->request->all();
-
-        $sort = false;
-        $sortDesc = false;
-
-        if (isset($seRequest["{$resource::uriKey()}_order"])) {
-            $sort = $seRequest["{$resource::uriKey()}_order"];
-            unset($seRequest["{$resource::uriKey()}_order"]);
-        }
-
-        if (isset($seRequest["{$resource::uriKey()}_direction"])) {
-            $sortDesc = $seRequest["{$resource::uriKey()}_direction"] === 'desc';
-            unset($seRequest["{$resource::uriKey()}_direction"]);
-        }
-
-        if (isset($seRequest['search'])) {
-            $searchAttribute = $resource::$search[0] ?? false;
-            if ($searchAttribute) {
-                $seRequest["{$searchAttribute}-like"] = urlencode("%{$seRequest['search']}%");
-            }
-            unset($seRequest['search']);
-        }
-
-        if (isset($seRequest["{$resource::uriKey()}_filter"])) {
-            $filter = $seRequest["{$resource::uriKey()}_filter"];
-            unset($seRequest["{$resource::uriKey()}_filter"]);
-
-            $filters = (new FilterDecoder($filter, $this->request->newResource()->availableFilters($this->request)))->filters();
-            foreach ($filters as $applyFilterObj) {
-                $seRequest = $applyFilterObj->filter->apply($this->request, $seRequest, $applyFilterObj->value);
-            }
-        }
-
-        $seRequestCount = $seRequest;
-        unset($seRequestCount['page']);
-        unset($seRequestCount['pageSize']);
-
-        if ($sort) {
-            $seRequest['sort'] = ($sortDesc ? '-' : '') . $sort;
-        }
-        else {
-            $seRequest['sort'] = $resource::$defaultSort;
-        }
-
-        if ($resource === Purchase::class) {
-            // todo: remove fixed strings
-            $seRequest['email-ne'] = 'login@brainspin.de';
-        }
-
-        $indexFields = $this->request->newResource()->indexFields($this->request);
-
-        $seRequest['properties'] = $indexFields->map(fn(Field $field) => $field->attribute)
-            ->add($resource::$id)
-            ->join('|');
-
-        // todo: add params
-        //dd($seRequestCount);
-        //$count = $client->get($shopEnginePath . '/count', [] $seRequestCount); //);
-        $rawResponse = $this->getClient()->get($this->getShopEnginePath(), []);//$seRequest);
+    private function loadItems(NovaRequest $novaRequest, int $perPage) {
+        $request = $this->buildShopEngineRequest($novaRequest, $perPage);
+        $rawResponse = $this->getClient()->get($this->getShopEnginePath(), $request);
 
         return collect($rawResponse)->map(function ($seModel) {
             return new ShopEngineModel($seModel);
         })->all();
     }
 
-    private function buildRequest() {
-        // @todo: build me
+    /**
+     * Builds Request for ShopEngine
+     *
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $novaRequest
+     * @param string $perPage
+     *
+     * @return array
+     */
+    private function buildShopEngineRequest(
+        NovaRequest $novaRequest,
+        string $perPage = "25"
+    ): array {
+
+        /** @var \Brainspin\Novashopengine\Resources\ShopEngineResource $resource */
+        $resource = $novaRequest->resource();
+
+        $seRequest = [
+            'pageSize' =>  $perPage,
+            'page' => $novaRequest->get('page') ? $novaRequest->get('page') - 1 : 0
+        ];
+
+        $sortPrefix = $novaRequest->get('orderByDirection') === 'asc' ? '-' : '';
+        if ($novaRequest->get('orderBy')) {
+            $seRequest['sort'] = $sortPrefix . $novaRequest->get('orderBy');
+        } else {
+            $seRequest['sort'] = $sortPrefix . $resource::getDefaultSort();
+        }
+
+        if ($novaRequest->has('search')) {
+            if ($resource::getFirstSearchKey()) {
+                $searchTerm = $novaRequest->get('search');
+                if ($searchTerm) {
+                    $searchKey = "{$resource::getFirstSearchKey()}-like";
+                    $seRequest[$searchKey] = urlencode("%{$searchTerm}%");
+                }
+            }
+        }
+
+        if ($novaRequest->has('filters')) {
+
+            $filters = (new FilterDecoder(
+                $novaRequest->get('filters'),
+                $this->request->newResource()->availableFilters($this->request)
+            ))->filters();
+
+            $filterParams = [];
+            foreach ($filters as $applyFilterObj) {
+                $filterParams = $applyFilterObj->filter->apply($this->request, $filterParams, $applyFilterObj->value);
+            }
+
+            $seRequest = $seRequest + $filterParams;
+        }
+
+        // @todo: remove this ugly stuff
+        if ($resource === Purchase::class) {
+            // todo: remove fixed strings
+            $seRequest['email-ne'] = 'login@brainspin.de';
+        }
+
+        $indexFields = $this->request->newResource()->indexFields($this->request);
+        $seRequest['properties'] = $indexFields->map(fn(Field $field) => $field->attribute)
+            ->add($resource::$id)
+            ->join('|');
+
+        return $seRequest;
     }
 
 
@@ -153,13 +156,33 @@ class RequestBuilder
         return $this;
     }
 
+    /**
+     * Response for Nova /count api call
+     *
+     * @return int
+     */
     public function count() : int
     {
-        return $this->getClient()->get($this->getShopEnginePath() . '/count', []);
+        $seRequest = $this->buildShopEngineRequest($this->request);
+
+        // @todo shopengine but - if page is large > 0
+        unset($seRequest['sort']);
+        unset($seRequest['page']);
+        unset($seRequest['pageSize']);
+
+        return $this->getClient()->get(
+            $this->getShopEnginePath() . '/count',
+            $seRequest
+        );
     }
 
+    /**
+     *  Get Endpoint of Resource
+     *
+     * @return string
+     */
     private function getShopEnginePath() : string {
-        return $this->request->resource()::$shopEnginePath;
+        return $this->request->resource()::getShopEngineEndpoint();
     }
 
     /**
@@ -172,32 +195,4 @@ class RequestBuilder
         $shopService = ConfiguredClassFactory::getShopEngineService();
         return $shopService->shopEngineClient();
     }
-
-
-//    /**
-//     * Alias to set the "offset" value of the query.
-//     *
-//     * @param  int  $value
-//     * @return $this
-//     */
-//    public function skip($value)
-//    {
-//        return $this->offset($value);
-//    }
-//
-//    /**
-//     * Set the "offset" value of the query.
-//     *
-//     * @param  int  $value
-//     * @return $this
-//     */
-//    public function offset($value)
-//    {
-//        $property = $this->unions ? 'unionOffset' : 'offset';
-//
-//        $this->$property = max(0, $value);
-//
-//        return $this;
-//    }
-
 }

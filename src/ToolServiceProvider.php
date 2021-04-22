@@ -13,8 +13,6 @@ class ToolServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-
-
         $this->registerPublishing();
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'novashopengine');

@@ -20,9 +20,13 @@ class ShippingCost extends ShopEngineResource
     public static $title = 'name';
     public static $search = ['name'];
 
-    public static $shopEnginePath = 'shippingcost';
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'shippingcost';
+    }
 
     public function fields(\Illuminate\Http\Request $request)
     {

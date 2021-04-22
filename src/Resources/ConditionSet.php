@@ -11,9 +11,13 @@ class ConditionSet extends ShopEngineResource
     public static $title = 'name';
     public static $search = ['name'];
 
-    public static $shopEnginePath = 'conditionset';
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'conditionset';
+    }
 
     public function fields(Request $request)
     {

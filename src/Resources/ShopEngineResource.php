@@ -1,20 +1,32 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
 use Brainspin\Novashopengine\Api\RequestBuilder;
+use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Laravel\Nova\TrashedStatus;
 
-abstract class ShopEngineResource extends Resource
+abstract class ShopEngineResource extends Resource implements ShopEngineResourceInterface
 {
+    public static $search = [];
+    public static $defaultSort = 'id';
+
     public static $globallySearchable = false;
     public static $displayInNavigation = false;
     public static $canImportResource = false;
 
-    public function getKey()
+    public function getKey() : string
     {
         return $this->model[$this::$id];
+    }
+
+    public static function getFirstSearchKey() : ?string {
+        return static::$search[0] ?? null;
+    }
+
+    public static function getDefaultSort() : string {
+        return static::$defaultSort;
     }
 
     public function authorizedToDelete(Request $request)
@@ -51,6 +63,7 @@ abstract class ShopEngineResource extends Resource
      *
      * @return \Brainspin\Novashopengine\Api\RequestBuilder
      */
+
     public static function buildIndexQuery(NovaRequest $request,
         $query = null,
         $search = null,

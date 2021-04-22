@@ -18,9 +18,13 @@ class Codepool extends ShopEngineResource
     public static $title = 'orderId';
     public static $search = ['name'];
 
-    public static $shopEnginePath = 'codepool';
     public static $defaultSort = '-updatedAt';
     public static $id = 'id';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'codepool';
+    }
 
     public function fields(Request $request)
     {

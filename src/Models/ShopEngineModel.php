@@ -21,12 +21,6 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         $this->model = $model;
     }
 
-    /**
-     * @return mixed
-     */
-    public function newQuery() {
-        return null;
-    }
 
     public function getKeyName()
     {
@@ -53,16 +47,6 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         }
 
         return null;
-    }
-
-    public function offsetSet($offset, $value)
-    {
-
-    }
-
-    public function offsetUnset($offset)
-    {
-
     }
 
     public function attributesToArray()
@@ -148,5 +132,35 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         }
 
         return $obj;
+    }
+
+
+    // for faking an eloquent model
+
+
+    /**
+     * @return mixed
+     */
+    public function newQuery() {
+        return null;
+    }
+
+    public function newQueryWithoutScopes()
+    {
+        return $this;
+    }
+
+    public function find()
+    {
+        return $this;
+    }
+
+    public function offsetSet($offset, $value){
+
+    }
+
+    public function offsetUnset($offset)
+    {
+
     }
 }

@@ -19,6 +19,7 @@ class PurchaseStatusFilter extends Filter
         return $query;
     }
 
+    // @todo: this types should be defined in ssb
     public function options(Request $request)
     {
         return [

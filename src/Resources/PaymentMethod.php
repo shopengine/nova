@@ -15,9 +15,13 @@ class PaymentMethod extends ShopEngineResource
     public static $title = 'name';
     public static $search = ['name'];
 
-    public static $shopEnginePath = 'paymentmethod';
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getShopEngineEndpoint(): string
+    {
+        return 'paymentmethod';
+    }
 
     public function fields(\Illuminate\Http\Request $request)
     {
