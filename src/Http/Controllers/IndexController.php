@@ -15,6 +15,7 @@ class IndexController extends ShopEngineNovaController
 {
     public function index(NovaRequest $request)
     {
+        /** @var \Brainspin\Novashopengine\Resources\ShopEngineResource $resource */
         $resource = $request->resource();
 
         if ($resource === CodepoolGroup::class) {
@@ -28,7 +29,7 @@ class IndexController extends ShopEngineNovaController
             return $response;
         }
 
-        $shopEnginePath = $resource::$shopEnginePath;
+        $shopEnginePath = $resource::getShopEngineEndpoint();
         $seRequest = $request->all();
 
         $sort = false;
@@ -115,7 +116,6 @@ class IndexController extends ShopEngineNovaController
 
     public function lastCodes(NovaRequest $request)
     {
-        dd('xx');
         $seRequest = $request->all();
 
         $days = 30;

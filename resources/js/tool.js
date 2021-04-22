@@ -1,9 +1,14 @@
 Nova.booting((Vue, router, store) => {
     router.addRoutes([
-        // {
-        //     path: '/novashopengine/resources/:resourceName',
-        //     component: require('./components/List'),
-        // },
+        {
+            path: '/novashopengine/lastCodes',
+            component: require('./components/ListLegacy'),
+        },
+        {
+            path: '/novashopengine/codepool-groups',
+            component: require('./components/ListLegacy'),
+        },
+
         {
             path: '/novashopengine/:resourceName',
             component: require('./components/List'),

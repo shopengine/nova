@@ -2,6 +2,7 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
+use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\PaymentMethodModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -11,12 +12,16 @@ use Laravel\Nova\Fields\Text;
 
 class PaymentMethod extends ShopEngineResource
 {
-    public static $model = PaymentMethodModel::class;
     public static $title = 'name';
     public static $search = ['name'];
 
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getModel() : string
+    {
+        return PaymentMethodModel::class;
+    }
 
     public static function getShopEngineEndpoint(): string
     {

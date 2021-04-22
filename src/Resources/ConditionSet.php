@@ -7,12 +7,16 @@ use Laravel\Nova\Fields\Text;
 
 class ConditionSet extends ShopEngineResource
 {
-    public static $model = PurchaseModel::class;
     public static $title = 'name';
     public static $search = ['name'];
 
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getModel() : string
+    {
+        return PurchaseModel::class;
+    }
 
     public static function getShopEngineEndpoint(): string
     {

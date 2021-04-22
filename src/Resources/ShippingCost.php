@@ -6,6 +6,7 @@ use App\Models\ShopSetting;
 use Brainspin\Novashopengine\Fields\Money;
 use Brainspin\Novashopengine\Fields\ShippingCostOptions;
 use Brainspin\Novashopengine\Fields\ShippingCostValidations;
+use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\ShippingCostModel;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Laravel\Nova\Fields\Badge;
@@ -16,12 +17,16 @@ use Laravel\Nova\Panel;
 
 class ShippingCost extends ShopEngineResource
 {
-    public static $model = ShippingCostModel::class;
     public static $title = 'name';
     public static $search = ['name'];
 
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
+
+    public static function getModel() : string
+    {
+        return ShippingCostModel::class;
+    }
 
     public static function getShopEngineEndpoint(): string
     {

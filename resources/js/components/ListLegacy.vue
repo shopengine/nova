@@ -115,10 +115,6 @@ export default {
             isSearchable: true,
         }
     },
-    async created() {
-        this.resourceName = this.$route.params.resourceName
-        await this.initializeFilters()
-    },
     computed: {
         fields() {
             if (this.resources[0]) {
@@ -147,8 +143,12 @@ export default {
             return Nova.config.shopEngineIdentifier
         }
     },
+    async created() {
+        this.resourceName = this.$route.params.resourceName || this.$route.path.replace(/^\/+/, '').split('/')[1]
+        await this.initializeFilters()
+    },
     mounted() {
-        this.resourceName = this.$route.params.resourceName
+        this.resourceName = this.$route.params.resourceName || this.$route.path.replace(/^\/+/, '').split('/')[1]
         this.setDataFromRouter(this.$route.query)
         this.list()
     },
@@ -239,11 +239,13 @@ export default {
                 this.shopSettings = response.data.shopSettings
                 this.isSearchable = response.data.isSearchable !== false
 
+                console.log(response.data)
+
                 if (response.data.resources[0]) {
                     this.authToCreate = response.data.resources[0].authorizedToCreate
                 }
                 else {
-                    this.authToCreate = true // todo: ???
+                    this.authToCreate = false //true // todo: ???
                 }
             })
         },

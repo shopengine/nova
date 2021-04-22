@@ -19,9 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr
-                v-for="(resource, index) in resources"
-        >
+        <tr v-for="(resource, index) in resources">
             <td v-for="field in resource.fields">
                 <component
                         :is="'index-' + field.component"

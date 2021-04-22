@@ -21,6 +21,11 @@ class Codepool extends ShopEngineResource
     public static $defaultSort = '-updatedAt';
     public static $id = 'id';
 
+    public static function getModel() : string
+    {
+        return CodepoolModel::class;
+    }
+
     public static function getShopEngineEndpoint(): string
     {
         return 'codepool';

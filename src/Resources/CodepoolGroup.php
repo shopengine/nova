@@ -18,7 +18,6 @@ use SSB\Api\Model\Codepool as CodepoolModel;
 // Outsource Shopresource
 class CodepoolGroup extends ShopResource
 {
-
     public static $canUseFallbackShop = false;
 
     public static $globallySearchable = false;

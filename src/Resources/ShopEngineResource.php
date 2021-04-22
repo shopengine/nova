@@ -29,18 +29,17 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         return static::$defaultSort;
     }
 
+    public static function newModel()
+    {
+        $model = static::getModel();
+        return new $model;
+    }
+
     public function authorizedToDelete(Request $request)
     {
         return false;
     }
 
-    public static function redirectAfterCreate(NovaRequest $request, $resource)
-    {
-        $uriKey = static::uriKey();
-        $resourceKey = $resource->getKey();
-
-        return "/novashopengine/$uriKey/$resourceKey";
-    }
 
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {

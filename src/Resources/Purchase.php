@@ -6,6 +6,7 @@ use Brainspin\Novashopengine\Fields\PurchaseArticles;
 use Brainspin\Novashopengine\Fields\PurchaseCodes;
 use Brainspin\Novashopengine\Fields\PurchaseManualJTL;
 use Brainspin\Novashopengine\Filter\PurchaseStatusFilter;
+use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\PurchaseModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -19,12 +20,16 @@ use SSB\Api\Model\Purchase as ApiPurchase;
 
 class Purchase extends ShopEngineResource
 {
-    public static $model = PurchaseModel::class;
     public static $title = 'orderId';
     public static $search = ['orderId'];
 
     public static $defaultSort = '-orderDate';
     public static $id = 'aggregateId';
+
+    public static function getModel() : string
+    {
+        return PurchaseModel::class;
+    }
 
     public static function getShopEngineEndpoint(): string
     {
