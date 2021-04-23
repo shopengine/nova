@@ -2,11 +2,9 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use App\Models\ShopSetting;
 use Brainspin\Novashopengine\Fields\Money;
 use Brainspin\Novashopengine\Fields\ShippingCostOptions;
 use Brainspin\Novashopengine\Fields\ShippingCostValidations;
-use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\ShippingCostModel;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Laravel\Nova\Fields\Badge;

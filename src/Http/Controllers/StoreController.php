@@ -4,9 +4,12 @@ namespace Brainspin\Novashopengine\Http\Controllers;
 
 use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Resources\Codepool;
+use Brainspin\Novashopengine\Codepools\Resources\Codepool;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
+/*
+ * @deprecated
+ */
 class StoreController extends ShopEngineNovaController
 {
     public function store(string $resource, NovaRequest $request)
@@ -14,7 +17,7 @@ class StoreController extends ShopEngineNovaController
         $resource = $request->resource();
 
         // todo: refactor that extra case
-        if ($resource === \Brainspin\Novashopengine\Resources\CodepoolGroup::class) {
+        if ($resource === \Brainspin\Novashopengine\Codepools\Resources\CodepoolGroup::class) {
             $response = app()->call('Laravel\Nova\Http\Controllers\ResourceStoreController@handle');
             $data = $response->getOriginalContent();
             $data['redirect'] = '/novashopengine/codepool-groups/' . $data['resource']['id'];

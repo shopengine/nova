@@ -28511,9 +28511,11 @@ Nova.booting(function (Vue, router, store) {
 
     Vue.component('detail-shippingcostoptions', __webpack_require__(86));
     Vue.component('detail-shippingcostvalidations', __webpack_require__(92));
+
     Vue.component('detail-purchase-address', __webpack_require__(97));
     Vue.component('detail-purchase-articles', __webpack_require__(100));
     Vue.component('detail-purchase-codes', __webpack_require__(105));
+
     Vue.component('detail-codepool-codes', __webpack_require__(110));
     Vue.component('detail-codepool-group-codepools', __webpack_require__(115));
     Vue.component('detail-codepool-link', __webpack_require__(120));
@@ -28522,6 +28524,7 @@ Nova.booting(function (Vue, router, store) {
     Vue.component('detail-codepool-actions', __webpack_require__(126));
     Vue.component('detail-purchase-manual-jtl', __webpack_require__(131));
 
+    // ???
     Vue.component('index-money', __webpack_require__(136));
     Vue.component('detail-money', __webpack_require__(139));
     Vue.component('form-money', __webpack_require__(142));

@@ -33,9 +33,11 @@ Nova.booting((Vue, router, store) => {
 
     Vue.component('detail-shippingcostoptions', require('./fields/DetailShippingCostOptions'))
     Vue.component('detail-shippingcostvalidations', require('./fields/DetailShippingCostValidaton'))
+
     Vue.component('detail-purchase-address', require('./fields/DetailAddress'))
     Vue.component('detail-purchase-articles', require('./fields/DetailPurchaseArticles'))
     Vue.component('detail-purchase-codes', require('./fields/DetailCodes'))
+
     Vue.component('detail-codepool-codes', require('./fields/CodepoolCodes'))
     Vue.component('detail-codepool-group-codepools', require('./fields/CodepoolGroupCodepools'))
     Vue.component('detail-codepool-link', require('./fields/DetailCodepoolLink'))
@@ -44,6 +46,7 @@ Nova.booting((Vue, router, store) => {
     Vue.component('detail-codepool-actions', require('./fields/CodepoolActions'))
     Vue.component('detail-purchase-manual-jtl', require('./fields/DetailPurchaseManualJTL'))
 
+    // ???
     Vue.component('index-money', require('./fields/IndexMoney'))
     Vue.component('detail-money', require('./fields/DetailMoney'))
     Vue.component('form-money', require('./fields/FormMoney'))

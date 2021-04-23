@@ -1,27 +1,16 @@
 <?php
 namespace Brainspin\Novashopengine\Api;
 
-
-use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Resources\Purchase;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
-use Illuminate\Container\Container;
-use Illuminate\Pagination\Paginator;
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\FilterDecoder;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Nova;
 use SSB\Api\Client;
 
-class RequestBuilder
-{
-
-    const PER_PAGE_COUNT = 25;
+abstract class RequestBuilder {
 
     /**
      * @var \Laravel\Nova\Http\Requests\NovaRequest
      */
-    private NovaRequest $request;
+    protected NovaRequest $request;
 
     public function __construct(NovaRequest $request)
     {
@@ -29,124 +18,24 @@ class RequestBuilder
     }
 
     /**
-     * Paginate the given query into a simple paginator.
+     *  Get Endpoint of Resource
      *
-     * @param  int|null  $perPage
-     * @param  array  $columns
-     * @param  string  $pageName
-     * @param  int|null  $page
-     * @return \Illuminate\Contracts\Pagination\Paginator
+     * @return string
      */
-    public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    protected function getShopEnginePath() : string {
+        return $this->request->resource()::getShopEngineEndpoint();
+    }
+
+    /**
+     *  Get Api Client
+     *
+     * @return \SSB\Api\Client
+     */
+    protected function getClient(): Client
     {
-        $page = $page ?: Paginator::resolveCurrentPage($pageName);
-        $perPage = $perPage ?: PER_PAGE_COUNT;
-
-        return $this->simplePaginator($this->loadItems($this->request, $perPage), $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => $pageName,
-        ]);
+        $shopService = ConfiguredClassFactory::getShopEngineService();
+        return $shopService->shopEngineClient();
     }
-
-    /**
-     * Create a new simple paginator instance.
-     *
-     * @param  \Illuminate\Support\Collection  $items
-     * @param  int  $perPage
-     * @param  int  $currentPage
-     * @param  array  $options
-     * @return \Illuminate\Pagination\Paginator
-     */
-    protected function simplePaginator($items, $perPage, $currentPage, $options) : Paginator
-    {
-        return Container::getInstance()->makeWith(Paginator::class, compact(
-            'items', 'perPage', 'currentPage', 'options'
-        ));
-    }
-
-    /**
-     * Execute the query statement on ShopEngine API.
-     *
-     * @todo Refactor me please (its old stuff)
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
-     */
-    private function loadItems(NovaRequest $novaRequest, int $perPage) {
-        $request = $this->buildShopEngineRequest($novaRequest, $perPage);
-        $rawResponse = $this->getClient()->get($this->getShopEnginePath(), $request);
-
-        return collect($rawResponse)->map(function ($seModel) {
-            return new ShopEngineModel($seModel);
-        })->all();
-    }
-
-    /**
-     * Builds Request for ShopEngine
-     *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $novaRequest
-     * @param string $perPage
-     *
-     * @return array
-     */
-    private function buildShopEngineRequest(
-        NovaRequest $novaRequest,
-        string $perPage = "25"
-    ): array {
-
-        /** @var \Brainspin\Novashopengine\Resources\ShopEngineResource $resource */
-        $resource = $novaRequest->resource();
-
-        $seRequest = [
-            'pageSize' =>  $perPage,
-            'page' => $novaRequest->get('page') ? $novaRequest->get('page') - 1 : 0
-        ];
-
-        $sortPrefix = $novaRequest->get('orderByDirection') === 'asc' ? '-' : '';
-        if ($novaRequest->get('orderBy')) {
-            $seRequest['sort'] = $sortPrefix . $novaRequest->get('orderBy');
-        } else {
-            $seRequest['sort'] = $sortPrefix . $resource::getDefaultSort();
-        }
-
-        if ($novaRequest->has('search')) {
-            if ($resource::getFirstSearchKey()) {
-                $searchTerm = $novaRequest->get('search');
-                if ($searchTerm) {
-                    $searchKey = "{$resource::getFirstSearchKey()}-like";
-                    $seRequest[$searchKey] = urlencode("%{$searchTerm}%");
-                }
-            }
-        }
-
-        if ($novaRequest->has('filters')) {
-
-            $filters = (new FilterDecoder(
-                $novaRequest->get('filters'),
-                $this->request->newResource()->availableFilters($this->request)
-            ))->filters();
-
-            $filterParams = [];
-            foreach ($filters as $applyFilterObj) {
-                $filterParams = $applyFilterObj->filter->apply($this->request, $filterParams, $applyFilterObj->value);
-            }
-
-            $seRequest = $seRequest + $filterParams;
-        }
-
-        // @todo: remove this ugly stuff
-        if ($resource === Purchase::class) {
-            // todo: remove fixed strings
-            $seRequest['email-ne'] = 'login@brainspin.de';
-        }
-
-        $indexFields = $this->request->newResource()->indexFields($this->request);
-        $seRequest['properties'] = $indexFields->map(fn(Field $field) => $field->attribute)
-            ->add($resource::$id)
-            ->join('|');
-
-        return $seRequest;
-    }
-
 
     /**
      *  Fakes a Base cause have no base
@@ -157,42 +46,30 @@ class RequestBuilder
     }
 
     /**
-     * Response for Nova /count api call
+     * A really ugly function
+     * @todo fix me please
      *
-     * @return int
+     * @param $value
+     * @param string $type
+     *
+     * @return array|bool|int|mixed|string|null
      */
-    public function count() : int
+    protected function fixTypes($value, string $type)
     {
-        $seRequest = $this->buildShopEngineRequest($this->request);
+        switch ($type) {
+            case 'string':
+                return "$value";
+            case 'int':
+                return intval($value);
+            case 'bool':
+                return $value == true;
+            case '\SSB\Api\Model\Money':
+                $v = json_decode($value);
+                return ['amount' => intval($v->amount), 'currency' => $v->currency];
+            case '\SSB\Api\Model\Validation[]':
+                return json_decode($value, true);
+        }
 
-        // @todo shopengine but - if page is large > 0
-        unset($seRequest['sort']);
-        unset($seRequest['page']);
-        unset($seRequest['pageSize']);
-
-        return $this->getClient()->get(
-            $this->getShopEnginePath() . '/count',
-            $seRequest
-        );
-    }
-
-    /**
-     *  Get Endpoint of Resource
-     *
-     * @return string
-     */
-    private function getShopEnginePath() : string {
-        return $this->request->resource()::getShopEngineEndpoint();
-    }
-
-    /**
-     *  Get Api Client
-     *
-     * @return \SSB\Api\Client
-     */
-    private function getClient(): Client
-    {
-        $shopService = ConfiguredClassFactory::getShopEngineService();
-        return $shopService->shopEngineClient();
+        return null;
     }
 }

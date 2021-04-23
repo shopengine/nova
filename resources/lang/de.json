@@ -1,0 +1,6 @@
+{
+    "se.admin" : "Admin",
+    "se.orders" : "Bestellungen",
+    "se.shippingcosts" : "Versandarten",
+    "se.payments" : "Zahlungsarten"
+}

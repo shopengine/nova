@@ -2,14 +2,18 @@
 
 namespace Brainspin\Novashopengine;
 
+use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
 use Brainspin\Novashopengine\Http\Middleware\Authorize;
 use Brainspin\Novashopengine\Resources;
+use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
+use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
+use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Nova;
 
-class ToolServiceProvider extends ServiceProvider
+class PackageServiceProvider extends ServiceProvider implements ShopEnginePackageInterface
 {
     public function boot()
     {
@@ -24,11 +28,8 @@ class ToolServiceProvider extends ServiceProvider
         Nova::resources([
             Resources\ShippingCost::class,
             Resources\Purchase::class,
-            Resources\Codepool::class,
-            Resources\Code::class,
             Resources\ConditionSet::class,
-            Resources\PaymentMethod::class,
-            Resources\CodepoolGroup::class
+            Resources\PaymentMethod::class
         ]);
 
         Field::macro('default', function ($default) {
@@ -70,5 +71,30 @@ class ToolServiceProvider extends ServiceProvider
 
     public function register()
     {
+    }
+
+    public static function getShopengineNavigation() : ?NavigationStruct {
+        $baseNavigation = [
+            new NavigationItemStruct('orders', '/novashopengine/purchases')
+        ];
+
+        $adminNavigation = [
+            new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs'),
+            new NavigationItemStruct('payments', '/novashopengine/payment-methods')
+        ];
+
+        return new NavigationStruct(
+            [
+                new NavigationGroupStruct(
+                    '_',
+                    $baseNavigation,
+                    false
+                ),
+                new NavigationGroupStruct(
+                    'admin',
+                    $adminNavigation
+                ),
+            ]
+        );
     }
 }

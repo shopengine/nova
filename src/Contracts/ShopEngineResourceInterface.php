@@ -17,7 +17,7 @@ interface ShopEngineResourceInterface
 
     public static function getShopEngineEndpoint() : string;
 
-    //public static function getModel() : string;
+    public static function getModel() : string;
 
     public static function buildIndexQuery(
         NovaRequest $request,
@@ -27,5 +27,4 @@ interface ShopEngineResourceInterface
         array $orderings,
         string $withTrashed
     );
-
 }

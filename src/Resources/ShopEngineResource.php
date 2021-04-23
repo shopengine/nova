@@ -1,7 +1,8 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Api\RequestBuilder;
+use Brainspin\Novashopengine\Api\LoadRequestBuilder;
 use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
+use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
@@ -9,6 +10,8 @@ use Laravel\Nova\TrashedStatus;
 
 abstract class ShopEngineResource extends Resource implements ShopEngineResourceInterface
 {
+    use UseDynamicResourceModel;
+
     public static $search = [];
     public static $defaultSort = 'id';
 
@@ -18,7 +21,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
 
     public function getKey() : string
     {
-        return $this->model[$this::$id];
+        return $this->model[$this::$id] || '';
     }
 
     public static function getFirstSearchKey() : ?string {
@@ -29,17 +32,10 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         return static::$defaultSort;
     }
 
-    public static function newModel()
-    {
-        $model = static::getModel();
-        return new $model;
-    }
-
     public function authorizedToDelete(Request $request)
     {
         return false;
     }
-
 
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
@@ -60,16 +56,17 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param array $orderings
      * @param string $withTrashed
      *
-     * @return \Brainspin\Novashopengine\Api\RequestBuilder
+     * @return \Brainspin\Novashopengine\Api\LoadRequestBuilder
      */
 
-    public static function buildIndexQuery(NovaRequest $request,
+    public static function buildIndexQuery(
+        NovaRequest $request,
         $query = null,
         $search = null,
         array $filters = [],
         array $orderings = [],
         $withTrashed = TrashedStatus::DEFAULT)
     {
-        return new RequestBuilder($request);
+        return new LoadRequestBuilder($request);
     }
 }

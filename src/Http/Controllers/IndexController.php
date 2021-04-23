@@ -3,7 +3,7 @@
 namespace Brainspin\Novashopengine\Http\Controllers;
 
 use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Resources\CodepoolGroup;
+use Brainspin\Novashopengine\Codepools\Resources\CodepoolGroup;
 use Brainspin\Novashopengine\Resources\Purchase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +11,9 @@ use Laravel\Nova\Fields\Field;
 use Laravel\Nova\FilterDecoder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
+/*
+* @deprecated
+*/
 class IndexController extends ShopEngineNovaController
 {
     public function index(NovaRequest $request)

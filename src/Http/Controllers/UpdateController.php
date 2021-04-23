@@ -12,7 +12,7 @@ class UpdateController extends ShopEngineNovaController
     {
         $requestResource = $request->resource();
 
-        if ($requestResource === \Brainspin\Novashopengine\Resources\CodepoolGroup::class) {
+        if ($requestResource === \Brainspin\Novashopengine\Codepools\Resources\CodepoolGroup::class) {
             $response = app()->call('Laravel\Nova\Http\Controllers\ResourceUpdateController@handle');
             $data = $response->getOriginalContent();
             $data['redirect'] = '/novashopengine/codepool-groups/' . $data['resource']['id'];
@@ -71,7 +71,7 @@ class UpdateController extends ShopEngineNovaController
     {
         $resource = $request->resource();
 
-        if ($resource === \Brainspin\Novashopengine\Resources\CodepoolGroup::class) {
+        if ($resource === \Brainspin\Novashopengine\Codepools\Resources\CodepoolGroup::class) {
             return app()->call('Laravel\Nova\Http\Controllers\UpdateFieldController@index');
         }
 

@@ -3,6 +3,9 @@
 namespace Brainspin\Novashopengine\Models;
 
 use ArrayAccess;
+use Brainspin\Novashopengine\Api\StoreRequestBuilder;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
 use SSB\Api\Model\PaymentInformation;
@@ -134,9 +137,14 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return $obj;
     }
 
+    public function save(array $options = [])
+    {
+        $request = app(NovaRequest::class);
+        return (new StoreRequestBuilder($request))->save($this);
+    }
+
 
     // for faking an eloquent model
-
 
     /**
      * @return mixed
@@ -162,5 +170,30 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
     public function offsetUnset($offset)
     {
 
+    }
+
+    public function whereKey()
+    {
+        return null;
+    }
+
+    /**
+     * Get the class name for polymorphic relations.
+     *
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return static::class;
+    }
+
+    /**
+     * Get the value of the model's primary key.
+     *
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return '0';
     }
 }

@@ -7,9 +7,7 @@ Route::get('/{resource}/{resourceId}/stats-by-time', 'StatisticController@statsB
 
 Route::get('/{resource}/{resourceId}/export/orders', 'ExportController@orders');
 Route::get('/{resource}/{resourceId}/export/newCustomers', 'ExportController@newCustomer');
-Route::get('/codepools/{resourceId}/export/activeCodes', 'ExportController@codepoolActiveCodes');
 
-Route::get('/codepools/{resourceId}/archive', 'CodepoolController@archive');
 Route::post('/purchases/{resourceId}/manualJTL', 'PurchaseController@manualJTL');
 
 Route::get('/lastCodes', 'IndexController@lastCodes');

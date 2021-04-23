@@ -3,9 +3,10 @@
 namespace Brainspin\Novashopengine\Http\Controllers;
 
 use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Resources\CodepoolGroup;
+use Brainspin\Novashopengine\Codepools\Resources\CodepoolGroup;
 use Illuminate\Http\JsonResponse;
 use Laravel\Nova\Http\Requests\NovaRequest;
+
 
 class DetailController extends ShopEngineNovaController
 {
