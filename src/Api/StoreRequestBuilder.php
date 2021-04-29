@@ -2,21 +2,20 @@
 namespace Brainspin\Novashopengine\Api;
 
 
-use Brainspin\Novashopengine\Codepools\Resources\Codepool;
 use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Code;
 
 class StoreRequestBuilder extends RequestBuilder
 {
 
     public function save(ShopEngineModel $model) {
-        $seRequest = $this->buildShopEngineRequest($model);
-        $rawResponse = $this->getClient()->post($this->getShopEnginePath(), $seRequest);
+        $seRequest = $this->buildFromModel($model);
+        $this->getClient()->post($this->getShopEnginePath(), $seRequest);
     }
 
-    private function buildShopEngineRequest(ShopEngineModel $model)
+    public function buildFromModel(ShopEngineModel $model)
     {
+        // todo: type this stuff!
         $seRequest = collect(get_object_vars($model))
             ->filter(function ($a, $key) {
                 return $key !== 'model';

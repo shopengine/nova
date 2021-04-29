@@ -37,14 +37,14 @@ Nova.booting((Vue, router, store) => {
     Vue.component('detail-purchase-address', require('./fields/DetailAddress'))
     Vue.component('detail-purchase-articles', require('./fields/DetailPurchaseArticles'))
     Vue.component('detail-purchase-codes', require('./fields/DetailCodes'))
+    Vue.component('detail-purchase-manual-jtl', require('./fields/DetailPurchaseManualJTL'))
 
     Vue.component('detail-codepool-codes', require('./fields/CodepoolCodes'))
     Vue.component('detail-codepool-group-codepools', require('./fields/CodepoolGroupCodepools'))
-    Vue.component('detail-codepool-link', require('./fields/DetailCodepoolLink'))
 
+    Vue.component('detail-codepool-link', require('./fields/DetailCodepoolLink'))
     Vue.component('detail-codepool-statistics', require('./fields/CodepoolStatistics'))
     Vue.component('detail-codepool-actions', require('./fields/CodepoolActions'))
-    Vue.component('detail-purchase-manual-jtl', require('./fields/DetailPurchaseManualJTL'))
 
     // ???
     Vue.component('index-money', require('./fields/IndexMoney'))

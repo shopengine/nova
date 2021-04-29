@@ -1,6 +1,6 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Api\LoadRequestBuilder;
+use Brainspin\Novashopengine\Api\ListRequestBuilder;
 use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
 use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
@@ -56,7 +56,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param array $orderings
      * @param string $withTrashed
      *
-     * @return \Brainspin\Novashopengine\Api\LoadRequestBuilder
+     * @return \Brainspin\Novashopengine\Api\ListRequestBuilder
      */
 
     public static function buildIndexQuery(
@@ -67,6 +67,6 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         array $orderings = [],
         $withTrashed = TrashedStatus::DEFAULT)
     {
-        return new LoadRequestBuilder($request);
+        return new ListRequestBuilder($request);
     }
 }

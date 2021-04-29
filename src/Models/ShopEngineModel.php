@@ -3,8 +3,9 @@
 namespace Brainspin\Novashopengine\Models;
 
 use ArrayAccess;
+use Brainspin\Novashopengine\Api\LoadRequestBuilder;
 use Brainspin\Novashopengine\Api\StoreRequestBuilder;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
@@ -15,6 +16,11 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
     public ModelInterface $model;
     public static $apiModel;
 
+    /**
+     * ShopEngineModel constructor.
+     *
+     * @param \SSB\Api\Model\ModelInterface|null $model
+     */
     public function __construct(ModelInterface $model = null)
     {
         if ($model === null) {
@@ -24,17 +30,29 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         $this->model = $model;
     }
 
-
-    public function getKeyName()
+    /**
+     * @return string
+     */
+    public function getKeyName(): string
     {
         return isset($this->model::swaggerTypes()['aggregateId']) ? 'aggregateId' : 'id';
     }
 
-    public function offsetExists($offset)
+    /**
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset): bool
     {
         return isset($this->model::getters()[$offset]);
     }
 
+    /**
+     * @param mixed $offset
+     *
+     * @return array|mixed|\SSB\Api\Model\Article|string|null
+     */
     public function offsetGet($offset)
     {
         return $this->offsetExists($offset) ?
@@ -42,6 +60,11 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
             null;
     }
 
+    /**
+     * @param $key
+     *
+     * @return null
+     */
     public function __get($key)
     {
         if ($this->offsetExists($key)) {
@@ -52,18 +75,31 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return null;
     }
 
-    public function attributesToArray()
+    /**
+     * @return array
+     */
+    public function attributesToArray(): array
     {
         return $this->mapShopEngineValue($this->model);
     }
 
+    /**
+     * @param $offset
+     *
+     * @return array|\SSB\Api\Model\Article|string
+     */
     private function fromModel($offset)
     {
         $data = $this->model->{$this->model::getters()[$offset]}();
         return $this->mapShopEngineModelToArray($data);
     }
 
-    private function mapShopEngineValue(ModelInterface $entry)
+    /**
+     * @param \SSB\Api\Model\ModelInterface $entry
+     *
+     * @return array
+     */
+    private function mapShopEngineValue(ModelInterface $entry): array
     {
         $responseEntry = [];
 
@@ -86,6 +122,11 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return $responseEntry;
     }
 
+    /**
+     * @param $obj
+     *
+     * @return array|\SSB\Api\Model\Article|string
+     */
     private function mapShopEngineModelToArray($obj)
     {
         if (is_object($obj)) {
@@ -127,7 +168,10 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return $obj;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         $obj = [];
         foreach ($this->model::getters() as $attribute => $getter) {
@@ -137,14 +181,47 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return $obj;
     }
 
+    /**
+     * @return \Brainspin\Novashopengine\Models\ShopEngineModel|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function first()
+    {
+        $request = app(NovaRequest::class);
+        $builder = new LoadRequestBuilder($request);
+        return $builder->loadItem(
+            $builder->buildFromRequest()
+        );
+    }
+
+
+    /**
+     * @param array $options
+     */
     public function save(array $options = [])
     {
         $request = app(NovaRequest::class);
         return (new StoreRequestBuilder($request))->save($this);
     }
 
+    /** -- for faking an eloquent model --  */
 
-    // for faking an eloquent model
+    /**
+     * Execute the query and get the first result or throw an exception.
+     *
+     * @param  array  $columns
+     * @return \Illuminate\Database\Eloquent\Model|static
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function firstOrFail()
+    {
+        if (! is_null($model = $this->first())) {
+            return $model;
+        }
+
+        throw (new ModelNotFoundException)->setModel(get_class($this));
+    }
+
 
     /**
      * @return mixed
@@ -153,33 +230,47 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         return null;
     }
 
-    public function newQueryWithoutScopes()
+    /**
+     * @return $this
+     */
+    public function newQueryWithoutScopes(): ShopEngineModel
     {
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function find()
     {
         return $this;
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value){
 
     }
 
+    /**
+     * @param mixed $offset
+     */
     public function offsetUnset($offset)
     {
 
     }
 
-    public function whereKey()
+    /**
+     * @return $this
+     */
+    public function whereKey(): ShopEngineModel
     {
-        return null;
+        return $this;
     }
 
     /**
-     * Get the class name for polymorphic relations.
-     *
      * @return string
      */
     public function getMorphClass()
@@ -188,8 +279,6 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Get the value of the model's primary key.
-     *
      * @return mixed
      */
     public function getKey()
