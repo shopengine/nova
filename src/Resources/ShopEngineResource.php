@@ -40,9 +40,9 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
         $uriKey = static::uriKey();
-        $resourceKey = $resource->getKey();
+        $resourceKey = $request->resourceId;
 
-        return "/novashopengine/$uriKey/$resourceKey";
+        return "/resources/$uriKey/$resourceKey";
     }
 
     /**

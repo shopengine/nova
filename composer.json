@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "PackageServiceProvider"
+                "Brainspin\\Novashopengine\\PackageServiceProvider"
             ]
         }
     },

@@ -6,7 +6,6 @@ use Brainspin\Novashopengine\Fields\PurchaseArticles;
 use Brainspin\Novashopengine\Fields\PurchaseCodes;
 use Brainspin\Novashopengine\Fields\PurchaseManualJTL;
 use Brainspin\Novashopengine\Filter\PurchaseStatusFilter;
-use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\PurchaseModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -14,7 +13,6 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Money\Money;
 use SSB\Api\Model\Purchase as ApiPurchase;
 

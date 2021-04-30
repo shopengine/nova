@@ -5,6 +5,7 @@ namespace Brainspin\Novashopengine\Models;
 use ArrayAccess;
 use Brainspin\Novashopengine\Api\LoadRequestBuilder;
 use Brainspin\Novashopengine\Api\StoreRequestBuilder;
+use Brainspin\Novashopengine\Api\UpdateRequestBuilder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Article;
@@ -200,7 +201,16 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
     public function save(array $options = [])
     {
         $request = app(NovaRequest::class);
-        return (new StoreRequestBuilder($request))->save($this);
+
+        if ($request->get('editMode') === 'update') {
+            (new UpdateRequestBuilder($request))->save($this);
+            return;
+        }
+
+        if ($request->get('editMode') === 'create') {
+            (new StoreRequestBuilder($request))->save($this);
+            return;
+        }
     }
 
     /** -- for faking an eloquent model --  */
@@ -222,12 +232,33 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
         throw (new ModelNotFoundException)->setModel(get_class($this));
     }
 
+    public function lockForUpdate()
+    {
+        return $this;
+    }
+
+    public function lock($value = true)
+    {
+
+    }
 
     /**
      * @return mixed
      */
     public function newQuery() {
         return null;
+    }
+
+    public function getUpdatedAtColumn() {
+
+    }
+
+    public function getOriginal() {
+        return [];
+    }
+
+    public function getDirty() {
+        return [];
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Models\CodepoolModel;
 use Brainspin\Novashopengine\Models\PaymentMethodModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;

@@ -7,14 +7,15 @@ class ConfiguredClassFactory {
 
     public static function getShopEngineService() : NovaShopEngineInterface
     {
-        return app()->make(\Config::get('nova-shopengine.nova_shopengine_interface'));
-    }
+        $serviceClass = \Config::get('nova-shopengine.nova_shopengine_interface');
 
-    // this one needs a real class
-    public static function createCodepoolClass()
-    {
-        $className = \Config::get('nova-shopengine.codepool_model');
-        return new $className;
+        if (is_null($serviceClass)) {
+            throw new \Exception(
+                    'Nova ShopEngine Service has not been defined. You need to define a nova-shopengine.nova_shopengine_interface service in the config. It must be a service using the NovaShopengineInterface.'
+                );
+        }
+
+        return app()->make($serviceClass);
     }
 
 }
