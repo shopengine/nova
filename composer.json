@@ -8,7 +8,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.3.0",
-        "brainspin/client-php": "dev-main",
+        "brainspin/client-php": "4.0.0",
         "optimistdigital/nova-translations-loader": "*"
     },
     "autoload": {
