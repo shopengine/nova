@@ -16,11 +16,7 @@ class UpdateRequestBuilder extends RequestBuilder
     public function buildFromModel(ShopEngineModel $model)
     {
         // todo: type this stuff!
-        $seRequest = collect(get_object_vars($model))
-            ->filter(function ($a, $key) {
-                return $key !== 'model';
-            })
-            ->toArray();
+        $seRequest = $model->getDirty();
 
         $swaggerTypes = $model->model::swaggerTypes();
 

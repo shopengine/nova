@@ -4,6 +4,7 @@ namespace Brainspin\Novashopengine;
 
 use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
 use Brainspin\Novashopengine\Http\Middleware\Authorize;
+use Brainspin\Novashopengine\Http\Requests\SeResourceIndexRequest;
 use Brainspin\Novashopengine\Resources;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
@@ -11,10 +12,21 @@ use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 use Laravel\Nova\Nova;
 
 class PackageServiceProvider extends ServiceProvider implements ShopEnginePackageInterface
 {
+    protected static function ShopEngineResources() {
+        return [
+            Resources\ShippingCost::class,
+            Resources\Purchase::class,
+            Resources\ConditionSet::class,
+            Resources\PaymentMethod::class
+        ];
+    }
+
     public function boot()
     {
         $this->registerPublishing();
@@ -25,12 +37,13 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             $this->routes();
         });
 
-        Nova::resources([
-            Resources\ShippingCost::class,
-            Resources\Purchase::class,
-            Resources\ConditionSet::class,
-            Resources\PaymentMethod::class
-        ]);
+        Nova::resources(self::ShopEngineResources());
+
+        // intercept nova request
+        if ($this->isSeResourceRequest())
+        {
+            app()->bind(ResourceIndexRequest::class, SeResourceIndexRequest::class);
+        }
 
         Field::macro('default', function ($default) {
             return $this->resolveUsing(function ($value) use ($default) {
@@ -67,6 +80,11 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             ->prefix('nova-vendor/novashopengine')
             ->namespace('Brainspin\Novashopengine\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
+
+        Route::middleware(['nova', Authorize::class])
+            ->prefix('nova-api')
+            ->namespace('Brainspin\Novashopengine\Http\Controllers')
+            ->group(__DIR__ . '/../routes/web.php');
     }
 
     public function register()
@@ -95,6 +113,22 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
                     $adminNavigation
                 ),
             ]
+        );
+    }
+
+    private function isSeResourceRequest() : bool
+    {
+        $request = app(NovaRequest::class);
+        $resource = $request->viaResource();
+
+        if (is_null($resource) && $request->segment(1) === 'nova-api') {
+            $resourceString = $request->segment(2);
+            $resource = Nova::resourceForKey($resourceString);
+        }
+
+        return in_array(
+            $resource,
+            self::ShopEngineResources()
         );
     }
 }

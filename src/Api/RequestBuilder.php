@@ -34,7 +34,7 @@ abstract class RequestBuilder {
     protected function getClient(): Client
     {
         $shopService = ConfiguredClassFactory::getShopEngineService();
-        return $shopService->shopEngineClient();
+        return $shopService->shopEngineClient($shopService->shopEngineSettings());
     }
 
     /**

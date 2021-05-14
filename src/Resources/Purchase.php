@@ -1,6 +1,6 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
-use App\Services\ConvertMoney;
+use Brainspin\Novashopengine\Services\ConvertMoney;
 use Brainspin\Novashopengine\Fields\Address;
 use Brainspin\Novashopengine\Fields\PurchaseArticles;
 use Brainspin\Novashopengine\Fields\PurchaseCodes;
@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Scout\Searchable;
 use Money\Money;
 use SSB\Api\Model\Purchase as ApiPurchase;
 

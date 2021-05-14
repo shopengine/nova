@@ -6,13 +6,14 @@ use ArrayAccess;
 use Brainspin\Novashopengine\Api\LoadRequestBuilder;
 use Brainspin\Novashopengine\Api\StoreRequestBuilder;
 use Brainspin\Novashopengine\Api\UpdateRequestBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
 use SSB\Api\Model\PaymentInformation;
 
-class ShopEngineModel implements ArrayAccess, \JsonSerializable
+class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 {
     public ModelInterface $model;
     public static $apiModel;
@@ -253,12 +254,17 @@ class ShopEngineModel implements ArrayAccess, \JsonSerializable
 
     }
 
-    public function getOriginal() {
+    public function getOriginal($key = null, $default = null) {
+        return [];
+    }
+
+    public function getRawOriginal($key = null, $default = null)
+    {
         return [];
     }
 
     public function getDirty() {
-        return [];
+        return parent::getDirty();
     }
 
     /**

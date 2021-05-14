@@ -3,10 +3,13 @@
 namespace Brainspin\Novashopengine;
 
 use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
+use Brainspin\Novashopengine\Http\Requests\SeResourceIndexRequest;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
 use Brainspin\Novashopengine\Traits\UseNovaTranslations;
 use Illuminate\Support\Arr;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
