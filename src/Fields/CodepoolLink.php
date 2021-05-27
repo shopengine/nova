@@ -4,7 +4,7 @@ namespace Brainspin\Novashopengine\Fields;
 
 use Laravel\Nova\Fields\Field;
 
-class PurchaseArticles extends Field
+class CodepoolLink extends Field
 {
-    public $component = 'purchase-articles';
+    public $component = 'codepool-link';
 }

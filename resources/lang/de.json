@@ -2,5 +2,11 @@
     "se.admin" : "Admin",
     "se.orders" : "Bestellungen",
     "se.shippingcosts" : "Versandarten",
-    "se.payments" : "Zahlungsarten"
+    "se.payments" : "Zahlungsarten",
+
+    "se.codesgroup" : "Gutscheincodes",
+    "se.codepools" : "Kampagnen",
+    "se.codepool" : "Kampagne",
+
+    "se.codes" : "Codes"
 }

@@ -43,7 +43,7 @@
             }
         },
         created() {
-            Nova.request().get(`/nova-vendor/novashopengine/${this.field.uriKey}`, {}).then(response => {
+            Nova.request().get(`/nova-api/${this.field.uriKey}`, {}).then(response => {
                 if (response.headers['content-type'] !== 'application/json') {
                     console.error(response)
                     return

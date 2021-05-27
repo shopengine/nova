@@ -1,4 +1,6 @@
-<?php namespace Brainspin\Novashopengine\Filter;
+<?php
+
+namespace Brainspin\Novashopengine\Filter;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
