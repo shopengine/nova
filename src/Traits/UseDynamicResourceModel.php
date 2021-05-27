@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\App;
 
 trait UseDynamicResourceModel
 {
+    //
+    public static string $model = '#';
 
     public static function newModel()
     {
