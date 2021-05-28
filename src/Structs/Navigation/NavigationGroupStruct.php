@@ -2,7 +2,7 @@
 
 namespace Brainspin\Novashopengine\Structs\Navigation;
 
-use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
+use Illuminate\Support\Collection;
 
 // @todo: on php8 use constructor property promotion
 final class NavigationGroupStruct {
@@ -17,10 +17,7 @@ final class NavigationGroupStruct {
      */
     private bool $showTitle;
 
-    /**
-     * @var NavigationItemStruct[]
-     */
-    private array $items;
+    private Collection $items;
 
     /**
      * NavigationStruct constructor.
@@ -36,13 +33,13 @@ final class NavigationGroupStruct {
     ) {
         $this->title = $title;
         $this->showTitle = $showTitle;
-        $this->items = $items;
+        $this->items = collect($items);
     }
 
     /**
      * @return NavigationItemStruct[]
      */
-    public function getItems(): array
+    public function getItems(): Collection
     {
         return $this->items;
     }
@@ -61,6 +58,21 @@ final class NavigationGroupStruct {
     public function showTitle(): bool
     {
         return $this->showTitle;
+    }
+
+    public function getAvailableGroup(array $availableResources) : ?NavigationGroupStruct
+    {
+        $items = $this->items->filter(
+            fn( NavigationItemStruct $item) => in_array($item->getResourceClass(), $availableResources)
+        );
+
+        if ($items->isEmpty()) return null;
+
+        return new NavigationGroupStruct(
+            $this->title,
+            $items->all(),
+            $this->showTitle
+        );
     }
 
     /**

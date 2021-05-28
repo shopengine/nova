@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 use Laravel\Nova\Nova;
+use Laravel\Nova\ResourceCollection;
 use Laravel\Nova\Tool;
 
 
@@ -20,6 +21,8 @@ class Novashopengine extends Tool
 
     public function boot()
     {
+        $this->renderNavigation();
+
         $this->loadTranslations(__DIR__ . '/../resources/lang', 'nova-shopengine', true);
 
         $shopService = ConfiguredClassFactory::getShopEngineService();

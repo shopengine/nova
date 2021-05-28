@@ -14,6 +14,7 @@ final class NavigationItemStruct {
      * @var string
      */
     private string $path;
+    private ?string $resourceClass;
 
     /**
      * NavigationStruct constructor.
@@ -23,10 +24,12 @@ final class NavigationItemStruct {
      */
     public function __construct(
         string $title,
-        string $path
+        string $path,
+        string $resourceClass = null
     ) {
         $this->title = $title;
         $this->path = $path;
+        $this->resourceClass = $resourceClass;
     }
 
     /**
@@ -45,4 +48,11 @@ final class NavigationItemStruct {
         return $this->path;
     }
 
+    /**
+     * @return string
+     */
+    public function getResourceClass(): ?string
+    {
+        return $this->resourceClass;
+    }
 }

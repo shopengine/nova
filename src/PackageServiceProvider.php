@@ -95,20 +95,23 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
     public static function getShopengineNavigation() : ?NavigationStruct {
         $baseNavigation = [
-            new NavigationItemStruct('orders', '/novashopengine/purchases')
+            new NavigationItemStruct('orders', '/novashopengine/purchases', Resources\Purchase::class)
         ];
 
         $adminNavigation = [
-            new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs'),
-            new NavigationItemStruct('payments', '/novashopengine/payment-methods')
+            new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs', Resources\ShippingCost::class),
+            new NavigationItemStruct('payments', '/novashopengine/payment-methods',
+                Resources\PaymentMethod::class)
         ];
 
         $codepoolNavigation = [
-            new NavigationItemStruct('codepools', '/novashopengine/codepools'),
-            new NavigationItemStruct('codes', '/novashopengine/codes')
+            new NavigationItemStruct('codepools', '/novashopengine/codepools',
+                Resources\Codepool::class),
+            new NavigationItemStruct('codes', '/novashopengine/codes',
+                Resources\Code::class)
         ];
 
-        return new NavigationStruct(
+        $struct = new NavigationStruct(
             [
                 new NavigationGroupStruct(
                     '_',
@@ -125,6 +128,8 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
                 )
             ]
         );
+
+        return $struct->getAvailableStruct(Nova::availableResources(request()));
     }
 
     private function isSeResourceRequest() : bool
