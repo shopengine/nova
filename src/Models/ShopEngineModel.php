@@ -13,9 +13,9 @@ use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
 use SSB\Api\Model\PaymentInformation;
 
-class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
+abstract class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 {
-    public ModelInterface $model;
+    public ModelInterface|null $model;
     public static $apiModel;
 
     /**

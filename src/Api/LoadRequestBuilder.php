@@ -29,7 +29,8 @@ class LoadRequestBuilder extends RequestBuilder
             $this->getShopEnginePath() . '/' . $loadRequestStruct->createApiRequest()
         );
 
-        return new ShopEngineModel($rawResponse);
+        $modelClass = $this->request->resource()::getModel();
+        return new $modelClass($rawResponse);
     }
 
     public function buildFromRequest() : LoadRequestStruct

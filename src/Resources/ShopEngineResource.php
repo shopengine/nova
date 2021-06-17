@@ -4,6 +4,7 @@ use Brainspin\Novashopengine\Api\ListRequestBuilder;
 use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
 use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
+use Laravel\Nova\Authorizable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Laravel\Nova\TrashedStatus;
@@ -11,6 +12,7 @@ use Laravel\Nova\TrashedStatus;
 abstract class ShopEngineResource extends Resource implements ShopEngineResourceInterface
 {
     use UseDynamicResourceModel;
+    use Authorizable;
 
     public static $search = [];
     public static $defaultSort = 'id';

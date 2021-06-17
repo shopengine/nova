@@ -72,8 +72,10 @@ class ListRequestBuilder extends RequestBuilder
             $listRequest->createApiRequest()
         );
 
-        return collect($rawResponse)->map(function ($seModel) {
-            return new ShopEngineModel($seModel);
+        $modelClass = $this->request->resource()::getModel();
+
+        return collect($rawResponse)->map(function ($seModel) use ($modelClass) {
+            return new $modelClass($seModel);
         })->all();
     }
 
