@@ -5,8 +5,8 @@
     "se.payments" : "Zahlungsarten",
 
     "se.codesgroup" : "Gutscheincodes",
-    "se.codepools" : "Kampagnen",
     "se.codepool" : "Kampagne",
+    "se.codepools" : "Codepools",
 
     "se.codes" : "Codes"
 }

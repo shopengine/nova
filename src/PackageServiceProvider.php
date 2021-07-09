@@ -9,6 +9,7 @@ use Brainspin\Novashopengine\Resources;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
+use Brainspin\Novashopengine\Traits\UseNovaTranslations;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;
@@ -146,5 +147,10 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             $resource,
             self::ShopEngineResources()
         );
+    }
+
+    public static function getLanguagePath(): ?string
+    {
+        return __DIR__ . '/../resources/lang';
     }
 }

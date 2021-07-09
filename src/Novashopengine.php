@@ -23,7 +23,7 @@ class Novashopengine extends Tool
     {
         $this->renderNavigation();
 
-        $this->loadTranslations(__DIR__ . '/../resources/lang', 'nova-shopengine', true);
+        $this->loadTranslationsAllPlugins();
 
         $shopService = ConfiguredClassFactory::getShopEngineService();
 
@@ -64,5 +64,19 @@ class Novashopengine extends Tool
             array_keys(app()->getLoadedProviders()),
             fn($provider) => is_a($provider, ShopEnginePackageInterface::class, true)
         );
+    }
+
+    private function loadTranslationsAllPlugins() : void
+    {
+
+        $seProviders = $this->getShopengineProviders();
+
+        foreach ($seProviders as $providerClass) {
+            try {
+                $file = call_user_func($providerClass .'::getLanguagePath');
+                    $this->loadTranslations($file, 'nova-shopengine', true);
+            } catch (\Exception $e) {
+            }
+        }
     }
 }
