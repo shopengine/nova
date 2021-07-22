@@ -8,6 +8,8 @@
     "license": "MIT",
     "require": {
         "php": ">=7.3.0",
+        "brainspin/shopengine-nova": "*",
+        "brainspin/shopengine-nova-stats": "*",
         "brainspin/client-php": "dev-master",
         "optimistdigital/nova-translations-loader": "^3.1.2"
     },
