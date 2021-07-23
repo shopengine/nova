@@ -2,6 +2,10 @@
 
 use Brainspin\Novashopengine\Api\ListRequestBuilder;
 use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
+use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
+use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsStruct;
+use Brainspin\Novashopengine\Models\ShopEngineModel;
+use Brainspin\Novashopengine\Traits\HasShopEngineFields;
 use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Authorizable;
@@ -13,6 +17,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
 {
     use UseDynamicResourceModel;
     use Authorizable;
+    use HasShopEngineFields;
 
     public static $search = [];
     public static $defaultSort = 'id';
@@ -46,6 +51,25 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
 
         return "/resources/$uriKey/$resourceKey";
     }
+
+    /**
+     * Injecting seModel to js environment.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return array
+     */
+    public function serializeForDetail(NovaRequest $request)
+    {
+        $serialized = parent::serializeForDetail($request);
+        $seModel = null;
+        if (!empty($serialized['fields'])) {
+            $seModel = (new ShopEngineModel($serialized['fields'][0]->resource->model))->jsonSerialize();
+        }
+        return array_merge($serialized, [
+            'seModel' => $seModel
+        ]);
+    }
+
 
     /**
      *

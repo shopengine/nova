@@ -44,7 +44,7 @@ class Codepool extends ShopEngineResource
 
     public function fields(Request $request)
     {
-        return [
+        return $this->appendShopEngineFields([
             Text::make('Name', 'name')
                 ->required(true)->rules('required')
                 ->sortable(true),
@@ -64,14 +64,7 @@ class Codepool extends ShopEngineResource
                    true => 'danger'
                 ])
                 ->onlyOnDetail(),
-
-            CodepoolStatistics::make('Statistiken')->onlyOnDetail(),
-
-            new Panel('Codes', [
-                CodepoolCodes::make('Codes', 'codes')
-                    ->onlyOnDetail()
-            ])
-        ];
+        ]);
     }
 
     public function filters(Request $request)

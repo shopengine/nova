@@ -1,5 +1,4 @@
 Nova.booting((Vue, router, store) => {
-
      // alias for resources/:resourceName
 
      router.addRoutes([
@@ -16,18 +15,19 @@ Nova.booting((Vue, router, store) => {
     Vue.component('detail-purchase-address', require('./fields/DetailAddress'))
     Vue.component('detail-purchase-articles', require('./fields/DetailPurchaseArticles'))
     Vue.component('detail-purchase-manual-jtl', require('./fields/DetailPurchaseManualJTL'))
+    Vue.component('detail-purchase-codes', require('./fields/DetailCodes'))
 
     Vue.component('index-money', require('./fields/IndexMoney'))
     Vue.component('detail-money', require('./fields/DetailMoney'))
     Vue.component('form-money', require('./fields/FormMoney'))
 
-
     Vue.component('detail-codepool-codes', require('./fields/CodepoolCodes'))
-    Vue.component('form-code-validation', require('./fields/FormCodeValidation'))
     Vue.component('detail-codepool-link', require('./fields/DetailCodepoolLink'))
-    //Vue.component('detail-codepool-actions', require('./fields/CodepoolActions'))
-    Vue.component('detail-code-validation', require('./fields/DetailCodeValidation'))
 
+    //Vue.component('detail-codepool-actions', require('./fields/CodepoolActions'))
+
+    Vue.component('detail-code-validation', require('./fields/DetailCodeValidation'))
+    Vue.component('form-code-validation', require('./fields/FormCodeValidation'))
 
 
     // ???

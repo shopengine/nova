@@ -18,6 +18,8 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public ?ModelInterface $model;
     public static $apiModel;
 
+    public $seModel;
+
     /**
      * ShopEngineModel constructor.
      *
@@ -29,6 +31,9 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             $model = new static::$apiModel;
         }
 
+        $this->seModel = $model;
+
+        // @todo needed?
         $this->model = $model;
     }
 
@@ -190,6 +195,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     {
         $request = app(NovaRequest::class);
         $builder = new LoadRequestBuilder($request);
+
         return $builder->loadItem(
             $builder->buildFromRequest()
         );

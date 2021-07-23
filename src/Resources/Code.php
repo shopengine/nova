@@ -2,6 +2,7 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
+use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
 use Brainspin\Novashopengine\Fields\CodepoolLink;
 use Brainspin\Novashopengine\Fields\CodeValidation;
 use Brainspin\Novashopengine\Fields\ShopEngineModel;
@@ -15,6 +16,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Panel;
 
 class Code extends ShopEngineResource
 {
@@ -37,7 +39,7 @@ class Code extends ShopEngineResource
 
     public function fields(Request $request)
     {
-        return [
+        return $this->appendShopEngineFields([
             Text::make('Code', 'code'),
             Badge::make('Status')->map([
                 'enabled' => 'success',
@@ -74,9 +76,6 @@ class Code extends ShopEngineResource
             CodepoolLink::make('Marketing Kampagne', 'codepoolId')
                 ->onlyOnDetail(),
 
-            Text::make('Kondition', 'conditionSetName')
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
             ShopEngineModel::make('Kondition', 'conditionSetVersionId')
@@ -95,7 +94,7 @@ class Code extends ShopEngineResource
 
             CodeValidation::make('Validierungen', 'validation')
                 ->hideFromIndex(),
-        ];
+        ]);
     }
 
     public function filters(Request $request)

@@ -2,6 +2,7 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
+use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
 use Brainspin\Novashopengine\Fields\Money;
 use Brainspin\Novashopengine\Fields\ShippingCostOptions;
 use Brainspin\Novashopengine\Fields\ShippingCostValidations;
@@ -35,7 +36,7 @@ class ShippingCost extends ShopEngineResource
     {
         $shopService = ConfiguredClassFactory::getShopEngineService();
 
-        return [
+        $fields = [
             Text::make('Name', 'name')
                 ->required(true)->rules('required')
                 ->sortable(true),
@@ -114,6 +115,8 @@ class ShippingCost extends ShopEngineResource
                     ->hideWhenUpdating(),
             ]),
         ];
+
+        return $fields;
     }
 
 
