@@ -1,6 +1,6 @@
-<?php namespace Brainspin\Novashopengine\Resources;
+<?php namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Models\PurchaseModel;
+use ShopEngine\Nova\Models\PurchaseModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;

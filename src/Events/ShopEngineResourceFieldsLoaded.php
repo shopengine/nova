@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Events;
+namespace ShopEngine\Nova\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -15,7 +15,7 @@ class ShopEngineResourceFieldsLoaded
     /**
      * ShopEngineResourceFieldsLoaded constructor.
      *
-     * @param \Brainspin\Novashopengine\Events\ShopEngineResourceFieldsStruct $data
+     * @param \ShopEngine\Nova\Events\ShopEngineResourceFieldsStruct $data
      */
     public function __construct(ShopEngineResourceFieldsStruct $data)
     {

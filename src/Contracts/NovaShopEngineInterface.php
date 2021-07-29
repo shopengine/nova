@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Contracts;
+namespace ShopEngine\Nova\Contracts;
 
 use SSB\Api\Client;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;

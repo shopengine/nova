@@ -1,11 +1,11 @@
 <?php
 
-namespace Brainspin\Novashopengine\Models;
+namespace ShopEngine\Nova\Models;
 
 use ArrayAccess;
-use Brainspin\Novashopengine\Api\LoadRequestBuilder;
-use Brainspin\Novashopengine\Api\StoreRequestBuilder;
-use Brainspin\Novashopengine\Api\UpdateRequestBuilder;
+use ShopEngine\Nova\Api\LoadRequestBuilder;
+use ShopEngine\Nova\Api\StoreRequestBuilder;
+use ShopEngine\Nova\Api\UpdateRequestBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -189,7 +189,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     }
 
     /**
-     * @return \Brainspin\Novashopengine\Models\ShopEngineModel|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return \ShopEngine\Nova\Models\ShopEngineModel|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function first()
     {

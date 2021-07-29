@@ -1,9 +1,9 @@
 <?php
-namespace Brainspin\Novashopengine\Api;
+namespace ShopEngine\Nova\Api;
 
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Structs\Api\LoadRequestStruct;
+use ShopEngine\Nova\Models\ShopEngineModel;
+use ShopEngine\Nova\Structs\Api\LoadRequestStruct;
 
 class LoadRequestBuilder extends RequestBuilder
 {
@@ -11,7 +11,7 @@ class LoadRequestBuilder extends RequestBuilder
     /**
      * Execute the query statement on ShopEngine API.
      *
-     * @param \Brainspin\Novashopengine\Structs\Api\LoadRequestStruct $loadRequestStruct
+     * @param \ShopEngine\Nova\Structs\Api\LoadRequestStruct $loadRequestStruct
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */

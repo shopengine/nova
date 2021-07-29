@@ -1,14 +1,14 @@
 <?php
 
-namespace Brainspin\Novashopengine;
+namespace ShopEngine\Nova;
 
-use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
-use Brainspin\Novashopengine\Http\Middleware\Authorize;
-use Brainspin\Novashopengine\Http\Requests\SeResourceIndexRequest;
-use Brainspin\Novashopengine\Resources;
-use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
-use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
-use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
+use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
+use ShopEngine\Nova\Http\Middleware\Authorize;
+use ShopEngine\Nova\Http\Requests\SeResourceIndexRequest;
+use ShopEngine\Nova\Resources;
+use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
+use ShopEngine\Nova\Structs\Navigation\NavigationItemStruct;
+use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;
@@ -80,12 +80,12 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/novashopengine')
-            ->namespace('Brainspin\Novashopengine\Http\Controllers')
+            ->namespace('ShopEngine\Nova\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
 
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-api')
-            ->namespace('Brainspin\Novashopengine\Http\Controllers')
+            ->namespace('ShopEngine\Nova\Http\Controllers')
             ->group(__DIR__ . '/../routes/web.php');
     }
 

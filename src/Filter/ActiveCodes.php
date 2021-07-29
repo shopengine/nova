@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Filter;
+namespace ShopEngine\Nova\Filter;
 
 use DateTime;
 use Illuminate\Http\Request;

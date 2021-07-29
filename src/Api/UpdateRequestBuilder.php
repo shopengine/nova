@@ -1,8 +1,8 @@
 <?php
-namespace Brainspin\Novashopengine\Api;
+namespace ShopEngine\Nova\Api;
 
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
+use ShopEngine\Nova\Models\ShopEngineModel;
 use SSB\Api\Model\Code;
 
 class UpdateRequestBuilder extends RequestBuilder

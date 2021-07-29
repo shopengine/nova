@@ -1,7 +1,7 @@
 <?php
-namespace Brainspin\Novashopengine\Api;
+namespace ShopEngine\Nova\Api;
 
-use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Client;
 

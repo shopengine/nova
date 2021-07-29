@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Traits;
+namespace ShopEngine\Nova\Traits;
 
 use Laravel\Nova\Nova;
 use OptimistDigital\NovaTranslationsLoader\LoadsNovaTranslations;

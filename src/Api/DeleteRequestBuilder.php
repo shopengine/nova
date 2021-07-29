@@ -1,5 +1,5 @@
 <?php
-namespace Brainspin\Novashopengine\Api;
+namespace ShopEngine\Nova\Api;
 
 class DeleteRequestBuilder extends RequestBuilder
 {

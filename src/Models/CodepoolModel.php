@@ -1,4 +1,4 @@
-<?php namespace Brainspin\Novashopengine\Models;
+<?php namespace ShopEngine\Nova\Models;
 
 use SSB\Api\Model\Codepool;
 

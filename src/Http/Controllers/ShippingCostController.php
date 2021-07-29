@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Http\Controllers;
+namespace ShopEngine\Nova\Http\Controllers;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 

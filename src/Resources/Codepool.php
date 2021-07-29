@@ -1,11 +1,11 @@
 <?php
 
-namespace Brainspin\Novashopengine\Resources;
+namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Fields\CodepoolActions;
-use Brainspin\Novashopengine\Fields\CodepoolStatistics;
-use Brainspin\Novashopengine\Filter\CodepoolArchive;
-use Brainspin\Novashopengine\Models\CodepoolModel;
+use ShopEngine\Nova\Fields\CodepoolActions;
+use ShopEngine\Nova\Fields\CodepoolStatistics;
+use ShopEngine\Nova\Filter\CodepoolArchive;
+use ShopEngine\Nova\Models\CodepoolModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Structs\Api;
+namespace ShopEngine\Nova\Structs\Api;
 
 
 // @todo: on php8 use constructor property promotion

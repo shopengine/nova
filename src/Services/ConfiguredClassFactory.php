@@ -1,7 +1,7 @@
 <?php
-namespace Brainspin\Novashopengine\Services;
+namespace ShopEngine\Nova\Services;
 
-use Brainspin\Novashopengine\Contracts\NovaShopEngineInterface;
+use ShopEngine\Nova\Contracts\NovaShopEngineInterface;
 
 class ConfiguredClassFactory {
 

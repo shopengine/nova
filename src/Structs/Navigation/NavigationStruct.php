@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Structs\Navigation;
+namespace ShopEngine\Nova\Structs\Navigation;
 
 // @todo: on php8 use constructor property promotion
 use Illuminate\Support\Collection;

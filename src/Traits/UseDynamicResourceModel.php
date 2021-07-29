@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Traits;
+namespace ShopEngine\Nova\Traits;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 

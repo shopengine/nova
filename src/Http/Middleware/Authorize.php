@@ -1,8 +1,8 @@
 <?php
 
-namespace Brainspin\Novashopengine\Http\Middleware;
+namespace ShopEngine\Nova\Http\Middleware;
 
-use Brainspin\Novashopengine\Novashopengine;
+use ShopEngine\Nova\NovaTool;
 use Laravel\Nova\Nova;
 
 class Authorize
@@ -29,6 +29,6 @@ class Authorize
      */
     public function matchesTool($tool)
     {
-        return $tool instanceof Novashopengine;
+        return $tool instanceof NovaTool;
     }
 }

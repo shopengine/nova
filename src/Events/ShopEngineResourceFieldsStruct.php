@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Events;
+namespace ShopEngine\Nova\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Resource;

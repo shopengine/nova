@@ -1,9 +1,9 @@
 <?php
 
-namespace Brainspin\Novashopengine\Traits;
+namespace ShopEngine\Nova\Traits;
 
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsStruct;
+use ShopEngine\Nova\Events\ShopEngineResourceFieldsLoaded;
+use ShopEngine\Nova\Events\ShopEngineResourceFieldsStruct;
 
 trait HasShopEngineFields
 {

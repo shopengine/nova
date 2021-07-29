@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Structs\Navigation;
+namespace ShopEngine\Nova\Structs\Navigation;
 
 use Illuminate\Support\Collection;
 
@@ -88,7 +88,7 @@ final class NavigationGroupStruct {
      * @param array $plainStruct
      * @param bool $showTitle
      *
-     * @return \Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct
+     * @return \ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct
      */
     public static function create(
         string $title,

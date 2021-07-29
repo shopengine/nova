@@ -1,10 +1,10 @@
 <?php
-namespace Brainspin\Novashopengine\Api;
+namespace ShopEngine\Nova\Api;
 
 
-use Brainspin\Novashopengine\Resources\Purchase;
-use Brainspin\Novashopengine\Structs\Api\ListRequestStruct;
-use Brainspin\Novashopengine\Structs\Api\RequestFilterStruct;
+use ShopEngine\Nova\Resources\Purchase;
+use ShopEngine\Nova\Structs\Api\ListRequestStruct;
+use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
 use Illuminate\Container\Container;
 use Illuminate\Pagination\Paginator;
 use Laravel\Nova\Fields\Field;
@@ -59,7 +59,7 @@ class ListRequestBuilder extends RequestBuilder
     /**
      * Execute the query statement on ShopEngine API.
      *
-     * @param \Brainspin\Novashopengine\Structs\Api\ListRequestStruct $listRequest
+     * @param \ShopEngine\Nova\Structs\Api\ListRequestStruct $listRequest
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */
@@ -90,7 +90,7 @@ class ListRequestBuilder extends RequestBuilder
         string $perPage = "25"
     ): ListRequestStruct
     {
-        /** @var \Brainspin\Novashopengine\Resources\ShopEngineResource $resource */
+        /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
         $resource = $this->request->resource();
 
         $listRequest = new ListRequestStruct();

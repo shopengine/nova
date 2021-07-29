@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Contracts;
+namespace ShopEngine\Nova\Contracts;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;

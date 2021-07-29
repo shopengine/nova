@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Fields;
+namespace ShopEngine\Nova\Fields;
 
 use Laravel\Nova\Fields\Field;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Brainspin\Novashopengine\Http\Controllers;
+namespace ShopEngine\Nova\Http\Controllers;
 
-use Brainspin\Novashopengine\Contracts\NovaShopEngineInterface;
-use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
+use ShopEngine\Nova\Contracts\NovaShopEngineInterface;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use Illuminate\Routing\Controller;
 use SSB\Api\Client;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;

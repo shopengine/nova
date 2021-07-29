@@ -1,10 +1,10 @@
-<?php namespace Brainspin\Novashopengine\Resources;
+<?php namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Api\ListRequestBuilder;
-use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
-use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Traits\HasShopEngineFields;
-use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;
+use ShopEngine\Nova\Api\ListRequestBuilder;
+use ShopEngine\Nova\Contracts\ShopEngineResourceInterface;
+use ShopEngine\Nova\Models\ShopEngineModel;
+use ShopEngine\Nova\Traits\HasShopEngineFields;
+use ShopEngine\Nova\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Authorizable;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -80,7 +80,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param array $orderings
      * @param string $withTrashed
      *
-     * @return \Brainspin\Novashopengine\Api\ListRequestBuilder
+     * @return \ShopEngine\Nova\Api\ListRequestBuilder
      */
 
     public static function buildIndexQuery(

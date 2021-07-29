@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Structs\Api;
+namespace ShopEngine\Nova\Structs\Api;
 
 abstract class RequestStruct {
 

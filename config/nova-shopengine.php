@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'nova_shopengine_interface' => 'Brainspin\Novashopengine\Contracts\NovaShopEngineInterface',
+    'nova_shopengine_interface' => 'ShopEngine\Nova\Contracts\NovaShopEngineInterface',
 ];

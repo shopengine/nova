@@ -1,8 +1,7 @@
 <?php
+namespace ShopEngine\Nova\Contracts;
 
-namespace Brainspin\Novashopengine\Contracts;
-
-use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
+use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
 
 interface ShopEnginePackageInterface {
 

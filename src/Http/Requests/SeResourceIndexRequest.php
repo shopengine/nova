@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Http\Requests;
+namespace ShopEngine\Nova\Http\Requests;
 
 use Laravel\Nova\Http\Requests\CountsResources;
 use Laravel\Nova\Http\Requests\NovaRequest;

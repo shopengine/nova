@@ -1,8 +1,8 @@
 <?php
 
-namespace Brainspin\Novashopengine\Resources;
+namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Models\PaymentMethodModel;
+use ShopEngine\Nova\Models\PaymentMethodModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;

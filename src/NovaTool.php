@@ -1,18 +1,18 @@
 <?php
 
-namespace Brainspin\Novashopengine;
+namespace ShopEngine\Nova;
 
-use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
-use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
-use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
-use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
-use Brainspin\Novashopengine\Traits\UseNovaTranslations;
+use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
+use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
+use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
+use ShopEngine\Nova\Traits\UseNovaTranslations;
 use Illuminate\Support\Arr;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
 
-class Novashopengine extends Tool
+class NovaTool extends Tool
 {
     use UseNovaTranslations;
 

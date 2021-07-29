@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainspin\Novashopengine\Services;
+namespace ShopEngine\Nova\Services;
 
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;

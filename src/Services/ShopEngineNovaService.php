@@ -1,5 +1,5 @@
 <?php
-namespace Brainspin\Novashopengine\Services;
+namespace ShopEngine\Nova\Services;
 
 use SSB\Api\Client;
 use SSB\Api\ClientFactory;

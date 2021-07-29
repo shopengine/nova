@@ -1,12 +1,12 @@
-<?php namespace Brainspin\Novashopengine\Resources;
+<?php namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Fields\Address;
-use Brainspin\Novashopengine\Fields\PurchaseArticles;
-use Brainspin\Novashopengine\Fields\PurchaseCodes;
-use Brainspin\Novashopengine\Fields\PurchaseManualJTL;
-use Brainspin\Novashopengine\Filter\PurchaseStatusFilter;
-use Brainspin\Novashopengine\Models\PurchaseModel;
-use Brainspin\Novashopengine\Services\ConvertMoney;
+use ShopEngine\Nova\Fields\Address;
+use ShopEngine\Nova\Fields\PurchaseArticles;
+use ShopEngine\Nova\Fields\PurchaseCodes;
+use ShopEngine\Nova\Fields\PurchaseManualJTL;
+use ShopEngine\Nova\Filter\PurchaseStatusFilter;
+use ShopEngine\Nova\Models\PurchaseModel;
+use ShopEngine\Nova\Services\ConvertMoney;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Brainspin\Novashopengine\Resources;
+namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Fields\CodepoolLink;
-use Brainspin\Novashopengine\Fields\CodeValidation;
-use Brainspin\Novashopengine\Fields\ShopEngineModel;
-use Brainspin\Novashopengine\Filter\ActiveCodes;
-use Brainspin\Novashopengine\Models\CodeModel;
+use ShopEngine\Nova\Fields\CodepoolLink;
+use ShopEngine\Nova\Fields\CodeValidation;
+use ShopEngine\Nova\Fields\ShopEngineModel;
+use ShopEngine\Nova\Filter\ActiveCodes;
+use ShopEngine\Nova\Models\CodeModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Boolean;

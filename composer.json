@@ -1,5 +1,5 @@
 {
-    "name": "brainspin/shopengine-nova",
+    "name": "shopengine/nova",
     "description": "Shopengine Nova Integration",
     "keywords": [
         "laravel",
@@ -8,20 +8,18 @@
     "license": "MIT",
     "require": {
         "php": ">=7.3.0",
-        "brainspin/shopengine-nova": "*",
-        "brainspin/shopengine-nova-stats": "*",
-        "brainspin/client-php": "dev-master",
+        "shopengine/client-php": "^4.0.4",
         "optimistdigital/nova-translations-loader": "^3.1.2"
     },
     "autoload": {
         "psr-4": {
-            "Brainspin\\Novashopengine\\": "src/"
+            "ShopEngine\\Nova\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Brainspin\\Novashopengine\\PackageServiceProvider"
+                "ShopEngine\\Nova\\PackageServiceProvider"
             ]
         }
     },

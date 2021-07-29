@@ -1,12 +1,12 @@
 <?php
 
-namespace Brainspin\Novashopengine\Resources;
+namespace ShopEngine\Nova\Resources;
 
-use Brainspin\Novashopengine\Fields\Money;
-use Brainspin\Novashopengine\Fields\ShippingCostOptions;
-use Brainspin\Novashopengine\Fields\ShippingCostValidations;
-use Brainspin\Novashopengine\Models\ShippingCostModel;
-use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
+use ShopEngine\Nova\Fields\Money;
+use ShopEngine\Nova\Fields\ShippingCostOptions;
+use ShopEngine\Nova\Fields\ShippingCostValidations;
+use ShopEngine\Nova\Models\ShippingCostModel;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
