@@ -60,6 +60,14 @@ final class NavigationGroupStruct {
         return $this->showTitle;
     }
 
+    /**
+     * @param array $itemStructs
+     */
+    public function addItems(array $itemStructs)
+    {
+        $this->items = $this->items->merge($itemStructs);
+    }
+
     public function getAvailableGroup(array $availableResources) : ?NavigationGroupStruct
     {
         $items = $this->items->filter(

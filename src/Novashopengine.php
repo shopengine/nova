@@ -4,6 +4,7 @@ namespace Brainspin\Novashopengine;
 
 use Brainspin\Novashopengine\Contracts\ShopEnginePackageInterface;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
+use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
 use Brainspin\Novashopengine\Traits\UseNovaTranslations;
 use Illuminate\Support\Arr;
@@ -52,7 +53,23 @@ class Novashopengine extends Tool
             )
         );
 
-        return $navigationData;
+        // Merge Groups
+        $mergedData = null;
+        foreach ($navigationData as $struct) {
+            if (!$mergedData) {
+                $mergedData = $struct;
+                continue;
+            }
+            $mergedData = $mergedData->mergeWith($struct);
+        }
+
+        if (!$mergedData) {
+            return $navigationData;
+        }
+
+        return [
+            new NavigationStruct($mergedData->getGroups()->toArray())
+        ];
     }
 
     private function getShopengineProviders() : array {
