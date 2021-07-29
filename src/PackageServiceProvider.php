@@ -42,8 +42,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         Nova::resources(self::ShopEngineResources());
 
         // intercept nova request
-        if ($this->isSeResourceRequest())
-        {
+        if ($this->isSeResourceRequest()) {
             app()->bind(ResourceIndexRequest::class, SeResourceIndexRequest::class);
         }
 
@@ -134,8 +133,9 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
     private function isSeResourceRequest() : bool
     {
-        $request = app(NovaRequest::class);
+        $request = NovaRequest::createFrom(request());
         $resource = $request->viaResource();
+
 
         if (is_null($resource) && $request->segment(1) === 'nova-api') {
             $resourceString = $request->segment(2);

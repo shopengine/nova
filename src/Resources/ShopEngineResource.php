@@ -56,9 +56,9 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
-    public function serializeForDetail(NovaRequest $request)
+    public function serializeForDetail(NovaRequest $request, Resource $resource = null)
     {
-        $serialized = parent::serializeForDetail($request);
+        $serialized = parent::serializeForDetail($request, $resource);
         $seModel = null;
         if (!empty($serialized['fields'])) {
             $seModel = (new ShopEngineModel($serialized['fields'][0]->resource->model))->jsonSerialize();
