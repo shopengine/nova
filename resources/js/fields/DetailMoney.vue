@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    import helper from '../helper'
+import helper from '../helper'
 
-    export default {
+export default {
         props: ['resource', 'resourceName', 'resourceId', 'field'],
         computed: {
             reformattedField() {

@@ -56,9 +56,10 @@
 </template>
 
 <script>
-    import ShippingCostOptionCreateModal from '../components/Modals/ShippingCostOptionCreateModal'
-    import helper from '../helper'
-    export default {
+import ShippingCostOptionCreateModal from '../components/Modals/ShippingCostOptionCreateModal'
+import helper from '../helper'
+
+export default {
         components: {ShippingCostOptionCreateModal},
         props: ['resource', 'resourceName', 'resourceId', 'field'],
         data() {

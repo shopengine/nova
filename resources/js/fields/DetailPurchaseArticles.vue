@@ -28,9 +28,9 @@
 </template>
 
 <script>
-    import helper from '../helper'
+import helper from '../helper'
 
-    export default {
+export default {
         props: ['field'],
         methods: {
             articleTotalPrice(article) {

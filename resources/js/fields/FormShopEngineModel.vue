@@ -28,9 +28,9 @@
 </template>
 
 <script>
-    import {FormField, HandlesValidationErrors} from 'laravel-nova'
+import {FormField, HandlesValidationErrors} from 'laravel-nova'
 
-    export default {
+export default {
         mixins: [FormField, HandlesValidationErrors],
 
         props: ['resourceName', 'resourceId', 'field'],

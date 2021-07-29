@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Traits;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Nova;
 use OptimistDigital\NovaTranslationsLoader\LoadsNovaTranslations;
 

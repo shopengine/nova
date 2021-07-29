@@ -2,8 +2,6 @@
 
 use Brainspin\Novashopengine\Api\ListRequestBuilder;
 use Brainspin\Novashopengine\Contracts\ShopEngineResourceInterface;
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsStruct;
 use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Brainspin\Novashopengine\Traits\HasShopEngineFields;
 use Brainspin\Novashopengine\Traits\UseDynamicResourceModel;

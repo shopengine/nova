@@ -1,8 +1,6 @@
 <?php
 namespace Brainspin\Novashopengine\Services;
 
-use App\Models\ShopSetting;
-
 use SSB\Api\Client;
 use SSB\Api\ClientFactory;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;
@@ -25,7 +23,7 @@ class ShopEngineNovaService {
      * @return mixed
      * @throws Exception
      */
-    public function settings(): ShopSetting
+    public function settings(): ShopEngineSettingsInterface
     {
         return $this->current()->settings;
     }

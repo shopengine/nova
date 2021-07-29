@@ -2,8 +2,8 @@
 
 namespace Brainspin\Novashopengine\Http\Middleware;
 
-use Laravel\Nova\Nova;
 use Brainspin\Novashopengine\Novashopengine;
+use Laravel\Nova\Nova;
 
 class Authorize
 {

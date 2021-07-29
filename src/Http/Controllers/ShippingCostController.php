@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Http\Controllers;
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ShippingCostController extends ShopEngineNovaController

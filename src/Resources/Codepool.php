@@ -2,17 +2,15 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Filter\CodepoolArchive;
 use Brainspin\Novashopengine\Fields\CodepoolActions;
-use Brainspin\Novashopengine\Fields\CodepoolCodes;
 use Brainspin\Novashopengine\Fields\CodepoolStatistics;
+use Brainspin\Novashopengine\Filter\CodepoolArchive;
 use Brainspin\Novashopengine\Models\CodepoolModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Panel;
 
 class Codepool extends ShopEngineResource
 {

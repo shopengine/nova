@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
 use Brainspin\Novashopengine\Fields\CodepoolLink;
 use Brainspin\Novashopengine\Fields\CodeValidation;
 use Brainspin\Novashopengine\Fields\ShopEngineModel;
@@ -16,7 +15,6 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Panel;
 
 class Code extends ShopEngineResource
 {

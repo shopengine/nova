@@ -9,7 +9,6 @@ use Brainspin\Novashopengine\Resources;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationGroupStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationItemStruct;
 use Brainspin\Novashopengine\Structs\Navigation\NavigationStruct;
-use Brainspin\Novashopengine\Traits\UseNovaTranslations;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;

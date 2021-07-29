@@ -78,7 +78,7 @@
 
             <div class="pb-4">
                 <label>Email:</label>
-                
+
                 <input
                         type="email"
                         class="w-full form-control form-input form-input-bordered mt-2"
@@ -95,9 +95,9 @@
 </template>
 
 <script>
-    import {FormField, HandlesValidationErrors} from 'laravel-nova'
+import {FormField, HandlesValidationErrors} from 'laravel-nova'
 
-    export default {
+export default {
         mixins: [FormField, HandlesValidationErrors],
 
         props: ['resourceName', 'resourceId', 'field'],

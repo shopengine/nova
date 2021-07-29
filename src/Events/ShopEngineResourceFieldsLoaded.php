@@ -2,10 +2,8 @@
 
 namespace Brainspin\Novashopengine\Events;
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
-use Brainspin\Novashopengine\Resources\ShopEngineResource;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Laravel\Nova\Resource;
 
 class ShopEngineResourceFieldsLoaded

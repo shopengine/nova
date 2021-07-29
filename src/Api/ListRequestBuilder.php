@@ -2,7 +2,6 @@
 namespace Brainspin\Novashopengine\Api;
 
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Brainspin\Novashopengine\Resources\Purchase;
 use Brainspin\Novashopengine\Structs\Api\ListRequestStruct;
 use Brainspin\Novashopengine\Structs\Api\RequestFilterStruct;
@@ -10,7 +9,6 @@ use Illuminate\Container\Container;
 use Illuminate\Pagination\Paginator;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\FilterDecoder;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ListRequestBuilder extends RequestBuilder
 {

@@ -5,8 +5,8 @@ namespace Brainspin\Novashopengine\Http\Controllers;
 use Brainspin\Novashopengine\Contracts\NovaShopEngineInterface;
 use Brainspin\Novashopengine\Services\ConfiguredClassFactory;
 use Illuminate\Routing\Controller;
-use SSB\Api\Contracts\ShopEngineSettingsInterface;
 use SSB\Api\Client;
+use SSB\Api\Contracts\ShopEngineSettingsInterface;
 use SSB\Api\Model\Code;
 
 class ShopEngineNovaController extends Controller

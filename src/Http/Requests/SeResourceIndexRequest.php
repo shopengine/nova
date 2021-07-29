@@ -6,7 +6,6 @@ use Laravel\Nova\Http\Requests\CountsResources;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\QueriesResources;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-use Laravel\Nova\Query\Builder as QueryBuilder;
 
 class SeResourceIndexRequest extends ResourceIndexRequest
 {

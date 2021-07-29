@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Events\ShopEngineResourceFieldsLoaded;
 use Brainspin\Novashopengine\Fields\Money;
 use Brainspin\Novashopengine\Fields\ShippingCostOptions;
 use Brainspin\Novashopengine\Fields\ShippingCostValidations;

@@ -1,19 +1,18 @@
 <?php namespace Brainspin\Novashopengine\Resources;
 
-use Brainspin\Novashopengine\Services\ConvertMoney;
 use Brainspin\Novashopengine\Fields\Address;
 use Brainspin\Novashopengine\Fields\PurchaseArticles;
 use Brainspin\Novashopengine\Fields\PurchaseCodes;
 use Brainspin\Novashopengine\Fields\PurchaseManualJTL;
 use Brainspin\Novashopengine\Filter\PurchaseStatusFilter;
 use Brainspin\Novashopengine\Models\PurchaseModel;
+use Brainspin\Novashopengine\Services\ConvertMoney;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Scout\Searchable;
 use Money\Money;
 use SSB\Api\Model\Purchase as ApiPurchase;
 

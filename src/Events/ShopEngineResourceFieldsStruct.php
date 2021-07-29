@@ -2,7 +2,6 @@
 
 namespace Brainspin\Novashopengine\Events;
 
-use Brainspin\Novashopengine\Models\ShopEngineModel;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Resource;
 
