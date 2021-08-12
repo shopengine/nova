@@ -1,6 +1,6 @@
 <?php namespace ShopEngine\Nova\Resources;
 
-use ShopEngine\Nova\Models\PurchaseModel;
+use ShopEngine\Nova\Models\ConditionSetModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
@@ -15,7 +15,7 @@ class ConditionSet extends ShopEngineResource
 
     public static function getModel() : string
     {
-        return PurchaseModel::class;
+        return ConditionSetModel::class;
     }
 
     public static function getShopEngineEndpoint(): string
@@ -23,11 +23,24 @@ class ConditionSet extends ShopEngineResource
         return 'conditionset';
     }
 
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
+
     public function fields(Request $request)
     {
-        return [
-            Text::make('Name', 'name'),
+        return $this->appendShopEngineFields([
+            Text::make('Name', 'name')->rules('required')->required(),
             Number::make('Version ID', 'versionId')
-        ];
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->readonly()
+        ]);
     }
 }

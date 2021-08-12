@@ -5,6 +5,7 @@ use SSB\Api\Client;
 use SSB\Api\ClientFactory;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;
 
+// @todo add defaults
 class ShopEngineNovaService {
 
     public function __construct()

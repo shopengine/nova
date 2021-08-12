@@ -29,7 +29,7 @@ class PaymentMethod extends ShopEngineResource
 
     public function fields(\Illuminate\Http\Request $request)
     {
-        return [
+        return $this->appendShopEngineFields([
             Text::make('Name', 'name')
                 ->required(true)->rules('required'),
             Text::make('Type', 'type')->readonly(),
@@ -49,7 +49,7 @@ class PaymentMethod extends ShopEngineResource
                 ->step(1)
                 ->required(true)->rules('required')
                 ->sortable()
-        ];
+        ]);
     }
 
     public static function authorizedToCreate(Request $request)

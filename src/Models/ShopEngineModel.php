@@ -19,6 +19,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public static $apiModel;
 
     public $seModel;
+    public $useSwaggerTypesOnUpsert = true;
 
     /**
      * ShopEngineModel constructor.
@@ -130,6 +131,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     }
 
     /**
+     * @todo fix this classes
      * @param $obj
      *
      * @return array|\SSB\Api\Model\Article|string

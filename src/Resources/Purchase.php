@@ -36,7 +36,7 @@ class Purchase extends ShopEngineResource
 
     public function fields(\Illuminate\Http\Request $request)
     {
-        return [
+        return $this->appendShopEngineFields([
             Text::make('Bestellnummer', 'orderId')
                 ->sortable(true),
             DateTime::make('Bestelldatum', 'orderDate')
@@ -99,7 +99,7 @@ class Purchase extends ShopEngineResource
 
             KeyValue::make('Weitere Informationen', 'paymentInformation')
                 ->onlyOnDetail()
-        ];
+        ]);
     }
 
     public function filters(Request $request)

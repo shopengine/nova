@@ -36,6 +36,7 @@ class UpdateRequestBuilder extends RequestBuilder
             $seRequest['code'] = '';
         }
 
+
         return $seRequest;
     }
 }

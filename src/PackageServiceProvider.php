@@ -46,6 +46,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             app()->bind(ResourceIndexRequest::class, SeResourceIndexRequest::class);
         }
 
+        // default fields
         Field::macro('default', function ($default) {
             return $this->resolveUsing(function ($value) use ($default) {
                 return $value ?: $default;

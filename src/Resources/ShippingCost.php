@@ -115,7 +115,7 @@ class ShippingCost extends ShopEngineResource
             ]),
         ];
 
-        return $fields;
+        return $this->appendShopEngineFields($fields);
     }
 
 
