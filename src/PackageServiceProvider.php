@@ -67,9 +67,6 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             ], 'shopengine-nova-config');
             return;
         }
-
-        $configPath = __DIR__ . '/../config/nova-shopengine.php';
-        $this->mergeConfigFrom($configPath, 'nova-shopengine');
     }
 
     protected function routes() : void
@@ -91,6 +88,8 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
     public function register()
     {
+        $configPath = __DIR__ . '/../config/nova-shopengine.php';
+        $this->mergeConfigFrom($configPath, 'nova-shopengine');
     }
 
     public static function getShopengineNavigation() : ?NavigationStruct {
