@@ -3,6 +3,7 @@
 use ShopEngine\Nova\Api\ListRequestBuilder;
 use ShopEngine\Nova\Contracts\ShopEngineResourceInterface;
 use ShopEngine\Nova\Models\ShopEngineModel;
+use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
 use ShopEngine\Nova\Traits\HasShopEngineFields;
 use ShopEngine\Nova\Traits\UseDynamicResourceModel;
 use Illuminate\Http\Request;
@@ -91,6 +92,15 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         array $orderings = [],
         $withTrashed = TrashedStatus::DEFAULT)
     {
-        return new ListRequestBuilder($request);
+
+        if ($request->has('id-eq')) {
+            $filters[] =new RequestFilterStruct(
+                'id',
+                $request->get('id-eq'),
+                'eq'
+            );
+        }
+
+        return new ListRequestBuilder($request, $filters);
     }
 }

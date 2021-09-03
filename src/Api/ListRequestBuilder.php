@@ -2,6 +2,7 @@
 namespace ShopEngine\Nova\Api;
 
 
+use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Resources\Purchase;
 use ShopEngine\Nova\Structs\Api\ListRequestStruct;
 use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
@@ -10,11 +11,24 @@ use Illuminate\Pagination\Paginator;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\FilterDecoder;
 
+/**
+ * @property array|RequestFilterStruct $filters
+ */
+
 class ListRequestBuilder extends RequestBuilder
 {
 
     const PER_PAGE_COUNT = 25;
 
+    public function __construct(
+        NovaRequest $request,
+        array $filters = []
+    )
+    {
+        parent::__construct($request);
+        $this->request = $request;
+        $this->filters = $filters;
+    }
     /**
      * Paginate the given query into a simple paginator.
      *
@@ -119,6 +133,10 @@ class ListRequestBuilder extends RequestBuilder
                     );
                 }
             }
+        }
+
+        foreach ($this->filters as $filter) {
+            $listRequest->addFilter($filter);
         }
 
         if ($this->request->has('filters')) {
