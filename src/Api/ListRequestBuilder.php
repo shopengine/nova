@@ -136,7 +136,9 @@ class ListRequestBuilder extends RequestBuilder
         }
 
         foreach ($this->filters as $filter) {
-            $listRequest->addFilter($filter);
+            if ($filter instanceof RequestFilterStruct) {
+                $listRequest->addFilter($filter);
+            }
         }
 
         if ($this->request->has('filters')) {

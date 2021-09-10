@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Http\Requests;
 
+use Laravel\Nova\Contracts\QueryBuilder;
 use Laravel\Nova\Http\Requests\CountsResources;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\QueriesResources;
@@ -18,6 +19,8 @@ class SeResourceIndexRequest extends ResourceIndexRequest
      */
     public function searchIndex()
     {
+
+        // @todo may use custom querybuilder for se
         $request = app(NovaRequest::class);
 
         $paginator = $this->paginator(
@@ -26,7 +29,8 @@ class SeResourceIndexRequest extends ResourceIndexRequest
 
         return [
             $paginator,
-            count($paginator->items())
+            count($paginator->items()),
+            false
         ];
     }
 

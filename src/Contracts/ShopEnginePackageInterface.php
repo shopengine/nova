@@ -1,4 +1,5 @@
 <?php
+
 namespace ShopEngine\Nova\Contracts;
 
 use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
