@@ -33,6 +33,16 @@ class ConditionSet extends ShopEngineResource
         return false;
     }
 
+    public static function label()
+    {
+        return __('se.conditionsets');
+    }
+
+    public static function singularLabel()
+    {
+        return __('se.conditionset');
+    }
+
     public function fields(Request $request)
     {
         return $this->appendShopEngineFields([

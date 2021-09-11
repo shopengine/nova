@@ -34,6 +34,16 @@ class Purchase extends ShopEngineResource
         return 'purchase';
     }
 
+    public static function label()
+    {
+        return __('se.orders');
+    }
+
+    public static function singularLabel()
+    {
+        return __('se.order');
+    }
+
     public function fields(\Illuminate\Http\Request $request)
     {
         return $this->appendShopEngineFields([
@@ -52,7 +62,7 @@ class Purchase extends ShopEngineResource
                 ApiPurchase::STATUS_SHIPPED => 'success',
                 ApiPurchase::STATUS_CANCELED => 'danger',
             ]),
-            Badge::make('JTL Status', 'originStatus')->map([
+            Badge::make('ERP Status', 'originStatus')->map([
                 ApiPurchase::ORIGIN_STATUS_EMPTY => 'info',
                 ApiPurchase::ORIGIN_STATUS_READY_TO_IMPORT => 'info',
                 ApiPurchase::ORIGIN_STATUS_IMPORTED => 'success',
@@ -60,7 +70,7 @@ class Purchase extends ShopEngineResource
                 ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
             ]),
 
-            PurchaseManualJTL::make('Manuellen import für JTL freigeben')
+            PurchaseManualJTL::make('Manuellen Import für ERP freigeben')
                 ->onlyOnDetail(),
 
             Text::make('Zahlart', 'paymentMethod'),
