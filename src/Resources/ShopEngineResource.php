@@ -1,4 +1,6 @@
-<?php namespace ShopEngine\Nova\Resources;
+<?php
+
+namespace ShopEngine\Nova\Resources;
 
 use ShopEngine\Nova\Api\ListRequestBuilder;
 use ShopEngine\Nova\Contracts\ShopEngineResourceInterface;
