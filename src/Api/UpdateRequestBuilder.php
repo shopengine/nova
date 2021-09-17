@@ -10,7 +10,7 @@ class UpdateRequestBuilder extends RequestBuilder
 
     public function save(ShopEngineModel $model) {
         $seRequest = $this->buildFromModel($model);
-        $this->getClient()->patch($this->getShopEnginePath().'/'.$this->request->resourceId, $seRequest);
+        $this->getClient()->patch($this->getShopEnginePath().'/'.$model->id, $seRequest);
     }
 
     public function buildFromModel(ShopEngineModel $model)

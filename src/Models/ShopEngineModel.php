@@ -196,10 +196,11 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function first()
     {
         $request = app(NovaRequest::class);
-        $builder = new LoadRequestBuilder($request);
+        $builder = new LoadRequestBuilder($request->resource());
 
         return $builder->loadItem(
-            $builder->buildFromRequest()
+            $builder->buildFromRequest($request),
+            $request->resource()
         );
     }
 
@@ -212,12 +213,12 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         $request = app(NovaRequest::class);
 
         if ($request->get('editMode') === 'update') {
-            (new UpdateRequestBuilder($request))->save($this);
+            (new UpdateRequestBuilder($request->resource()))->save($this);
             return;
         }
 
         if ($request->get('editMode') === 'create') {
-            (new StoreRequestBuilder($request))->save($this);
+            (new StoreRequestBuilder($request->resource()))->save($this);
             return;
         }
     }
@@ -255,7 +256,8 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      * @return mixed
      */
     public function newQuery() {
-        return null;
+        $request = app(NovaRequest::class);
+        return new LoadRequestBuilder($request->resource());
     }
 
     public function getUpdatedAtColumn() {
@@ -329,5 +331,25 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function getKey()
     {
         return '0';
+    }
+
+    protected function forwardCallTo($object, $method, $parameters)
+    {
+        try {
+            return $object->{$method}(...$parameters);
+        } catch (Error | BadMethodCallException $e) {
+            $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
+
+            if (! preg_match($pattern, $e->getMessage(), $matches)) {
+                throw $e;
+            }
+
+            if ($matches['class'] != get_class($object) ||
+                $matches['method'] != $method) {
+                throw $e;
+            }
+
+            static::throwBadMethodCallException($method);
+        }
     }
 }

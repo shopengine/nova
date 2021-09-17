@@ -18,12 +18,11 @@ use Laravel\Nova\FilterDecoder;
 class ListRequestBuilder extends RequestBuilder
 {
     public function __construct(
-        NovaRequest $request,
+        string $resource,
         array $filters = []
     )
     {
-        parent::__construct($request);
-        $this->request = $request;
+        parent::__construct($resource);
         $this->filters = $filters;
     }
     /**
@@ -42,10 +41,16 @@ class ListRequestBuilder extends RequestBuilder
         $page = null
     )
     {
-        $perPage = $this->request->perPage();
+        $request = app(NovaRequest::class);
+
+        //$perPage = request()->perPage();
         $page = $page ?: Paginator::resolveCurrentPage($pageName);
 
-        $listRequest = $this->buildFromRequest($perPage);
+        $listRequest = $this->buildFromRequest(
+            $request,
+            $perPage
+        );
+
         return $this->simplePaginator($this->loadItems($listRequest), $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => $pageName,
@@ -82,7 +87,7 @@ class ListRequestBuilder extends RequestBuilder
             $listRequest->createApiRequest()
         );
 
-        $modelClass = $this->request->resource()::getModel();
+        $modelClass = $this->resource::getModel();
 
         return collect($rawResponse)->map(function ($seModel) use ($modelClass) {
             return new $modelClass($seModel);
@@ -99,28 +104,29 @@ class ListRequestBuilder extends RequestBuilder
      * @return array
      */
     public function buildFromRequest(
+        NovaRequest $request,
         string $perPage = "25"
     ): ListRequestStruct
     {
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
-        $resource = $this->request->resource();
+        $resource = $request->resource();
 
         $listRequest = new ListRequestStruct();
         $listRequest->setPageSize($perPage);
 
-        $page = $this->request->get('page') ? $this->request->get('page') - 1 : 0;
+        $page = $request->get('page') ? $request->get('page') - 1 : 0;
         $listRequest->setPage($page);
 
-        $listRequest->setSortDescending($this->request->get('orderByDirection') === 'desc');
-        if ($this->request->get('orderBy')) {
-            $listRequest->setSort($this->request->get('orderBy'));
+        $listRequest->setSortDescending($request->get('orderByDirection') === 'desc');
+        if ($request->get('orderBy')) {
+            $listRequest->setSort($request->get('orderBy'));
         } else {
             $listRequest->setSort($resource::getDefaultSort());
         }
 
-        if ($this->request->has('search')) {
+        if ($request->has('search')) {
             if ($resource::getFirstSearchKey()) {
-                $searchTerm = $this->request->get('search');
+                $searchTerm = $request->get('search');
                 if ($searchTerm) {
                     $listRequest->addFilter(
                         new RequestFilterStruct(
@@ -139,15 +145,15 @@ class ListRequestBuilder extends RequestBuilder
             }
         }
 
-        if ($this->request->has('filters')) {
+        if ($request->has('filters')) {
             $filters = (new FilterDecoder(
-                $this->request->get('filters'),
-                $this->request->newResource()->availableFilters($this->request)
+                $request->get('filters'),
+                $request->newResource()->availableFilters($request)
             ))->filters();
 
             $filterParams = [];
             foreach ($filters as $applyFilterObj) {
-                $filterParams = $applyFilterObj->filter->apply($this->request, $filterParams, $applyFilterObj->value);
+                $filterParams = $applyFilterObj->filter->apply($request, $filterParams, $applyFilterObj->value);
             }
 
             foreach ($filterParams as $field => $value) {
@@ -169,7 +175,7 @@ class ListRequestBuilder extends RequestBuilder
             ));
         }
 
-        $indexFields = $this->request->newResource()->indexFields($this->request);
+        $indexFields = $request->newResource()->indexFields($request);
         $properties =  $indexFields->map(fn(Field $field) => $field->attribute)
             ->add($resource::$id)
             ->toArray();
@@ -185,7 +191,8 @@ class ListRequestBuilder extends RequestBuilder
      */
     public function count() : int
     {
-        $listRequest = $this->buildFromRequest($this->request);
+        $request = app(NovaRequest::class);
+        $listRequest = $this->buildFromRequest($request);
 
         return $this->getClient()->get(
             $this->getShopEnginePath() . '/count',

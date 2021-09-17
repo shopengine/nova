@@ -2,6 +2,8 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use App\Nova\Actions\DuplicateFlatAction;
+use ShopEngine\Nova\Actions\CodepoolCodeMassAssign;
 use ShopEngine\Nova\Fields\CodepoolActions;
 use ShopEngine\Nova\Fields\CodepoolStatistics;
 use ShopEngine\Nova\Filter\CodepoolArchive;
@@ -69,6 +71,13 @@ class Codepool extends ShopEngineResource
     {
         return [
             new CodepoolArchive()
+        ];
+    }
+
+    public function actions(Request $request)
+    {
+        return [
+            (new CodepoolCodeMassAssign())->onlyOnDetail()
         ];
     }
 }

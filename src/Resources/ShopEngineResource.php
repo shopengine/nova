@@ -94,13 +94,13 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     {
 
         if ($request->has('id-eq')) {
-            $filters[] =new RequestFilterStruct(
+            $filters[] = new RequestFilterStruct(
                 'id',
                 $request->get('id-eq'),
                 'eq'
             );
         }
 
-        return new ListRequestBuilder($request, $filters);
+        return new ListRequestBuilder($request->resource(), $filters);
     }
 }

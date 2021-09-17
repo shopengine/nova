@@ -2,19 +2,15 @@
 namespace ShopEngine\Nova\Api;
 
 use ShopEngine\Nova\Services\ConfiguredClassFactory;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Client;
 
 abstract class RequestBuilder {
 
-    /**
-     * @var \Laravel\Nova\Http\Requests\NovaRequest
-     */
-    protected NovaRequest $request;
+    protected string $resource;
 
-    public function __construct(NovaRequest $request)
+    public function __construct(string $resource)
     {
-        $this->request = $request;
+        $this->resource = $resource;
     }
 
     /**
@@ -23,7 +19,7 @@ abstract class RequestBuilder {
      * @return string
      */
     protected function getShopEnginePath() : string {
-        return $this->request->resource()::getShopEngineEndpoint();
+        return $this->resource::getShopEngineEndpoint();
     }
 
     /**
@@ -72,4 +68,18 @@ abstract class RequestBuilder {
 
         return null;
     }
+
+    public function when($value, $callback, $default = null)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        } elseif ($default) {
+            return $default($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
+
+
 }
