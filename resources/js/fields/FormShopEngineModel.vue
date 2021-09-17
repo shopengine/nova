@@ -30,69 +30,74 @@
 <script>
 import {FormField, HandlesValidationErrors} from 'laravel-nova'
 
+const ResourceRequestLimit = 2500
+
 export default {
-        mixins: [FormField, HandlesValidationErrors],
+    mixins: [FormField, HandlesValidationErrors],
 
-        props: ['resourceName', 'resourceId', 'field'],
+    props: ['resourceName', 'resourceId', 'field'],
 
-        data() {
-            return {
-                options: [],
-                selectedOption: null,
-                search: '',
-            }
+    data() {
+        return {
+            options: [],
+            selectedOption: null,
+            search: '',
+        }
+    },
+    methods: {
+        fill(formData) {
+            formData.append(this.field.attribute, this.value)
         },
-        created() {
-            Nova.request().get(`/nova-api/${this.field.uriKey}`, {}).then(response => {
-                if (response.headers['content-type'] !== 'application/json') {
-                    console.error(response)
-                    return
-                }
 
-                this.options = response.data.resources
-                    .map((resource) => {
-                        const value = this.field.valueFieldName ?
-                            resource.fields.find((field) => field.attribute === this.field.valueFieldName).value :
-                            resource.id.value
+        performSearch(event) {
+            this.search = event
+        },
 
-                        return {
-                            label: resource.fields.find((field) => field.attribute === this.field.labelFieldName).value,
-                            value
-                        }
-                    })
-
-                this.selectedOption = this.options
-                    .find((option) => option.value == this.value)
+        selectOption(option) {
+            this.selectedOption = option
+            this.value = option.value
+        },
+    },
+    computed: {
+        filteredOptions() {
+            return this.options.filter(option => {
+                return (
+                    option.label.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                )
             })
         },
-        methods: {
-            fill(formData) {
-                formData.append(this.field.attribute, this.value)
-            },
-
-            performSearch(event) {
-                this.search = event
-            },
-
-            selectOption(option) {
-                this.selectedOption = option
-                this.value = option.value
-            },
+        placeholder() {
+            return this.field.placeholder || this.__('Choose an option')
         },
-        computed: {
-            filteredOptions() {
-                return this.options.filter(option => {
-                    return (
-                        option.label.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                    )
-                })
-            },
-            placeholder() {
-                return this.field.placeholder || this.__('Choose an option')
-            },
-            shop() {
-                return Nova.config.shopEngineIdentifier
+        shop() {
+            return Nova.config.shopEngineIdentifier
+        }
+    },
+    mounted() {
+        Nova.request().get(`/nova-api/${this.field.uriKey}`, { params: {
+                perPage: ResourceRequestLimit
+            } }).then(response => {
+            if (response.headers['content-type'] !== 'application/json') {
+                console.error(response)
+                return
             }
-        },
-    }
+
+
+            this.options = response.data.resources
+                .map((resource) => {
+                    const value = this.field.valueFieldName ?
+                        resource.fields.find((field) => field.attribute === this.field.valueFieldName).value :
+                        resource.id.value
+
+                    return {
+                        label: resource.fields.find((field) => field.attribute === this.field.labelFieldName).value,
+                        value
+                    }
+                })
+
+            this.selectedOption = this.options
+                .find((option) => option.value == this.value)
+        })
+    },
+}
 </script>

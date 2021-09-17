@@ -12,6 +12,8 @@ class SeResourceIndexRequest extends ResourceIndexRequest
 {
     use CountsResources, QueriesResources;
 
+    const PER_PAGE_COUNT = 25;
+
     /**
      * Get the paginator instance for the index request.
      *
@@ -41,5 +43,14 @@ class SeResourceIndexRequest extends ResourceIndexRequest
                 ? $resource::$perPageViaRelationship
                 : ($request->perPage ?? $resource::perPageOptions()[0])
         );
+    }
+
+    public function perPage()
+    {
+        if ($this->request->has('perPage')) {
+            return $this->request->get('perPage');
+        }
+
+        return static::PER_PAGE_COUNT;
     }
 }
