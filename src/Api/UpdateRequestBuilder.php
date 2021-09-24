@@ -10,7 +10,10 @@ class UpdateRequestBuilder extends RequestBuilder
 
     public function save(ShopEngineModel $model) {
         $seRequest = $this->buildFromModel($model);
-        $this->getClient()->patch($this->getShopEnginePath().'/'.$model->id, $seRequest);
+        $this->getClient()->patch(
+            $this->getEndpoint().'/'.$model->getId(),
+            $seRequest
+        );
     }
 
     public function buildFromModel(ShopEngineModel $model)
@@ -35,7 +38,6 @@ class UpdateRequestBuilder extends RequestBuilder
             $seRequest['quantity'] = intval($model->quantity);
             $seRequest['code'] = '';
         }
-
 
         return $seRequest;
     }

@@ -2,6 +2,7 @@
 
 use ShopEngine\Nova\Api\ListRequestBuilder;
 use ShopEngine\Nova\Contracts\ShopEngineResourceInterface;
+use ShopEngine\Nova\Models\CodeModel;
 use ShopEngine\Nova\Models\ShopEngineModel;
 use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
 use ShopEngine\Nova\Traits\HasShopEngineFields;
@@ -24,6 +25,14 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     public static $globallySearchable = false;
     public static $displayInNavigation = false;
     public static $canImportResource = false;
+
+    public static function getModel() : string { }
+
+    public static function getShopEngineEndpoint(): string
+    {
+        $model = static::getModel();
+        return $model::$apiEndpoint;
+    }
 
     public function getKey() : string
     {
@@ -81,7 +90,6 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param array $orderings
      * @param string $withTrashed
      *
-     * @return \ShopEngine\Nova\Api\ListRequestBuilder
      */
 
     public static function buildIndexQuery(
@@ -101,6 +109,6 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
             );
         }
 
-        return new ListRequestBuilder($request->resource(), $filters);
+        return ListRequestBuilder::fromResource($request->resource(), $filters);
     }
 }

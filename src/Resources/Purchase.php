@@ -29,11 +29,6 @@ class Purchase extends ShopEngineResource
         return PurchaseModel::class;
     }
 
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'purchase';
-    }
-
     public function fields(\Illuminate\Http\Request $request)
     {
         return $this->appendShopEngineFields([

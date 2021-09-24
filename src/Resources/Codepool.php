@@ -2,10 +2,11 @@
 
 namespace ShopEngine\Nova\Resources;
 
-use App\Nova\Actions\DuplicateFlatAction;
+use App\Nova\CodeRedirect;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use ShopEngine\Nova\Actions\CodepoolCodeMassAssign;
-use ShopEngine\Nova\Fields\CodepoolActions;
-use ShopEngine\Nova\Fields\CodepoolStatistics;
 use ShopEngine\Nova\Filter\CodepoolArchive;
 use ShopEngine\Nova\Models\CodepoolModel;
 use Illuminate\Http\Request;
@@ -25,11 +26,6 @@ class Codepool extends ShopEngineResource
     public static function getModel() : string
     {
         return CodepoolModel::class;
-    }
-
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'codepool';
     }
 
     public static function label()
@@ -64,6 +60,8 @@ class Codepool extends ShopEngineResource
                    true => 'danger'
                 ])
                 ->onlyOnDetail(),
+            //\ShopEngine\Nova\Fields\ShopEngineModel::make('Codes','codes')
+            HasMany::make('codes')
         ]);
     }
 

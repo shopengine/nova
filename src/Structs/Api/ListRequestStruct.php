@@ -4,6 +4,7 @@ namespace ShopEngine\Nova\Structs\Api;
 
 class ListRequestStruct extends RequestStruct {
 
+    const ALL_ENTRIES = '99999';
     /**
      * @var string
      */
@@ -40,18 +41,29 @@ class ListRequestStruct extends RequestStruct {
      */
     public function createApiRequest()
     {
-        $request =  [
-            'pageSize' => $this->pageSize,
-            'page' => $this->page,
-            'sort' => ($this->sortDescending ? '-' : '') . $this->sort,
-        ];
+        $request =  [];
+
+        if (isset($this->pageSize)) {
+            $request['pageSize'] = $this->pageSize;
+        }
+
+        if (isset($this->page)) {
+            $request['page'] = $this->page;
+        }
+
+        if (isset($this->sort)) {
+            $request['sort'] = ($this->sortDescending ? '-' : '') . $this->sort;
+        }
 
         if (count($this->properties) > 0) {
             $request['properties'] = join('|',$this->properties);
         }
 
         if (count($this->filters) > 0) {
-            $filters = array_map(fn(RequestFilterStruct $requestFilter) => $requestFilter->getRequest() , $this->filters);
+            $filters = array_map(
+                fn(RequestFilterStruct $requestFilter) => $requestFilter->getRequest(),
+                $this->filters
+            );
 
             foreach ($filters as $filter) {
                 $request += $filter;
@@ -66,6 +78,7 @@ class ListRequestStruct extends RequestStruct {
      */
     public function createCountRequest() : array
     {
+
         $request = $this->createApiRequest();
 
         return array_filter(
@@ -77,6 +90,12 @@ class ListRequestStruct extends RequestStruct {
             ]), ARRAY_FILTER_USE_KEY
         );
     }
+
+    public function withAllEntries() : self {
+        $this->setPageSize(static::ALL_ENTRIES);
+        return $this;
+    }
+
 
     /**
      * @param int $page

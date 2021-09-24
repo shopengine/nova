@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use ShopEngine\Nova\Actions\CodeMassEdit;
 use ShopEngine\Nova\Fields\CodepoolLink;
 use ShopEngine\Nova\Fields\CodeValidation;
 use ShopEngine\Nova\Fields\ShopEngineModel;
@@ -30,10 +31,6 @@ class Code extends ShopEngineResource
         return CodeModel::class;
     }
 
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'code';
-    }
 
     public function fields(Request $request)
     {
@@ -76,17 +73,20 @@ class Code extends ShopEngineResource
 
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
+
             ShopEngineModel::make('Kondition', 'conditionSetVersionId')
                 ->model(ConditionSet::class)
                 ->valueFieldName('versionId')
                 ->labelFieldName('name')
                 ->required(true)->rules('required')
                 ->onlyOnForms(),
+
             ShopEngineModel::make('Codepool', 'codepoolId')
                 ->model(Codepool::class)
                 ->labelFieldName('name')
                 ->required(true)->rules('required')
                 ->onlyOnForms(),
+
             Boolean::make('Versteckt', 'hidden')
                 ->hideFromIndex(),
 
@@ -99,6 +99,13 @@ class Code extends ShopEngineResource
     {
         return [
             new ActiveCodes()
+        ];
+    }
+
+    public function actions(Request $request)
+    {
+        return [
+            resolve(CodeMassEdit::class)
         ];
     }
 }

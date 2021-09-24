@@ -2,6 +2,12 @@
 
 namespace ShopEngine\Nova;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
+use Laravel\Nova\Nova;
 use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
 use ShopEngine\Nova\Http\Middleware\Authorize;
 use ShopEngine\Nova\Http\Requests\SeResourceIndexRequest;
@@ -9,12 +15,6 @@ use ShopEngine\Nova\Resources;
 use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
 use ShopEngine\Nova\Structs\Navigation\NavigationItemStruct;
 use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-use Laravel\Nova\Nova;
 
 class PackageServiceProvider extends ServiceProvider implements ShopEnginePackageInterface
 {
@@ -41,10 +41,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
         Nova::resources(self::ShopEngineResources());
 
-        // intercept nova request
-        if ($this->isSeResourceRequest()) {
-            app()->bind(ResourceIndexRequest::class, SeResourceIndexRequest::class);
-        }
+        $this->registerBindings();
 
         // default fields
         Field::macro('default', function ($default) {
@@ -90,6 +87,12 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
     {
         $configPath = __DIR__ . '/../config/nova-shopengine.php';
         $this->mergeConfigFrom($configPath, 'nova-shopengine');
+    }
+
+    private function registerBindings() {
+        if ($this->isSeResourceRequest()) {
+            app()->bind(ResourceIndexRequest::class, SeResourceIndexRequest::class);
+        }
     }
 
     public static function getShopengineNavigation() : ?NavigationStruct {

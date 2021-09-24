@@ -3,6 +3,7 @@ namespace ShopEngine\Nova\Api;
 
 
 use Laravel\Nova\Http\Requests\NovaRequest;
+use ShopEngine\Nova\Models\ShopEngineModel;
 use ShopEngine\Nova\Resources\Purchase;
 use ShopEngine\Nova\Structs\Api\ListRequestStruct;
 use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
@@ -18,11 +19,11 @@ use Laravel\Nova\FilterDecoder;
 class ListRequestBuilder extends RequestBuilder
 {
     public function __construct(
-        string $resource,
+        ShopEngineModel $model,
         array $filters = []
     )
     {
-        parent::__construct($resource);
+        parent::__construct($model);
         $this->filters = $filters;
     }
     /**
@@ -83,12 +84,11 @@ class ListRequestBuilder extends RequestBuilder
     public function loadItems(ListRequestStruct $listRequest) : array
     {
         $rawResponse = $this->getClient()->get(
-            $this->getShopEnginePath(),
+            $this->getEndpoint(),
             $listRequest->createApiRequest()
         );
 
-        $modelClass = $this->resource::getModel();
-
+        $modelClass = $this->getModelClass();
         return collect($rawResponse)->map(function ($seModel) use ($modelClass) {
             return new $modelClass($seModel);
         })->all();
@@ -195,7 +195,7 @@ class ListRequestBuilder extends RequestBuilder
         $listRequest = $this->buildFromRequest($request);
 
         return $this->getClient()->get(
-            $this->getShopEnginePath() . '/count',
+            $this->getEndpoint() . '/count',
             $listRequest->createCountRequest()
         );
     }

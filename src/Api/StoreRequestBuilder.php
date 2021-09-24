@@ -10,7 +10,7 @@ class StoreRequestBuilder extends RequestBuilder
 
     public function save(ShopEngineModel $model) {
         $seRequest = $this->buildFromModel($model);
-        $this->getClient()->post($this->getShopEnginePath(), $seRequest);
+        $this->getClient()->post($this->getEndpoint(), $seRequest);
     }
 
     public function buildFromModel(ShopEngineModel $model)

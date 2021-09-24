@@ -5,4 +5,5 @@ use SSB\Api\Model\ShippingCost;
 class ShippingCostModel extends ShopEngineModel
 {
     public static $apiModel = ShippingCost::class;
+    public static $apiEndpoint = 'shippingcost';
 }

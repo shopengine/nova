@@ -30,6 +30,4 @@ Nova.booting((Vue, router, store) => {
     Vue.component('form-code-validation', require('./fields/FormCodeValidation'))
 
     Vue.component('form-shop-engine-model', require('./fields/FormShopEngineModel'))
-
-    Vue.component('codepool-code-mass-assign', require('./components/CodepoolCodeMassAssign'))
 })

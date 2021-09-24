@@ -3,12 +3,16 @@
 namespace ShopEngine\Nova\Models;
 
 use ArrayAccess;
+use Illuminate\Support\Traits\ForwardsCalls;
+use ShopEngine\Nova\Api\ListRequestBuilder;
 use ShopEngine\Nova\Api\LoadRequestBuilder;
 use ShopEngine\Nova\Api\StoreRequestBuilder;
 use ShopEngine\Nova\Api\UpdateRequestBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use ShopEngine\Nova\Structs\Api\ListRequestStruct;
+use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
 use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
 use SSB\Api\Model\PaymentInformation;
@@ -17,6 +21,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 {
     public ?ModelInterface $model;
     public static $apiModel;
+    public static $apiEndpoint = null;
 
     public $seModel;
     public $useSwaggerTypesOnUpsert = true;
@@ -32,9 +37,9 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             $model = new static::$apiModel;
         }
 
+        // @todo remove me?
         $this->seModel = $model;
 
-        // @todo needed?
         $this->model = $model;
     }
 
@@ -44,6 +49,12 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function getKeyName(): string
     {
         return isset($this->model::swaggerTypes()['aggregateId']) ? 'aggregateId' : 'id';
+    }
+
+    public function getId() : ?string
+    {
+        $key = $this->getKeyName();
+        return $this->offsetGet($key);
     }
 
     /**
@@ -196,11 +207,10 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function first()
     {
         $request = app(NovaRequest::class);
-        $builder = new LoadRequestBuilder($request->resource());
+        $builder = LoadRequestBuilder::fromResource($request->resource());
 
         return $builder->loadItem(
-            $builder->buildFromRequest($request),
-            $request->resource()
+            $builder->buildFromRequest($request)
         );
     }
 
@@ -213,12 +223,12 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         $request = app(NovaRequest::class);
 
         if ($request->get('editMode') === 'update') {
-            (new UpdateRequestBuilder($request->resource()))->save($this);
+            (UpdateRequestBuilder::fromResource($request->resource()))->save($this);
             return;
         }
 
         if ($request->get('editMode') === 'create') {
-            (new StoreRequestBuilder($request->resource()))->save($this);
+            (StoreRequestBuilder::fromResource($request->resource()))->save($this);
             return;
         }
     }
@@ -242,6 +252,17 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         throw (new ModelNotFoundException)->setModel(get_class($this));
     }
 
+    public function findOrFail(int $id): ?Model
+    {
+        $model = $this->find($id);
+
+        if (!is_null($model)) {
+            return $model;
+        }
+
+        throw (new ModelNotFoundException)->setModel(get_class($this->baseQuery()));
+    }
+
     public function lockForUpdate()
     {
         return $this;
@@ -257,7 +278,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function newQuery() {
         $request = app(NovaRequest::class);
-        return new LoadRequestBuilder($request->resource());
+        return LoadRequestBuilder::fromResource($request->resource());
     }
 
     public function getUpdatedAtColumn() {
@@ -288,9 +309,10 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     /**
      * @return $this
      */
-    public function find()
+    public function find($id)
     {
-        return $this;
+        $builder = new LoadRequestBuilder($this);
+        return $builder->find($id);
     }
 
     /**
@@ -299,6 +321,11 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function offsetSet($offset, $value){
 
+        if (!isset($this->model::setters()[$offset])) {
+            throw \Exception('Cant find setter for  '.$offset. ' on '. get_class($this->model));
+        }
+
+        $this->model->{$this->model::setters()[$offset]}($value);
     }
 
     /**
@@ -333,23 +360,27 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         return '0';
     }
 
-    protected function forwardCallTo($object, $method, $parameters)
+
+
+    /**
+     * Define a one-to-many relationship.
+     *
+     * @param  string  $related
+     * @param  string|null  $foreignKey
+     * @param  string|null  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function hasManyShopEngineEntities($related, $apiIdentifier)
     {
-        try {
-            return $object->{$method}(...$parameters);
-        } catch (Error | BadMethodCallException $e) {
-            $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
+        $builder = ListRequestBuilder::fromClass($related);
 
-            if (! preg_match($pattern, $e->getMessage(), $matches)) {
-                throw $e;
-            }
+        $listRequest = new ListRequestStruct();
+        $listRequest->addFilter(new RequestFilterStruct(
+            $apiIdentifier,
+            $this->getId(),
+            'eq'
+        ));
 
-            if ($matches['class'] != get_class($object) ||
-                $matches['method'] != $method) {
-                throw $e;
-            }
-
-            static::throwBadMethodCallException($method);
-        }
+        return $builder->loadItems($listRequest);
     }
 }

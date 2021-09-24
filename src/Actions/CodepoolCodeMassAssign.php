@@ -3,20 +3,14 @@
 namespace ShopEngine\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\ActionRequest;
 
 class CodepoolCodeMassAssign extends Action
 {
     use InteractsWithQueue, Queueable;
-
-    public $component = 'codepool-code-mass-assign';
-
 
     /**
      * Perform the action on the given models.

@@ -10,35 +10,45 @@ class LoadRequestBuilder extends RequestBuilder
 {
     protected Collection $loadedEntities;
 
-    /**
-     * @param \Illuminate\Support\Collection $loadedEntities
-     */
-    public function __construct(string $resource)
+    protected ShopEngineModel $model;
+
+    public function __construct(ShopEngineModel $model)
     {
-        parent::__construct($resource);
+        parent::__construct($model);
         $this->loadedEntities = new Collection();
     }
 
+    /**
+     * Shorthand Query
+     * @param $id
+     */
+    public function find($id)
+    {
+        return $this->loadItem(new LoadRequestStruct($id));
+    }
 
     /**
      * Execute the query statement on ShopEngine API.
      *
      * @param \ShopEngine\Nova\Structs\Api\LoadRequestStruct $loadRequestStruct
-     *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */
     public function loadItem(LoadRequestStruct $loadRequestStruct) : ShopEngineModel
     {
         $rawResponse = $this->getClient()->get(
-            $this->getShopEnginePath() . '/' . $loadRequestStruct->createApiRequest()
+            $this->getEndpoint() . '/' . $loadRequestStruct->createApiRequest()
         );
 
-        $modelClass = $this->resource::getModel();
-        $entity = new $modelClass($rawResponse);
+        $entity = new $this->model($rawResponse);
         $this->loadedEntities->add($entity);
         return $entity;
     }
 
+    /**
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     *
+     * @return \ShopEngine\Nova\Structs\Api\LoadRequestStruct
+     */
     public function buildFromRequest(NovaRequest $request) : LoadRequestStruct
     {
         // @todo investigate why named route properties are not defined
@@ -80,7 +90,9 @@ class LoadRequestBuilder extends RequestBuilder
      */
     public function chunk($size)
     {
-     //   dd((new \Exception('x'))->getTraceAsString());
+        // @todo spoof - fixe me?
         return $this;
     }
+
+
 }

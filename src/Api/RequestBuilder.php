@@ -1,25 +1,42 @@
 <?php
 namespace ShopEngine\Nova\Api;
 
+use ShopEngine\Nova\Models\ShopEngineModel;
 use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use SSB\Api\Client;
 
 abstract class RequestBuilder {
 
-    protected string $resource;
+    protected ShopEngineModel $model;
 
-    public function __construct(string $resource)
+    public function __construct(ShopEngineModel $model)
     {
-        $this->resource = $resource;
+        $this->model = $model;
+    }
+
+    protected function getModelClass() : string
+    {
+        return get_class($this->model);
     }
 
     /**
-     *  Get Endpoint of Resource
-     *
      * @return string
      */
-    protected function getShopEnginePath() : string {
-        return $this->resource::getShopEngineEndpoint();
+    public function getEndpoint(): string
+    {
+        $modelClass = $this->getModelClass();
+        return $modelClass::$apiEndpoint;
+    }
+
+    static public function fromResource(string $resource)
+    {
+        $modelClass = $resource::getModel();
+        return new static(new $modelClass);
+    }
+
+    static public function fromClass(string $modelClass)
+    {
+        return new static(new $modelClass);
     }
 
     /**

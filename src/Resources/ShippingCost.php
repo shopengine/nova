@@ -26,11 +26,6 @@ class ShippingCost extends ShopEngineResource
         return ShippingCostModel::class;
     }
 
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'shippingcost';
-    }
-
     public function fields(\Illuminate\Http\Request $request)
     {
         $shopService = ConfiguredClassFactory::getShopEngineService();

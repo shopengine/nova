@@ -18,11 +18,6 @@ class ConditionSet extends ShopEngineResource
         return ConditionSetModel::class;
     }
 
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'conditionset';
-    }
-
     public function authorizedToDelete(Request $request)
     {
         return false;

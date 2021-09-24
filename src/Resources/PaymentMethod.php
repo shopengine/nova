@@ -22,11 +22,6 @@ class PaymentMethod extends ShopEngineResource
         return PaymentMethodModel::class;
     }
 
-    public static function getShopEngineEndpoint(): string
-    {
-        return 'paymentmethod';
-    }
-
     public function fields(\Illuminate\Http\Request $request)
     {
         return $this->appendShopEngineFields([

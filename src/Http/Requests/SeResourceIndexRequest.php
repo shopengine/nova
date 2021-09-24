@@ -53,4 +53,22 @@ class SeResourceIndexRequest extends ResourceIndexRequest
 
         return static::PER_PAGE_COUNT;
     }
+
+    /**
+     * Usually Laravel Nova would handle the relationship via Eloquent Model Class
+     * For ShopEngine we directly query the target relationship
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery()
+    {
+        if (! $this->viaRelationship()) {
+            return $this->model()->newQuery();
+        }
+
+        return forward_static_call([$this->viaResource(), 'newModel'])
+            ->newQueryWithoutScopes()->findOrFail(
+                $this->viaResourceId
+            )->{$this->viaRelationship}();
+    }
+
 }
