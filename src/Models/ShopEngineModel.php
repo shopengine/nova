@@ -252,7 +252,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         throw (new ModelNotFoundException)->setModel(get_class($this));
     }
 
-    public function findOrFail(int $id): ?Model
+    public function findOrFail($id): ?Model
     {
         $model = $this->find($id);
 
@@ -325,6 +325,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             throw \Exception('Cant find setter for  '.$offset. ' on '. get_class($this->model));
         }
 
+
         $this->model->{$this->model::setters()[$offset]}($value);
     }
 
@@ -361,7 +362,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     }
 
 
-
     /**
      * Define a one-to-many relationship.
      *
@@ -370,17 +370,26 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      * @param  string|null  $localKey
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function hasManyShopEngineEntities($related, $apiIdentifier)
+    public function hasManyShopEngineEntities(string $related, string $apiIdentifier)
     {
-        $builder = ListRequestBuilder::fromClass($related);
+        return $this->createHasManyRequest($related, $apiIdentifier);
 
+//      @todo - check if somewhere is still needed to return a collection, otherwise merge with
+//      createHasManyRequest
+
+//        $builder =  ListRequestBuilder::fromClass($related);
+//        $listRequest = $this->createHasManyRequest($related, $apiIdentifier);
+//        return $builder->loadItems($listRequest);
+    }
+
+    public function createHasManyRequest(string $related, string $apiIdentifier) : ListRequestStruct
+    {
         $listRequest = new ListRequestStruct();
         $listRequest->addFilter(new RequestFilterStruct(
             $apiIdentifier,
             $this->getId(),
             'eq'
         ));
-
-        return $builder->loadItems($listRequest);
+        return $listRequest;
     }
 }

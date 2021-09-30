@@ -19,6 +19,10 @@ class CodeMassEdit extends Action
     {
     }
 
+    public function name()
+    {
+        return __('se.actions.massedit');
+    }
 
     /**
      * Perform the action on the given models.
@@ -62,12 +66,6 @@ class CodeMassEdit extends Action
                 $updateRequest->save($model);
             };
         }
-
-
-
-
-
-
 
         return true;
     }

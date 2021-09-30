@@ -8,5 +8,7 @@
     "se.codepool" : "Kampagne",
     "se.codepools" : "Codepools",
 
-    "se.codes" : "Codes"
+    "se.codes" : "Codes",
+
+    "se.actions.massedit" : "Massenbearbeitung"
 }

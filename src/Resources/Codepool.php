@@ -2,18 +2,15 @@
 
 namespace ShopEngine\Nova\Resources;
 
-use App\Nova\CodeRedirect;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
-use ShopEngine\Nova\Actions\CodepoolCodeMassAssign;
-use ShopEngine\Nova\Filter\CodepoolArchive;
-use ShopEngine\Nova\Models\CodepoolModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use ShopEngine\Nova\Actions\CodepoolCodeMassAssign;
+use ShopEngine\Nova\Filter\CodepoolArchive;
+use ShopEngine\Nova\Models\CodepoolModel;
 
 class Codepool extends ShopEngineResource
 {
@@ -60,7 +57,7 @@ class Codepool extends ShopEngineResource
                    true => 'danger'
                 ])
                 ->onlyOnDetail(),
-            //\ShopEngine\Nova\Fields\ShopEngineModel::make('Codes','codes')
+
             HasMany::make('codes')
         ]);
     }

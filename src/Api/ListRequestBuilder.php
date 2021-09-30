@@ -111,7 +111,28 @@ class ListRequestBuilder extends RequestBuilder
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
         $resource = $request->resource();
 
+
         $listRequest = new ListRequestStruct();
+
+        if ($request->viaResourceId) {
+            if (
+                $request->viaRelationship &&
+                $request->viaResource()
+            ) {
+                $resourceModel = $request->newViaResource()::newModel();
+
+                // monkey-potching to prevent additional api call - needs testing
+                $resourceModel->offsetSet($resourceModel->getKeyName(), $request->viaResourceId);
+                $listRequest = $resourceModel->{$request->viaRelationship}();
+            } else {
+                $listRequest->addFilter(new RequestFilterStruct(
+                    'codepoolId',
+                    $request->viaResourceId,
+                    'eq'
+                ));
+            }
+        }
+
         $listRequest->setPageSize($perPage);
 
         $page = $request->get('page') ? $request->get('page') - 1 : 0;
@@ -166,7 +187,7 @@ class ListRequestBuilder extends RequestBuilder
             }
         }
 
-        // @todo: remove this ugly stuff
+        // @todo: [**] remove this ugly stuff
         if ($resource === Purchase::class) {
             $listRequest->addFilter(new RequestFilterStruct(
                 'email',

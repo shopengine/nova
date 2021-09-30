@@ -34,6 +34,12 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         return $model::$apiEndpoint;
     }
 
+    public static function newModel() : ShopEngineModel
+    {
+        $modelClass = static::getModel();
+        return new $modelClass;
+    }
+
     public function getKey() : string
     {
         return $this->model[$this::$id] || '';

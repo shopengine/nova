@@ -2,12 +2,6 @@
 
 namespace ShopEngine\Nova\Resources;
 
-use ShopEngine\Nova\Actions\CodeMassEdit;
-use ShopEngine\Nova\Fields\CodepoolLink;
-use ShopEngine\Nova\Fields\CodeValidation;
-use ShopEngine\Nova\Fields\ShopEngineModel;
-use ShopEngine\Nova\Filter\ActiveCodes;
-use ShopEngine\Nova\Models\CodeModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Boolean;
@@ -16,6 +10,12 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use ShopEngine\Nova\Actions\CodeMassEdit;
+use ShopEngine\Nova\Fields\CodepoolLink;
+use ShopEngine\Nova\Fields\CodeValidation;
+use ShopEngine\Nova\Fields\ShopEngineModel;
+use ShopEngine\Nova\Filter\ActiveCodes;
+use ShopEngine\Nova\Models\CodeModel;
 
 class Code extends ShopEngineResource
 {
