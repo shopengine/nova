@@ -36,12 +36,12 @@ class CodeMassEdit extends Action
         $resource = $request->resource();
         $loadRequest = ListRequestBuilder::fromResource($resource);
 
-        $ids = explode(',',$request->get('resources'));
+        $ids = explode(',', $request->get('resources'));
 
         $requestStruct = (new ListRequestStruct())->withAllEntries();
         $requestStruct->addFilter(new RequestFilterStruct(
             'aggregateId',
-            join('|',$ids),
+            join('|', $ids),
             'eq'
         ));
 

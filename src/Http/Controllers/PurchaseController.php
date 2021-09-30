@@ -12,8 +12,7 @@ class PurchaseController extends ShopEngineNovaController
 
         try {
             $this->getClient()->patch("purchase/$resourceId", $data);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json($exception->getMessage());
         }
 

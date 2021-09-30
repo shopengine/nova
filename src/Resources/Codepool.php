@@ -20,7 +20,7 @@ class Codepool extends ShopEngineResource
     public static $defaultSort = '-updatedAt';
     public static $id = 'id';
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return CodepoolModel::class;
     }
@@ -49,7 +49,7 @@ class Codepool extends ShopEngineResource
                 ->sortable(true)
                 ->format('Y-MM-DD HH:mm:ss')
                 ->onlyOnIndex(),
-            Badge::make('Archiviert', function() {
+            Badge::make('Archiviert', function () {
                 return $this->model->getDeletedAt() !== null;
             })
                 ->map([

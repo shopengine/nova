@@ -3,8 +3,8 @@
 namespace ShopEngine\Nova\Structs\Navigation;
 
 // @todo: on php8 use constructor property promotion
-final class NavigationItemStruct {
-
+final class NavigationItemStruct
+{
     /**
      * @var string
      */

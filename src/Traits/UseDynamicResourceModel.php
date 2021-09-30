@@ -12,7 +12,7 @@ trait UseDynamicResourceModel
     public static function newModel()
     {
         $model = static::getModel();
-        return new $model;
+        return new $model();
     }
 
     /**
@@ -28,7 +28,8 @@ trait UseDynamicResourceModel
         }
 
         return static::$softDeletes[static::getModel()] = in_array(
-            SoftDeletes::class, class_uses_recursive(static::newModel())
+            SoftDeletes::class,
+            class_uses_recursive(static::newModel())
         );
     }
 }

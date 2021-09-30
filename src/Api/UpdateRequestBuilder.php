@@ -1,14 +1,14 @@
 <?php
-namespace ShopEngine\Nova\Api;
 
+namespace ShopEngine\Nova\Api;
 
 use ShopEngine\Nova\Models\ShopEngineModel;
 use SSB\Api\Model\Code;
 
 class UpdateRequestBuilder extends RequestBuilder
 {
-
-    public function save(ShopEngineModel $model) {
+    public function save(ShopEngineModel $model)
+    {
         $seRequest = $this->buildFromModel($model);
         $this->getClient()->patch(
             $this->getEndpoint().'/'.$model->getId(),

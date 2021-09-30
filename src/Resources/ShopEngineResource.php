@@ -1,4 +1,6 @@
-<?php namespace ShopEngine\Nova\Resources;
+<?php
+
+namespace ShopEngine\Nova\Resources;
 
 use ShopEngine\Nova\Api\ListRequestBuilder;
 use ShopEngine\Nova\Contracts\ShopEngineResourceInterface;
@@ -26,7 +28,9 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     public static $displayInNavigation = false;
     public static $canImportResource = false;
 
-    public static function getModel() : string { }
+    public static function getModel(): string
+    {
+    }
 
     public static function getShopEngineEndpoint(): string
     {
@@ -34,22 +38,24 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         return $model::$apiEndpoint;
     }
 
-    public static function newModel() : ShopEngineModel
+    public static function newModel(): ShopEngineModel
     {
         $modelClass = static::getModel();
-        return new $modelClass;
+        return new $modelClass();
     }
 
-    public function getKey() : string
+    public function getKey(): string
     {
         return $this->model[$this::$id] || '';
     }
 
-    public static function getFirstSearchKey() : ?string {
+    public static function getFirstSearchKey(): ?string
+    {
         return static::$search[0] ?? null;
     }
 
-    public static function getDefaultSort() : string {
+    public static function getDefaultSort(): string
+    {
         return static::$defaultSort;
     }
 
@@ -104,9 +110,9 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         $search = null,
         array $filters = [],
         array $orderings = [],
-        $withTrashed = TrashedStatus::DEFAULT)
+        $withTrashed = TrashedStatus::DEFAULT
+    )
     {
-
         if ($request->has('id-eq')) {
             $filters[] = new RequestFilterStruct(
                 'id',

@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-
 class NovaTool extends Tool
 {
     use UseNovaTranslations;
@@ -42,13 +41,13 @@ class NovaTool extends Tool
     /**
      * @return NavigationStruct[]
      */
-    private function buildNavigation() : array
+    private function buildNavigation(): array
     {
         $providers = $this->getShopengineProviders();
 
         $navigationData = array_filter(
             array_map(
-                fn(string $provider) => $provider::getShopengineNavigation(),
+                fn (string $provider) => $provider::getShopengineNavigation(),
                 $providers
             )
         );
@@ -72,22 +71,22 @@ class NovaTool extends Tool
         ];
     }
 
-    private function getShopengineProviders() : array {
+    private function getShopengineProviders(): array
+    {
         return Arr::where(
             array_keys(app()->getLoadedProviders()),
-            fn($provider) => is_a($provider, ShopEnginePackageInterface::class, true)
+            fn ($provider) => is_a($provider, ShopEnginePackageInterface::class, true)
         );
     }
 
-    private function loadTranslationsAllPlugins() : void
+    private function loadTranslationsAllPlugins(): void
     {
-
         $seProviders = $this->getShopengineProviders();
 
         foreach ($seProviders as $providerClass) {
             try {
                 $file = call_user_func($providerClass .'::getLanguagePath');
-                    $this->loadTranslations($file, 'nova-shopengine', true);
+                $this->loadTranslations($file, 'nova-shopengine', true);
             } catch (\Exception $e) {
             }
         }

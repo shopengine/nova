@@ -34,7 +34,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function __construct(ModelInterface $model = null)
     {
         if ($model === null) {
-            $model = new static::$apiModel;
+            $model = new static::$apiModel();
         }
 
         // @todo remove me?
@@ -51,7 +51,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         return isset($this->model::swaggerTypes()['aggregateId']) ? 'aggregateId' : 'id';
     }
 
-    public function getId() : ?string
+    public function getId(): ?string
     {
         $key = $this->getKeyName();
         return $this->offsetGet($key);
@@ -163,8 +163,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
                     $obj = $this->mapShopEngineValue($obj);
                 }
             }
-        }
-        else if (is_array($obj)) {
+        } elseif (is_array($obj)) {
             $newObj = [];
 
             foreach ($obj as $item) {
@@ -172,12 +171,10 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
                     $interfaces = class_implements($item);
                     if (in_array(ModelInterface::class, $interfaces)) {
                         $newObj[] = $this->mapShopEngineValue($item);
-                    }
-                    else {
+                    } else {
                         $newObj[] = $item;
                     }
-                }
-                catch (\Exception $exception) {
+                } catch (\Exception $exception) {
                     $newObj[] = $item;
                 }
             }
@@ -249,7 +246,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             return $model;
         }
 
-        throw (new ModelNotFoundException)->setModel(get_class($this));
+        throw (new ModelNotFoundException())->setModel(get_class($this));
     }
 
     public function findOrFail($id): ?Model
@@ -260,7 +257,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             return $model;
         }
 
-        throw (new ModelNotFoundException)->setModel(get_class($this->baseQuery()));
+        throw (new ModelNotFoundException())->setModel(get_class($this->baseQuery()));
     }
 
     public function lockForUpdate()
@@ -270,22 +267,23 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 
     public function lock($value = true)
     {
-
     }
 
     /**
      * @return mixed
      */
-    public function newQuery() {
+    public function newQuery()
+    {
         $request = app(NovaRequest::class);
         return LoadRequestBuilder::fromResource($request->resource());
     }
 
-    public function getUpdatedAtColumn() {
-
+    public function getUpdatedAtColumn()
+    {
     }
 
-    public function getOriginal($key = null, $default = null) {
+    public function getOriginal($key = null, $default = null)
+    {
         return [];
     }
 
@@ -294,7 +292,8 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         return [];
     }
 
-    public function getDirty() {
+    public function getDirty()
+    {
         return parent::getDirty();
     }
 
@@ -319,8 +318,8 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value){
-
+    public function offsetSet($offset, $value)
+    {
         if (!isset($this->model::setters()[$offset])) {
             throw \Exception('Cant find setter for  '.$offset. ' on '. get_class($this->model));
         }
@@ -334,7 +333,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function offsetUnset($offset)
     {
-
     }
 
     /**
@@ -382,7 +380,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 //        return $builder->loadItems($listRequest);
     }
 
-    public function createHasManyRequest(string $related, string $apiIdentifier) : ListRequestStruct
+    public function createHasManyRequest(string $related, string $apiIdentifier): ListRequestStruct
     {
         $listRequest = new ListRequestStruct();
         $listRequest->addFilter(new RequestFilterStruct(

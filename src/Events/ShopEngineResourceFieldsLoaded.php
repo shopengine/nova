@@ -8,7 +8,8 @@ use Laravel\Nova\Resource;
 
 class ShopEngineResourceFieldsLoaded
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public ShopEngineResourceFieldsStruct $data;
 

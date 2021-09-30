@@ -10,21 +10,20 @@ use Money\Parser\DecimalMoneyParser;
 
 class ConvertMoney
 {
-    static private $decimalMoneyFormatter = null;
+    private static $decimalMoneyFormatter = null;
 
-    static function format($value)
+    public static function format($value)
     {
-        if ($value INSTANCEOF Money) {
+        if ($value instanceof Money) {
             $money = $value;
-        }
-        else {
+        } else {
             $money = self::parse($value);
         }
 
         return formatPrice(self::formatDecimal($money), '', $money->getCurrency()->getCode());
     }
 
-    static function parse($value)
+    public static function parse($value)
     {
         $currencies = new ISOCurrencies();
 
@@ -38,19 +37,18 @@ class ConvertMoney
         return new Money($value, new Currency(self::currency()));
     }
 
-    static function formatDecimal($value)
+    public static function formatDecimal($value)
     {
-        if ($value INSTANCEOF Money) {
+        if ($value instanceof Money) {
             $money = $value;
-        }
-        else {
+        } else {
             $money = self::parse($value);
         }
 
         return self::getDecimalMoneyFormatter()->format($money);
     }
 
-    static private function getDecimalMoneyFormatter()
+    private static function getDecimalMoneyFormatter()
     {
         if (self::$decimalMoneyFormatter === null) {
             self::$decimalMoneyFormatter = new DecimalMoneyFormatter(new ISOCurrencies());
@@ -59,28 +57,28 @@ class ConvertMoney
         return self::$decimalMoneyFormatter;
     }
 
-    static function fromStringToFloat($amount)
+    public static function fromStringToFloat($amount)
     {
         $m = self::parse($amount);
         return self::toRealFloat($m);
     }
 
-    static function toRealFloat(Money $money)
+    public static function toRealFloat(Money $money)
     {
         return floatval(self::toFloat($money));
     }
 
-    static function toFloat(Money $money)
+    public static function toFloat(Money $money)
     {
         return self::getDecimalMoneyFormatter()->format($money);
     }
 
-    static function toRaw(Money $money): array
+    public static function toRaw(Money $money): array
     {
         return ['amount' => $money->getAmount(), 'currency' => $money->getCurrency()->getCode()];
     }
 
-    static function currency()
+    public static function currency()
     {
         return config('rh.currency');
     }

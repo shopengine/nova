@@ -13,8 +13,7 @@ class PurchaseStatusFilter extends Filter
             $query['originStatus-eq'] = 'imported';
             $query['originId-eq'] = 'empty';
             $query['orderDate-gt'] = '2020-05-25';
-        }
-        else {
+        } else {
             $query['status-eq'] = $value;
         }
 

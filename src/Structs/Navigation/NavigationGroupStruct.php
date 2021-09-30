@@ -5,8 +5,8 @@ namespace ShopEngine\Nova\Structs\Navigation;
 use Illuminate\Support\Collection;
 
 // @todo: on php8 use constructor property promotion
-final class NavigationGroupStruct {
-
+final class NavigationGroupStruct
+{
     /**
      * @var string
      */
@@ -68,13 +68,15 @@ final class NavigationGroupStruct {
         $this->items = $this->items->merge($itemStructs);
     }
 
-    public function getAvailableGroup(array $availableResources) : ?NavigationGroupStruct
+    public function getAvailableGroup(array $availableResources): ?NavigationGroupStruct
     {
         $items = $this->items->filter(
-            fn( NavigationItemStruct $item) => in_array($item->getResourceClass(), $availableResources)
+            fn (NavigationItemStruct $item) => in_array($item->getResourceClass(), $availableResources)
         );
 
-        if ($items->isEmpty()) return null;
+        if ($items->isEmpty()) {
+            return null;
+        }
 
         return new NavigationGroupStruct(
             $this->title,
@@ -94,12 +96,13 @@ final class NavigationGroupStruct {
         string $title,
         array $plainStruct,
         bool $showTitle = true
-    ) : NavigationGroupStruct {
+    ): NavigationGroupStruct {
         $items = [];
         foreach ($plainStruct as $plainItems) {
             $items[] = new NavigationItemStruct(
                 $plainItems['title'],
-                $plainItems['path'])
+                $plainItems['path']
+            )
             ;
         }
         return new NavigationGroupStruct(

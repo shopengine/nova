@@ -1,4 +1,6 @@
-<?php namespace ShopEngine\Nova\Resources;
+<?php
+
+namespace ShopEngine\Nova\Resources;
 
 use ShopEngine\Nova\Fields\Address;
 use ShopEngine\Nova\Fields\PurchaseArticles;
@@ -24,7 +26,7 @@ class Purchase extends ShopEngineResource
     public static $defaultSort = '-orderDate';
     public static $id = 'aggregateId';
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return PurchaseModel::class;
     }

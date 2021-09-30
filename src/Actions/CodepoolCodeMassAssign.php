@@ -10,7 +10,8 @@ use Laravel\Nova\Http\Requests\ActionRequest;
 
 class CodepoolCodeMassAssign extends Action
 {
-    use InteractsWithQueue, Queueable;
+    use InteractsWithQueue;
+    use Queueable;
 
     /**
      * Perform the action on the given models.
@@ -39,7 +40,7 @@ class CodepoolCodeMassAssign extends Action
     public function fields()
     {
         return [
-            Textarea::make('Codes','codes')
+            Textarea::make('Codes', 'codes')
                 ->required(true)
                 ->rules('required'),
         ];

@@ -1,4 +1,6 @@
-<?php namespace ShopEngine\Nova\Models;
+<?php
+
+namespace ShopEngine\Nova\Models;
 
 use SSB\Api\Model\PaymentMethod;
 

@@ -2,9 +2,9 @@
 
 namespace ShopEngine\Nova\Structs\Api;
 
-class ListRequestStruct extends RequestStruct {
-
-    const ALL_ENTRIES = '99999';
+class ListRequestStruct extends RequestStruct
+{
+    public const ALL_ENTRIES = '99999';
     /**
      * @var string
      */
@@ -56,12 +56,12 @@ class ListRequestStruct extends RequestStruct {
         }
 
         if (count($this->properties) > 0) {
-            $request['properties'] = join('|',$this->properties);
+            $request['properties'] = join('|', $this->properties);
         }
 
         if (count($this->filters) > 0) {
             $filters = array_map(
-                fn(RequestFilterStruct $requestFilter) => $requestFilter->getRequest(),
+                fn (RequestFilterStruct $requestFilter) => $requestFilter->getRequest(),
                 $this->filters
             );
 
@@ -76,22 +76,23 @@ class ListRequestStruct extends RequestStruct {
     /**
      * @return array
      */
-    public function createCountRequest() : array
+    public function createCountRequest(): array
     {
-
         $request = $this->createApiRequest();
 
         return array_filter(
             $request,
-            fn($key) => !in_array($key, [
+            fn ($key) => !in_array($key, [
                 'pageSize',
                 'page',
                 'sort'
-            ]), ARRAY_FILTER_USE_KEY
+            ]),
+            ARRAY_FILTER_USE_KEY
         );
     }
 
-    public function withAllEntries() : self {
+    public function withAllEntries(): self
+    {
         $this->setPageSize(static::ALL_ENTRIES);
         return $this;
     }

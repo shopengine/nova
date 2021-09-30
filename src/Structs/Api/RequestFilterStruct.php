@@ -2,10 +2,10 @@
 
 namespace ShopEngine\Nova\Structs\Api;
 
-
 // @todo: on php8 use constructor property promotion
 
-final class RequestFilterStruct {
+final class RequestFilterStruct
+{
     /**
      * @var string
      */
@@ -38,7 +38,7 @@ final class RequestFilterStruct {
     /**
      * @return string[]
      */
-    public function getRequest() : array
+    public function getRequest(): array
     {
         $key = $this->name . ($this->operator ? '-' . $this->operator : '');
         return [

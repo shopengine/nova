@@ -1,4 +1,5 @@
 <?php
+
 namespace ShopEngine\Nova\Services;
 
 use SSB\Api\Client;
@@ -6,16 +7,14 @@ use SSB\Api\ClientFactory;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;
 
 // @todo add defaults
-class ShopEngineNovaService {
-
+class ShopEngineNovaService
+{
     public function __construct()
     {
-
     }
 
     public function getShopEngineSettings()
     {
-
     }
 
     /**
@@ -36,10 +35,6 @@ class ShopEngineNovaService {
 
     public function shopEngineClient(ShopEngineSettingsInterface $settings): Client
     {
-
         return $this->clientFactory->make($settings);
     }
-
 }
-
-

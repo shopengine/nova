@@ -21,7 +21,7 @@ class ShippingCost extends ShopEngineResource
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return ShippingCostModel::class;
     }
@@ -112,6 +112,4 @@ class ShippingCost extends ShopEngineResource
 
         return $this->appendShopEngineFields($fields);
     }
-
-
 }

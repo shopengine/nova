@@ -10,13 +10,13 @@ trait HasShopEngineFields
     /**
      * @param array $fields
      */
-    public function appendShopEngineFields(array $fields) : array {
-
+    public function appendShopEngineFields(array $fields): array
+    {
         $filtered = array_filter(
             event(ShopEngineResourceFieldsLoaded::makeWithStruct(
                 $this,
                 $fields
-            ), fn($el) => is_object($el) && $el instanceof ShopEngineResourceFieldsStruct)
+            ), fn ($el) => is_object($el) && $el instanceof ShopEngineResourceFieldsStruct)
         );
 
         if (!empty($filtered)) {

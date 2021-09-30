@@ -2,8 +2,8 @@
 
 namespace ShopEngine\Nova\Structs\Api;
 
-abstract class RequestStruct {
-
+abstract class RequestStruct
+{
     /**
      * @return array|string
      */

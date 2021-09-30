@@ -20,7 +20,7 @@ abstract class Struct
         return $self;
     }
 
-    public function assign(array $options) : Struct
+    public function assign(array $options): Struct
     {
         foreach ($options as $key => $value) {
             if ($key === 'id' && method_exists($this, 'setId')) {

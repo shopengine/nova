@@ -1,4 +1,5 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
 use Illuminate\Support\Collection;
@@ -33,7 +34,7 @@ class LoadRequestBuilder extends RequestBuilder
      * @param \ShopEngine\Nova\Structs\Api\LoadRequestStruct $loadRequestStruct
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */
-    public function loadItem(LoadRequestStruct $loadRequestStruct) : ShopEngineModel
+    public function loadItem(LoadRequestStruct $loadRequestStruct): ShopEngineModel
     {
         $rawResponse = $this->getClient()->get(
             $this->getEndpoint() . '/' . $loadRequestStruct->createApiRequest()
@@ -49,7 +50,7 @@ class LoadRequestBuilder extends RequestBuilder
      *
      * @return \ShopEngine\Nova\Structs\Api\LoadRequestStruct
      */
-    public function buildFromRequest(NovaRequest $request) : LoadRequestStruct
+    public function buildFromRequest(NovaRequest $request): LoadRequestStruct
     {
         // @todo investigate why named route properties are not defined
         // this is a interim solution
@@ -93,6 +94,4 @@ class LoadRequestBuilder extends RequestBuilder
         // @todo spoof - fixe me?
         return $this;
     }
-
-
 }

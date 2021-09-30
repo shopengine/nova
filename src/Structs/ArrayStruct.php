@@ -55,7 +55,7 @@ class ArrayStruct extends Struct implements \ArrayAccess
         return $this->data[$key] = $value;
     }
 
-    public function assign(array $options) : Struct
+    public function assign(array $options): Struct
     {
         $this->data = array_replace_recursive($this->data, $options);
 

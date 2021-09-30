@@ -30,7 +30,7 @@ class ShopEngineResourceFieldsStruct
         $this->model = $resource->model();
     }
 
-    public function appendFields(array $fields) : self
+    public function appendFields(array $fields): self
     {
         $this->fields = array_merge($this->fields, $fields);
         return $this;

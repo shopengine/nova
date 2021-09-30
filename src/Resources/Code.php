@@ -26,7 +26,7 @@ class Code extends ShopEngineResource
     public static $id = 'aggregateId';
 
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return CodeModel::class;
     }

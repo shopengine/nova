@@ -1,12 +1,13 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
 use ShopEngine\Nova\Models\ShopEngineModel;
 use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use SSB\Api\Client;
 
-abstract class RequestBuilder {
-
+abstract class RequestBuilder
+{
     protected ShopEngineModel $model;
 
     public function __construct(ShopEngineModel $model)
@@ -14,7 +15,7 @@ abstract class RequestBuilder {
         $this->model = $model;
     }
 
-    protected function getModelClass() : string
+    protected function getModelClass(): string
     {
         return get_class($this->model);
     }
@@ -28,15 +29,15 @@ abstract class RequestBuilder {
         return $modelClass::$apiEndpoint;
     }
 
-    static public function fromResource(string $resource)
+    public static function fromResource(string $resource)
     {
         $modelClass = $resource::getModel();
-        return new static(new $modelClass);
+        return new static(new $modelClass());
     }
 
-    static public function fromClass(string $modelClass)
+    public static function fromClass(string $modelClass)
     {
-        return new static(new $modelClass);
+        return new static(new $modelClass());
     }
 
     /**
@@ -96,7 +97,4 @@ abstract class RequestBuilder {
 
         return $this;
     }
-
-
-
 }

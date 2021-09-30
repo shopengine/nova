@@ -1,4 +1,6 @@
-<?php namespace ShopEngine\Nova\Resources;
+<?php
+
+namespace ShopEngine\Nova\Resources;
 
 use ShopEngine\Nova\Models\ConditionSetModel;
 use Illuminate\Http\Request;
@@ -13,7 +15,7 @@ class ConditionSet extends ShopEngineResource
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return ConditionSetModel::class;
     }

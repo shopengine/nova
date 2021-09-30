@@ -10,9 +10,10 @@ use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class SeResourceIndexRequest extends ResourceIndexRequest
 {
-    use CountsResources, QueriesResources;
+    use CountsResources;
+    use QueriesResources;
 
-    const PER_PAGE_COUNT = 25;
+    public const PER_PAGE_COUNT = 25;
 
     /**
      * Get the paginator instance for the index request.
@@ -26,7 +27,8 @@ class SeResourceIndexRequest extends ResourceIndexRequest
         $request = app(NovaRequest::class);
 
         $paginator = $this->paginator(
-            $request, $request->resource()
+            $request,
+            $request->resource()
         );
 
         return [
@@ -70,5 +72,4 @@ class SeResourceIndexRequest extends ResourceIndexRequest
                 $this->viaResourceId
             )->{$this->viaRelationship}();
     }
-
 }

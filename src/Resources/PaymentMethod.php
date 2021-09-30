@@ -17,7 +17,7 @@ class PaymentMethod extends ShopEngineResource
     public static $defaultSort = 'name';
     public static $id = 'aggregateId';
 
-    public static function getModel() : string
+    public static function getModel(): string
     {
         return PaymentMethodModel::class;
     }

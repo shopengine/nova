@@ -5,8 +5,8 @@ namespace ShopEngine\Nova\Structs\Navigation;
 // @todo: on php8 use constructor property promotion
 use Illuminate\Support\Collection;
 
-final class NavigationStruct implements \IteratorAggregate {
-
+final class NavigationStruct implements \IteratorAggregate
+{
     private Collection $groups;
 
     /**
@@ -31,18 +31,18 @@ final class NavigationStruct implements \IteratorAggregate {
     public function hasGroupWithTitle($title): int
     {
         return $this->groups->search(
-            fn($item, $key) => $item->getTitle() === $title
+            fn ($item, $key) => $item->getTitle() === $title
         );
     }
 
-    public function getAvailableStruct(array $availableResources) : NavigationStruct
+    public function getAvailableStruct(array $availableResources): NavigationStruct
     {
         return new NavigationStruct(
-            $this->groups->map(fn(NavigationGroupStruct $group) => $group->getAvailableGroup($availableResources))->filter()->all()
+            $this->groups->map(fn (NavigationGroupStruct $group) => $group->getAvailableGroup($availableResources))->filter()->all()
         );
     }
 
-    public function mergeWith(NavigationStruct $targetStruct) : self
+    public function mergeWith(NavigationStruct $targetStruct): self
     {
         foreach ($targetStruct as $structGroup) {
             $key = $this->hasGroupWithTitle($structGroup->getTitle());

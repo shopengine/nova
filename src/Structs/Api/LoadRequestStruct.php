@@ -2,8 +2,8 @@
 
 namespace ShopEngine\Nova\Structs\Api;
 
-class LoadRequestStruct extends RequestStruct {
-
+class LoadRequestStruct extends RequestStruct
+{
     private string $id;
 
 

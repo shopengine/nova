@@ -1,6 +1,6 @@
 <?php
-namespace ShopEngine\Nova\Api;
 
+namespace ShopEngine\Nova\Api;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Models\ShopEngineModel;
@@ -21,8 +21,7 @@ class ListRequestBuilder extends RequestBuilder
     public function __construct(
         ShopEngineModel $model,
         array $filters = []
-    )
-    {
+    ) {
         parent::__construct($model);
         $this->filters = $filters;
     }
@@ -40,8 +39,7 @@ class ListRequestBuilder extends RequestBuilder
         $columns = ['*'],
         $pageName = 'page',
         $page = null
-    )
-    {
+    ) {
         $request = app(NovaRequest::class);
 
         //$perPage = request()->perPage();
@@ -67,10 +65,13 @@ class ListRequestBuilder extends RequestBuilder
      * @param  array  $options
      * @return \Illuminate\Pagination\Paginator
      */
-    protected function simplePaginator($items, $perPage, $currentPage, $options) : Paginator
+    protected function simplePaginator($items, $perPage, $currentPage, $options): Paginator
     {
         return Container::getInstance()->makeWith(Paginator::class, compact(
-            'items', 'perPage', 'currentPage', 'options'
+            'items',
+            'perPage',
+            'currentPage',
+            'options'
         ));
     }
 
@@ -81,7 +82,7 @@ class ListRequestBuilder extends RequestBuilder
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
      */
-    public function loadItems(ListRequestStruct $listRequest) : array
+    public function loadItems(ListRequestStruct $listRequest): array
     {
         $rawResponse = $this->getClient()->get(
             $this->getEndpoint(),
@@ -106,8 +107,7 @@ class ListRequestBuilder extends RequestBuilder
     public function buildFromRequest(
         NovaRequest $request,
         string $perPage = "25"
-    ): ListRequestStruct
-    {
+    ): ListRequestStruct {
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
         $resource = $request->resource();
 
@@ -197,7 +197,7 @@ class ListRequestBuilder extends RequestBuilder
         }
 
         $indexFields = $request->newResource()->indexFields($request);
-        $properties =  $indexFields->map(fn(Field $field) => $field->attribute)
+        $properties =  $indexFields->map(fn (Field $field) => $field->attribute)
             ->add($resource::$id)
             ->toArray();
         $listRequest->setProperties($properties);
@@ -210,7 +210,7 @@ class ListRequestBuilder extends RequestBuilder
      *
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         $request = app(NovaRequest::class);
         $listRequest = $this->buildFromRequest($request);
