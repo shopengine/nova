@@ -58,7 +58,7 @@ class Codepool extends ShopEngineResource
                 ])
                 ->onlyOnDetail(),
 
-            HasMany::make('codes')
+            HasMany::make('Codes','codes')
         ]);
     }
 
