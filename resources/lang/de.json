@@ -1,14 +1,20 @@
 {
     "se.admin" : "Admin",
+    "se.order" : "Bestellung",
     "se.orders" : "Bestellungen",
+    "se.shippingcost" : "Versandart",
     "se.shippingcosts" : "Versandarten",
     "se.payments" : "Zahlungsarten",
+    "se.paymentmethod" : "Zahlungsart",
+    "se.paymentmethods" : "Zahlungsarten",
 
+    "se.conditionset": "Warenkorbregel",
+    "se.conditionsets": "Warenkorbregeln",
     "se.codesgroup" : "Gutscheincodes",
-    "se.codepool" : "Kampagne",
+    "se.codepool" : "Codepool",
     "se.codepools" : "Codepools",
 
-    "se.codes" : "Codes",
-
-    "se.actions.massedit" : "Massenbearbeitung"
+    "se.actions.massedit" : "Massenbearbeitung",
+    "se.code" : "Code",
+    "se.codes" : "Codes"
 }

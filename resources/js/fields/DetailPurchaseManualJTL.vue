@@ -1,7 +1,7 @@
 <template>
     <panel-item :field="field">
         <template slot="value">
-            <button v-on:click="send" :disabled="loading"  class="btn btn-default btn-danger btn-sm">Manuell Import</button>
+            <button v-on:click="send" :disabled="loading"  class="btn btn-default btn-primary">Freigeben</button>
         </template>
     </panel-item>
 </template>

@@ -26,6 +26,16 @@ class ShippingCost extends ShopEngineResource
         return ShippingCostModel::class;
     }
 
+    public static function label()
+    {
+        return __('se.shippingcosts');
+    }
+
+    public static function singularLabel()
+    {
+        return __('se.shippingcost');
+    }
+
     public function fields(\Illuminate\Http\Request $request)
     {
         $shopService = ConfiguredClassFactory::getShopEngineService();
@@ -75,23 +85,23 @@ class ShippingCost extends ShopEngineResource
                 'disabled' => 'Deaktiviert'
             ])->onlyOnForms()->required(true)->rules('required'),
 
-            Number::make('Mind. Versandzeit', 'time')
+            Number::make('Min. Versandzeit in Tagen', 'time')
                 ->required(true)->rules('required')
                 ->min(1)
                 ->step(1)
                 ->hideFromIndex(),
-            Number::make('Max. Versandzeit', 'timeMax')
+            Number::make('Max. Versandzeit in Tagen', 'timeMax')
                 ->required(true)->rules('required')
                 ->min(1)
                 ->step(1)
                 ->hideFromIndex(),
-            Text::make('Versandschluss', 'orderDeadline')
+            Text::make('Versandschluss Uhrzeit', 'orderDeadline')
                 ->required(true)->rules('required')
                 ->help('Im Format: HH:mm:ss. Bsp: 18:30:00')
                 ->hideFromIndex(),
-            Text::make('Warenwirtschaft Kennung', 'originIdentification')
+            Text::make('ERP Kennung', 'originIdentification')
                 ->required(true)->rules('required')
-                ->help('Wird zum Mapping mit der Wawi genutzt. ')
+                ->help('Wird zum Mapping mit dem ERP genutzt. ')
                 ->hideFromIndex(),
 
             new Panel('Optionen', [

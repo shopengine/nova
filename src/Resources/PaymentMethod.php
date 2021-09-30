@@ -22,6 +22,16 @@ class PaymentMethod extends ShopEngineResource
         return PaymentMethodModel::class;
     }
 
+    public static function label()
+    {
+        return __('se.paymentmethods');
+    }
+
+    public static function singularLabel()
+    {
+        return __('se.paymentmethod');
+    }
+
     public function fields(\Illuminate\Http\Request $request)
     {
         return $this->appendShopEngineFields([
