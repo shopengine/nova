@@ -5,7 +5,7 @@ namespace ShopEngine\Nova\Contracts;
 use SSB\Api\Client;
 use SSB\Api\Contracts\ShopEngineSettingsInterface;
 
-interface NovaShopEngineInterface
+interface ShopEngineNovaInterface
 {
     public function shopCurrency(): string;
     public function shopEngineSettings(string $shopIdentifier = null): ShopEngineSettingsInterface;

@@ -61,7 +61,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/nova-shopengine.php' => config_path('shopengine-nova.php'),
+                __DIR__ . '/../config/shopengine-nova.php' => config_path('shopengine-nova.php'),
             ], 'shopengine-nova-config');
             return;
         }
@@ -86,8 +86,8 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
 
     public function register()
     {
-        $configPath = __DIR__ . '/../config/nova-shopengine.php';
-        $this->mergeConfigFrom($configPath, 'nova-shopengine');
+        $configPath = __DIR__ . '/../config/shopengine-nova.php';
+        $this->mergeConfigFrom($configPath, 'shopengine-nova');
     }
 
     private function registerBindings()

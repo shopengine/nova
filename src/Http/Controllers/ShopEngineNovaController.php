@@ -2,7 +2,7 @@
 
 namespace ShopEngine\Nova\Http\Controllers;
 
-use ShopEngine\Nova\Contracts\NovaShopEngineInterface;
+use ShopEngine\Nova\Contracts\ShopEngineNovaInterface;
 use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use Illuminate\Routing\Controller;
 use SSB\Api\Client;
@@ -11,7 +11,7 @@ use SSB\Api\Model\Code;
 
 class ShopEngineNovaController extends Controller
 {
-    /** @var NovaShopEngineInterface */
+    /** @var ShopEngineNovaInterface */
     protected $shopService;
 
     public function __construct()

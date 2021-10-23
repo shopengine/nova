@@ -86,7 +86,7 @@ class NovaTool extends Tool
         foreach ($seProviders as $providerClass) {
             try {
                 $file = call_user_func($providerClass .'::getLanguagePath');
-                $this->loadTranslations($file, 'nova-shopengine', true);
+                $this->loadTranslations($file, 'shopengine-nova', true);
             } catch (\Exception $e) {
             }
         }
