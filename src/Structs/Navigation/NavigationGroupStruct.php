@@ -17,6 +17,7 @@ final class NavigationGroupStruct
      */
     private bool $showTitle;
 
+    /** @var NavigationItemStruct[] $items */
     private Collection $items;
 
     /**
@@ -33,7 +34,9 @@ final class NavigationGroupStruct
     ) {
         $this->title = $title;
         $this->showTitle = $showTitle;
-        $this->items = collect($items);
+        $this->items = collect();
+
+        $this->addItems($items);
     }
 
     /**
@@ -65,7 +68,9 @@ final class NavigationGroupStruct
      */
     public function addItems(array $itemStructs)
     {
-        $this->items = $this->items->merge($itemStructs);
+        $this->items = $this->items
+            ->merge($itemStructs)
+            ->sortBy(fn(NavigationItemStruct $navigationItemStruct) => $navigationItemStruct->getOrder());
     }
 
     public function getAvailableGroup(array $availableResources): ?NavigationGroupStruct

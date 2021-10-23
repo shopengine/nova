@@ -43,31 +43,34 @@ class NovaTool extends Tool
      */
     private function buildNavigation(): array
     {
-        $providers = $this->getShopengineProviders();
-
+        /** @var NavigationStruct[] $navigationData */
         $navigationData = array_filter(
             array_map(
                 fn (string $provider) => $provider::getShopengineNavigation(),
-                $providers
+                $this->getShopengineProviders()
             )
         );
 
-        // Merge Groups
-        $mergedData = null;
-        foreach ($navigationData as $struct) {
-            if (!$mergedData) {
-                $mergedData = $struct;
+        $mergedNavigation = null;
+
+        /** @var NavigationStruct $navigation */
+        foreach ($navigationData as $navigation) {
+            if (! $mergedNavigation) {
+                $mergedNavigation = $navigation;
                 continue;
             }
-            $mergedData = $mergedData->mergeWith($struct);
+
+            $mergedNavigation = $mergedNavigation->mergeWith($navigation);
         }
 
-        if (!$mergedData) {
+        if (! $mergedNavigation) {
             return $navigationData;
         }
 
+        $mergedNavigation->sortGroups(config('shopengine-nova.navigation'));
+
         return [
-            new NavigationStruct($mergedData->getGroups()->toArray())
+            new NavigationStruct($mergedNavigation->getGroups()->toArray())
         ];
     }
 

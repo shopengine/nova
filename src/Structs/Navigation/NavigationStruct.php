@@ -52,6 +52,14 @@ final class NavigationStruct implements \IteratorAggregate
         return $this;
     }
 
+    public function sortGroups(array $titles): self
+    {
+        $this->groups = $this->groups->sortBy(
+            fn(NavigationGroupStruct $navigationGroupStruct) => array_search($navigationGroupStruct->getTitle(), $titles)
+        );
+
+        return $this;
+    }
 
     public function getIterator()
     {

@@ -2,7 +2,7 @@
 
 namespace ShopEngine\Nova\Structs\Navigation;
 
-// @todo: on php8 use constructor property promotion
+// @todo[php8] on php8 use constructor property promotion
 final class NavigationItemStruct
 {
     /**
@@ -17,6 +17,11 @@ final class NavigationItemStruct
     private ?string $resourceClass;
 
     /**
+     * @var string
+     */
+    private int $order;
+
+    /**
      * NavigationStruct constructor.
      *
      * @param string $title
@@ -25,11 +30,13 @@ final class NavigationItemStruct
     public function __construct(
         string $title,
         string $path,
-        string $resourceClass = null
+        string $resourceClass = null,
+        int $order = 999
     ) {
         $this->title = $title;
         $this->path = $path;
         $this->resourceClass = $resourceClass;
+        $this->order = $order;
     }
 
     /**
@@ -54,5 +61,13 @@ final class NavigationItemStruct
     public function getResourceClass(): ?string
     {
         return $this->resourceClass;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 }
