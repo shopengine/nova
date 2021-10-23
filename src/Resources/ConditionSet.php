@@ -32,12 +32,12 @@ class ConditionSet extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.conditionsets');
+        return __('shopengine.conditionsets');
     }
 
     public static function singularLabel()
     {
-        return __('se.conditionset');
+        return __('shopengine.conditionset');
     }
 
     public function fields(Request $request)

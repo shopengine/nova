@@ -28,12 +28,12 @@ class ShippingCost extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.shippingcosts');
+        return __('shopengine.shippingcosts');
     }
 
     public static function singularLabel()
     {
-        return __('se.shippingcost');
+        return __('shopengine.shippingcost');
     }
 
     public function fields(\Illuminate\Http\Request $request)

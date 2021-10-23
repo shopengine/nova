@@ -1,6 +1,6 @@
 @if ($group->showTitle())
     <h4 class="ml-8 mb-1 text-xs text-white-50% uppercase tracking-wide">
-        {{ __('se.'.$group->getTitle())  }}
+        {{ __('shopengine.'.$group->getTitle())  }}
     </h4>
 @endif
 

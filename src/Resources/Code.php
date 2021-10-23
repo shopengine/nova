@@ -34,18 +34,18 @@ class Code extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.codes');
+        return __('shopengine.codes');
     }
 
     public static function singularLabel()
     {
-        return __('se.code');
+        return __('shopengine.code');
     }
 
     public function fields(Request $request)
     {
         return $this->appendShopEngineFields([
-            Text::make(__('se.code'), 'code'),
+            Text::make(__('shopengine.code'), 'code'),
             Badge::make('Status')->map([
                 'enabled' => 'success',
                 'disabled' => 'danger'
@@ -75,23 +75,23 @@ class Code extends ShopEngineResource
                 ->hideWhenUpdating()
                 ->sortable(true),
 
-            Text::make(__('se.codepool'), 'codepoolName')
+            Text::make(__('shopengine.codepool'), 'codepoolName')
                 ->onlyOnIndex(),
 
-            CodepoolLink::make(__('se.codepool'), 'codepoolId')
+            CodepoolLink::make(__('shopengine.codepool'), 'codepoolId')
                 ->onlyOnDetail(),
 
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
 
-            ShopEngineModel::make(__('se.conditionset'), 'conditionSetVersionId')
+            ShopEngineModel::make(__('shopengine.conditionset'), 'conditionSetVersionId')
                 ->model(ConditionSet::class)
                 ->valueFieldName('versionId')
                 ->labelFieldName('name')
                 ->required(true)->rules('required')
                 ->onlyOnForms(),
 
-            ShopEngineModel::make(__('se.codepool'), 'codepoolId')
+            ShopEngineModel::make(__('shopengine.codepool'), 'codepoolId')
                 ->model(Codepool::class)
                 ->labelFieldName('name')
                 ->required(true)->rules('required')

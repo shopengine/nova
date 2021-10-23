@@ -33,12 +33,12 @@ class Purchase extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.orders');
+        return __('shopengine.purchases');
     }
 
     public static function singularLabel()
     {
-        return __('se.order');
+        return __('shopengine.purchase');
     }
 
     public function fields(\Illuminate\Http\Request $request)

@@ -100,45 +100,51 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
     public static function getShopengineNavigation(): ?NavigationStruct
     {
         $baseNavigation = [
-            new NavigationItemStruct('orders', '/novashopengine/purchases', Resources\Purchase::class)
-        ];
-
-        $adminNavigation = [
-            new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs', Resources\ShippingCost::class),
             new NavigationItemStruct(
-                'payments',
+                'purchases',
+                '/novashopengine/purchases',
+                Resources\Purchase::class,
+                0
+            ),
+            new NavigationItemStruct(
+                'shippingcosts',
+                '/novashopengine/shipping-costs',
+                Resources\ShippingCost::class,
+                1
+            ),
+            new NavigationItemStruct(
+                'paymentmethods',
                 '/novashopengine/payment-methods',
-                Resources\PaymentMethod::class
+                Resources\PaymentMethod::class,
+                2
             )
         ];
 
-        $codepoolNavigation = [
-            new NavigationItemStruct(
-                'codepools',
-                '/novashopengine/codepools',
-                Resources\Codepool::class
-            ),
+        $codeNavigation = [
             new NavigationItemStruct(
                 'codes',
                 '/novashopengine/codes',
-                Resources\Code::class
+                Resources\Code::class,
+                0
+            ),
+            new NavigationItemStruct(
+                'codepools',
+                '/novashopengine/codepools',
+                Resources\Codepool::class,
+                1
             )
         ];
 
         $struct = new NavigationStruct(
             [
                 new NavigationGroupStruct(
-                    '_',
+                    'base',
                     $baseNavigation,
                     false
                 ),
                 new NavigationGroupStruct(
-                    'codesgroup',
-                    $codepoolNavigation
-                ),
-                new NavigationGroupStruct(
-                    'admin',
-                    $adminNavigation
+                    'codes',
+                    $codeNavigation
                 )
             ]
         );

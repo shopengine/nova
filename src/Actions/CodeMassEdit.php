@@ -21,7 +21,7 @@ class CodeMassEdit extends Action
 
     public function name()
     {
-        return __('se.actions.massedit');
+        return __('shopengine.actions.massedit');
     }
 
     /**

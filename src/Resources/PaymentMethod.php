@@ -24,12 +24,12 @@ class PaymentMethod extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.paymentmethods');
+        return __('shopengine.paymentmethods');
     }
 
     public static function singularLabel()
     {
-        return __('se.paymentmethod');
+        return __('shopengine.paymentmethod');
     }
 
     public function fields(\Illuminate\Http\Request $request)

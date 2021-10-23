@@ -27,12 +27,12 @@ class Codepool extends ShopEngineResource
 
     public static function label()
     {
-        return __('se.codepools');
+        return __('shopengine.codepools');
     }
 
     public static function singularLabel()
     {
-        return __('se.codepool');
+        return __('shopengine.codepool');
     }
 
     public function fields(Request $request)
