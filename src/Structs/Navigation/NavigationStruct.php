@@ -28,13 +28,6 @@ final class NavigationStruct implements \IteratorAggregate
         return $this->groups;
     }
 
-    public function hasGroupWithTitle($title): int
-    {
-        return $this->groups->search(
-            fn ($item, $key) => $item->getTitle() === $title
-        );
-    }
-
     public function getAvailableStruct(array $availableResources): NavigationStruct
     {
         return new NavigationStruct(
@@ -44,14 +37,18 @@ final class NavigationStruct implements \IteratorAggregate
 
     public function mergeWith(NavigationStruct $targetStruct): self
     {
+        /** @var NavigationGroupStruct $structGroup */
         foreach ($targetStruct as $structGroup) {
-            $key = $this->hasGroupWithTitle($structGroup->getTitle());
-            if ($key) {
+            $key = $this->groups->search(fn (NavigationGroupStruct $item, $key) => $item->getTitle() === $structGroup->getTitle());
+
+            if (is_numeric($key)) {
                 $this->groups->get($key)->addItems($structGroup->getItems()->toArray());
-            } else {
+            }
+            else {
                 $this->groups->add($structGroup);
             }
         }
+
         return $this;
     }
 
