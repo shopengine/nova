@@ -8,10 +8,7 @@ use Laravel\Nova\Resource;
 class ShopEngineResourceFieldsStruct
 {
     public array $fields;
-
-
     public Model $model;
-
     /**
      * @var Resource
      */

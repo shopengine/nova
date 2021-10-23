@@ -21,16 +21,13 @@ class Code extends ShopEngineResource
 {
     public static $title = 'code';
     public static $search = ['code'];
-
     public static $defaultSort = '-updatedAt';
     public static $id = 'aggregateId';
-
 
     public static function getModel(): string
     {
         return CodeModel::class;
     }
-
 
     public static function label()
     {

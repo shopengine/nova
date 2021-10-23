@@ -22,7 +22,6 @@ class SeResourceIndexRequest extends ResourceIndexRequest
      */
     public function searchIndex()
     {
-
         // @todo may use custom querybuilder for se
         $request = app(NovaRequest::class);
 

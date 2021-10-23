@@ -187,7 +187,7 @@ class ListRequestBuilder extends RequestBuilder
             }
         }
 
-        // @todo: [**] remove this ugly stuff
+        // @todo Solve in shopengine core
         if ($resource === Purchase::class) {
             $listRequest->addFilter(new RequestFilterStruct(
                 'email',
@@ -197,7 +197,7 @@ class ListRequestBuilder extends RequestBuilder
         }
 
         $indexFields = $request->newResource()->indexFields($request);
-        $properties =  $indexFields->map(fn (Field $field) => $field->attribute)
+        $properties = $indexFields->map(fn (Field $field) => $field->attribute)
             ->add($resource::$id)
             ->toArray();
         $listRequest->setProperties($properties);

@@ -6,7 +6,6 @@ class LoadRequestStruct extends RequestStruct
 {
     private string $id;
 
-
     /**
      * LoadRequestStruct constructor.
      *
@@ -16,7 +15,6 @@ class LoadRequestStruct extends RequestStruct
     {
         $this->id = $id;
     }
-
 
     /**
      * @return array|string
