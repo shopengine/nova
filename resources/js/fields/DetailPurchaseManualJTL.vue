@@ -28,7 +28,7 @@ export default {
             if (confirm('Wirklich?')) {
                 this.loading = true
 
-                Nova.request().post(`/nova-vendor/novashopengine/purchases/${this.resourceId}/manualJTL`).then(response => {
+                Nova.request().post(`/nova-vendor/shopengine/purchases/${this.resourceId}/manualJTL`).then(response => {
                     if (response.headers['content-type'] !== 'application/json') {
                         console.error(response)
                         return

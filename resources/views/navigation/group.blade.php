@@ -6,6 +6,6 @@
 
 <ul class="list-reset mb-8">
     @foreach ($group->getItems() as $item)
-        @include('novashopengine::navigation/item', ['item' => $item])
+        @include('shopengine::navigation/item', ['item' => $item])
     @endforeach
 </ul>

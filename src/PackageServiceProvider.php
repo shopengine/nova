@@ -34,7 +34,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
     {
         $this->registerPublishing();
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'novashopengine');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'shopengine');
 
         $this->app->booted(function () {
             $this->routes();
@@ -74,7 +74,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         }
 
         Route::middleware(['nova', Authorize::class])
-            ->prefix('nova-vendor/novashopengine')
+            ->prefix('nova-vendor/shopengine')
             ->namespace('ShopEngine\Nova\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
 
@@ -102,19 +102,19 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         $baseNavigation = [
             new NavigationItemStruct(
                 'purchases',
-                '/novashopengine/purchases',
+                '/shopengine/purchases',
                 Resources\Purchase::class,
                 0
             ),
             new NavigationItemStruct(
                 'shippingcosts',
-                '/novashopengine/shipping-costs',
+                '/shopengine/shipping-costs',
                 Resources\ShippingCost::class,
                 1
             ),
             new NavigationItemStruct(
                 'paymentmethods',
-                '/novashopengine/payment-methods',
+                '/shopengine/payment-methods',
                 Resources\PaymentMethod::class,
                 2
             )
@@ -123,13 +123,13 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         $codeNavigation = [
             new NavigationItemStruct(
                 'codes',
-                '/novashopengine/codes',
+                '/shopengine/codes',
                 Resources\Code::class,
                 0
             ),
             new NavigationItemStruct(
                 'codepools',
-                '/novashopengine/codepools',
+                '/shopengine/codepools',
                 Resources\Codepool::class,
                 1
             )
@@ -156,7 +156,6 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
     {
         $request = NovaRequest::createFrom(request());
         $resource = $request->viaResource();
-
 
         if (is_null($resource) && $request->segment(1) === 'nova-api') {
             $resourceString = $request->segment(2);

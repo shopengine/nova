@@ -28,12 +28,12 @@ class NovaTool extends Tool
             "shopCurrency" => $shopService->shopCurrency()
         ]);
 
-        Nova::script('novashopengine', __DIR__.'/../dist/js/tool.js');
+        Nova::script('shopengine', __DIR__.'/../dist/js/tool.js');
     }
 
     public function renderNavigation()
     {
-        return view('novashopengine::navigation.navigation', [
+        return view('shopengine::navigation.navigation', [
             'structs' => $this->buildNavigation()
         ]);
     }

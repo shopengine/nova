@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading" style="margin: -0.75rem -1.5rem" class="card">
-        <router-link v-if="!isArchived" :to="`/novashopengine/${inlineResourceName}/new?codepoolId=${resourceId}`" class="btn btn-default btn-primary" style="position: absolute; right: 0; top: -48px;">
+        <router-link v-if="!isArchived" :to="`/shopengine/${inlineResourceName}/new?codepoolId=${resourceId}`" class="btn btn-default btn-primary" style="position: absolute; right: 0; top: -48px;">
             {{ __('Create :resource', {resource: label}) }}
         </router-link>
 
@@ -110,7 +110,7 @@ export default {
 
             const params = {...this.query, 'codepoolId-eq': this.resourceId}
 
-            Nova.request().get(`/nova-vendor/novashopengine/codes`, {params}).then(response => {
+            Nova.request().get(`/nova-vendor/shopengine/codes`, {params}).then(response => {
                 if (response.headers['content-type'] !== 'application/json') {
                     console.error(response)
                     return

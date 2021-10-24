@@ -12,7 +12,7 @@
                 <tbody>
                 <tr v-for="code in field.value">
                     <td>{{code.code}}</td>
-                    <td><router-link :to="`/novashopengine-codepools/${code.codepoolId}`" class="text-80">{{code.codepoolName}}</router-link></td>
+                    <td><router-link :to="`/shopengine-codepools/${code.codepoolId}`" class="text-80">{{code.codepoolName}}</router-link></td>
                     <td>{{code.usedValue}}</td>
                 </tr>
                 </tbody>

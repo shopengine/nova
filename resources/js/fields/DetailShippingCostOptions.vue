@@ -78,7 +78,7 @@ export default {
                 this.deleteModalOpen = false
             },
             async confirmDelete() {
-                await Nova.request().post(`/nova-vendor/novashopengine/shipping-costs/${this.resourceId}/removeOption`, {
+                await Nova.request().post(`/nova-vendor/shopengine/shipping-costs/${this.resourceId}/removeOption`, {
                     values: {
                         optionId: this.selectedOption
                     }
@@ -103,7 +103,7 @@ export default {
             },
             async saveOption(values) {
                  await Nova.request()
-                    .post(`/nova-vendor/novashopengine/shipping-costs/${this.resourceId}/addOption`, {values})
+                    .post(`/nova-vendor/shopengine/shipping-costs/${this.resourceId}/addOption`, {values})
 
                 Nova.success(
                     this.__('The :resource was created!', {

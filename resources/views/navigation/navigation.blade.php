@@ -7,6 +7,6 @@
 
 @foreach ($structs as $struct)
     @foreach ($struct->getGroups() as $group)
-        @include('novashopengine::navigation/group', ['group' => $group])
+        @include('shopengine::navigation/group', ['group' => $group])
     @endforeach
 @endforeach
