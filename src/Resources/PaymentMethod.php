@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Models\PaymentMethodModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -36,25 +37,41 @@ class PaymentMethod extends ShopEngineResource
     {
         return $this->appendShopEngineFields([
             Text::make('Name', 'name')
-                ->required(true)->rules('required'),
-            Text::make('Type', 'type')->readonly(),
-
-            Badge::make('Status')->map([
-                'enabled' => 'success',
-                'disabled' => 'danger',
-            ]),
-
-            Select::make('Status')->options([
-                'enabled' => 'Aktiv',
-                'disabled' => 'Deaktiviert'
-            ])->onlyOnForms()->required(true)->rules('required'),
-
+                ->required(true)
+                ->rules('required'),
+            Text::make('Type', 'type')
+                ->readonly(),
+            Badge::make('Status')
+                ->map([
+                    'enabled' => 'success',
+                    'disabled' => 'danger',
+                ]),
+            Select::make('Status')
+                ->options([
+                    'enabled' => 'Aktiv',
+                    'disabled' => 'Deaktiviert'
+                ])
+                ->onlyOnForms()
+                ->required(true)
+                ->rules('required'),
             Number::make('Gewicht', 'weight')
                 ->min(1)
                 ->step(1)
                 ->required(true)->rules('required')
                 ->sortable()
         ]);
+    }
+
+    public function fieldsForIndex(NovaRequest $request)
+    {
+        return [
+            Text::make('Name', 'name'),
+            Badge::make('Status')
+                ->map([
+                    'enabled' => 'success',
+                    'disabled' => 'danger',
+                ]),
+        ];
     }
 
     public static function authorizedToCreate(Request $request)

@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Fields\Address;
 use ShopEngine\Nova\Fields\PurchaseArticles;
 use ShopEngine\Nova\Fields\PurchaseCodes;
@@ -107,6 +108,39 @@ class Purchase extends ShopEngineResource
             KeyValue::make('Weitere Informationen', 'paymentInformation')
                 ->onlyOnDetail()
         ]);
+    }
+
+    public function fieldsForIndex(NovaRequest $request)
+    {
+        return [
+            Text::make('Bestellnummer', 'orderId'),
+            Text::make('Email', 'email'),
+            DateTime::make('Bestelldatum', 'orderDate'),
+            Number::make('Gesamtkosten', 'grandTotal')
+                ->displayUsing(function ($money) {
+                    return $money instanceof Money
+                        ? ConvertMoney::toRealFloat($money) . ' ' . $money->getCurrency()
+                        : '';
+                })->withMeta(['textAlign' => 'right']),
+            Text::make('Zahlart', 'paymentMethod'),
+            Text::make('Versandart', 'shippingMethod'),
+            Badge::make('Status', 'status')->map([
+                ApiPurchase::STATUS__NEW => 'info',
+                ApiPurchase::STATUS_PLACED => 'info',
+                ApiPurchase::STATUS_PAYMENT_FAILED => 'warn',
+                ApiPurchase::STATUS_PAYMENT_PENDING => 'info',
+                ApiPurchase::STATUS_PAYMENT_DONE => 'success',
+                ApiPurchase::STATUS_SHIPPED => 'success',
+                ApiPurchase::STATUS_CANCELED => 'danger',
+            ]),
+            Badge::make('ERP Status', 'originStatus')->map([
+                ApiPurchase::ORIGIN_STATUS_EMPTY => 'info',
+                ApiPurchase::ORIGIN_STATUS_READY_TO_IMPORT => 'info',
+                ApiPurchase::ORIGIN_STATUS_IMPORTED => 'success',
+                ApiPurchase::ORIGIN_STATUS_ERROR_IN_IMPORT => 'danger',
+                ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
+            ]),
+        ];
     }
 
     public function filters(Request $request)
