@@ -7,6 +7,11 @@ use Laravel\Nova\Filters\Filter;
 
 class PurchaseStatusFilter extends Filter
 {
+    public function name()
+    {
+        return __('shopengine.filter.purchase_status');
+    }
+
     public function apply(Request $request, $query, $value)
     {
         if ($value === 'failed_jtl') {
