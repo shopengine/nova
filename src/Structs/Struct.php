@@ -9,12 +9,13 @@ abstract class Struct
         try {
             $self = (new \ReflectionClass(static::class))
                 ->newInstanceWithoutConstructor();
-        } catch (\ReflectionException $exception) {
+        }
+        catch (\ReflectionException $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
 
         foreach ($object->getVars() as $property => $value) {
-            $self->$property = $value;
+            $self->set($property, $value);
         }
 
         return $self;
@@ -30,7 +31,8 @@ abstract class Struct
 
             try {
                 $this->$key = $value;
-            } catch (\Exception $error) {
+            }
+            catch (\Exception $error) {
                 // @todo maybe more later
                 throw $error;
             }
