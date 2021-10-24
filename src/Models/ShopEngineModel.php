@@ -54,6 +54,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function getId(): ?string
     {
         $key = $this->getKeyName();
+
         return $this->offsetGet($key);
     }
 
@@ -74,9 +75,9 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function offsetGet($offset)
     {
-        return $this->offsetExists($offset) ?
-            $this->fromModel($offset) :
-            null;
+        return $this->offsetExists($offset)
+            ? $this->fromModel($offset)
+            : null;
     }
 
     /**
@@ -110,6 +111,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     private function fromModel($offset)
     {
         $data = $this->model->{$this->model::getters()[$offset]}();
+
         return $this->mapShopEngineModelToArray($data);
     }
 
@@ -121,9 +123,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     private function mapShopEngineValue(ModelInterface $entry): array
     {
         $responseEntry = [];
-
         $getProperties = $entry::getters();
-
         $hideNullValues = $entry instanceof PaymentInformation;
 
         foreach ($getProperties as $getKey => $getProperty) {
@@ -159,11 +159,13 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 
             if (is_object($obj)) {
                 $interfaces = class_implements($obj);
+
                 if (in_array(ModelInterface::class, $interfaces)) {
                     $obj = $this->mapShopEngineValue($obj);
                 }
             }
-        } elseif (is_array($obj)) {
+        }
+        elseif (is_array($obj)) {
             $newObj = [];
 
             foreach ($obj as $item) {
@@ -191,6 +193,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function jsonSerialize(): array
     {
         $obj = [];
+
         foreach ($this->model::getters() as $attribute => $getter) {
             $obj[$attribute] = $this->model->{$getter}();
         }
@@ -210,7 +213,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             $builder->buildFromRequest($request)
         );
     }
-
 
     /**
      * @param array $options
@@ -275,6 +277,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function newQuery()
     {
         $request = app(NovaRequest::class);
+
         return LoadRequestBuilder::fromResource($request->resource());
     }
 
@@ -311,6 +314,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function find($id)
     {
         $builder = new LoadRequestBuilder($this);
+
         return $builder->find($id);
     }
 
@@ -323,7 +327,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         if (!isset($this->model::setters()[$offset])) {
             throw \Exception('Cant find setter for  '.$offset. ' on '. get_class($this->model));
         }
-
 
         $this->model->{$this->model::setters()[$offset]}($value);
     }
@@ -359,7 +362,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         return '0';
     }
 
-
     /**
      * Define a one-to-many relationship.
      *
@@ -388,6 +390,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
             $this->getId(),
             'eq'
         ));
+
         return $listRequest;
     }
 }

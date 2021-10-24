@@ -90,7 +90,6 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         ]);
     }
 
-
     /**
      *
      * Replaces the Eloquent Builder with SE Api Client Builder
@@ -103,7 +102,6 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
      * @param string $withTrashed
      *
      */
-
     public static function buildIndexQuery(
         NovaRequest $request,
         $query = null,

@@ -1,12 +1,10 @@
 Nova.booting((Vue, router, store) => {
-     // alias for resources/:resourceName
+    // alias for resources/:resourceName
 
-     router.addRoutes([
-        {
-            path: '/novashopengine/:resourceName',
-            component: require('./components/List'),
-        }
-     ])
+    router.addRoutes([{
+        path: '/shopengine/:resourceName',
+        component: require('./components/List'),
+    }])
 
     // custom fields
     Vue.component('detail-shippingcostoptions', require('./fields/DetailShippingCostOptions'))

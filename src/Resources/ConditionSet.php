@@ -43,8 +43,10 @@ class ConditionSet extends ShopEngineResource
     public function fields(Request $request)
     {
         return $this->appendShopEngineFields([
-            Text::make('Name', 'name')->rules('required')->required(),
-            Number::make('Version ID', 'versionId')
+            Text::make('Name', 'name')
+                ->rules('required')
+                ->required(),
+            Number::make('Version Id', 'versionId')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->readonly()

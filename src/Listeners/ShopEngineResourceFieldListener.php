@@ -12,7 +12,6 @@ abstract class ShopEngineResourceFieldListener
      */
     public function handle($event): ShopEngineResourceFieldsStruct
     {
-
         /** @var ShopEngineResourceFieldsStruct $fieldStruct */
         $fieldStruct = $event->data;
 

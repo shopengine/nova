@@ -39,7 +39,8 @@ class Codepool extends ShopEngineResource
     {
         return $this->appendShopEngineFields([
             Text::make('Name', 'name')
-                ->required(true)->rules('required')
+                ->required(true)
+                ->rules('required')
                 ->sortable(true),
             Textarea::make('Beschreibung', 'description')
                 ->alwaysShow(),
@@ -50,15 +51,15 @@ class Codepool extends ShopEngineResource
                 ->format('Y-MM-DD HH:mm:ss')
                 ->onlyOnIndex(),
             Badge::make('Archiviert', function () {
-                return $this->model->getDeletedAt() !== null;
-            })
+                    return $this->model->getDeletedAt() !== null;
+                })
                 ->map([
                    false => 'success',
                    true => 'danger'
                 ])
                 ->onlyOnDetail(),
 
-            HasMany::make('Codes','codes')
+            HasMany::make('Codes', 'codes')
         ]);
     }
 

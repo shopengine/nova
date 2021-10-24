@@ -18,7 +18,8 @@ class PurchaseStatusFilter extends Filter
             $query['originStatus-eq'] = 'imported';
             $query['originId-eq'] = 'empty';
             $query['orderDate-gt'] = '2020-05-25';
-        } else {
+        }
+        else {
             $query['status-eq'] = $value;
         }
 
@@ -29,10 +30,10 @@ class PurchaseStatusFilter extends Filter
     public function options(Request $request)
     {
         return [
-            'Neu' => 'payment_done',
+            'Neu'         => 'payment_done',
+            'Versendet'   => 'shipped',
             'Abgebrochen' => 'canceled',
-            'Versendet' => 'shipped',
-            'JTL Fehler' => 'failed_jtl'
+            'JTL Fehler'  => 'failed_jtl'
         ];
     }
 }
