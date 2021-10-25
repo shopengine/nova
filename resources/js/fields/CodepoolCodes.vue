@@ -65,13 +65,11 @@ export default {
     },
     mounted() {
         this.setDataFromRouter(this.$route.query)
-        this.list()
     },
     watch: {
         $route(to, from) {
             if (to.query) {
                 this.setDataFromRouter(to.query)
-                this.list()
             }
         }
     },
@@ -105,29 +103,6 @@ export default {
         orderChange(query) {
             console.log(query)
         },
-        list() {
-            this.loading = true
-
-            const params = {...this.query, 'codepoolId-eq': this.resourceId}
-
-            Nova.request().get(`/nova-vendor/shopengine/codes`, {params}).then(response => {
-                if (response.headers['content-type'] !== 'application/json') {
-                    console.error(response)
-                    return
-                }
-
-                this.label = response.data.label
-                this.resources = response.data.resources
-                this.count = response.data.count
-                const maxPages = Math.ceil(this.count / this.query.pageSize) - 1
-
-                this.hasPreviousPage = this.query.page >= 1
-                this.hasNextPage = this.query.page < maxPages
-                this.loading = false
-                this.perPageOptions = response.data.per_page_options
-                this.perPage = response.data.per_page
-            })
-        }
     }
 }
 </script>
