@@ -3,8 +3,8 @@
         <template slot="value">
             <table class="table">
                 <tr v-for="validation in field.value">
-                    <td>{{label(validation.type)}}</td>
-                    <td>{{value(validation.value)}}</td>
+                    <td>{{ label(validation.type) }}</td>
+                    <td>{{ value(validation.value) }}</td>
                 </tr>
             </table>
         </template>
@@ -13,7 +13,12 @@
 
 <script>
     export default {
-        props: ['resource', 'resourceName', 'resourceId', 'field'],
+        props: [
+            'resource',
+            'resourceName',
+            'resourceId',
+            'field'
+        ],
 
         methods: {
             label(type) {
