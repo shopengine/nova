@@ -4,6 +4,7 @@ namespace ShopEngine\Nova\Filter;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
+use SSB\Api\Model\Purchase;
 
 class PurchaseStatusFilter extends Filter
 {
@@ -14,26 +15,17 @@ class PurchaseStatusFilter extends Filter
 
     public function apply(Request $request, $query, $value)
     {
-        if ($value === 'failed_jtl') {
-            $query['originStatus-eq'] = 'imported';
-            $query['originId-eq'] = 'empty';
-            $query['orderDate-gt'] = '2020-05-25';
-        }
-        else {
-            $query['status-eq'] = $value;
-        }
+        $query['status-eq'] = $value;
 
         return $query;
     }
 
-    // @todo: this types should be defined in ssb
     public function options(Request $request)
     {
         return [
-            'Neu'         => 'payment_done',
-            'Versendet'   => 'shipped',
-            'Abgebrochen' => 'canceled',
-            'JTL Fehler'  => 'failed_jtl'
+            'Bezahlt'     => Purchase::STATUS_PAYMENT_DONE,
+            'Versendet'   => Purchase::STATUS_SHIPPED,
+            'Abgebrochen' => Purchase::STATUS_CANCELED,
         ];
     }
 }
