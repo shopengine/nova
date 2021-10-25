@@ -104,20 +104,17 @@ class ShippingCost extends ShopEngineResource
                 ->help('Wird zum Mapping mit dem ERP genutzt. ')
                 ->hideFromIndex(),
 
-            new Panel('Optionen', [
-                ShippingCostOptions::make('Optionen', 'options')
-                    ->hideFromIndex()
-                    ->hideWhenCreating()
-                    ->hideWhenUpdating()
+            ShippingCostOptions::make('Optionen', 'options')
+                ->hideFromIndex()
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
                 ->withMeta(['listable' => true]),
-            ]),
 
-            new Panel('Validierungen', [
-                ShippingCostValidations::make('Validierungen', 'validation')
-                    ->hideFromIndex()
-                    ->hideWhenCreating()
-                    ->hideWhenUpdating(),
-            ]),
+            ShippingCostValidations::make('Validierungen', 'validation')
+                ->hideFromIndex()
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->withMeta(['listable' => true]),
         ];
 
         return $this->appendShopEngineFields($fields);

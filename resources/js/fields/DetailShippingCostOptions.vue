@@ -1,13 +1,11 @@
 <template>
-    <div style="position:relative;">
-        <button @click="openOptionModal" class="btn btn-default btn-primary" style="position:absolute;right: -1.5rem; top: -50px">
-            Add Option
-        </button>
+    <div class="relative w-full">
+        <div class="flex justify-between items-center mb-3">
+            <h1 class="flex-no-shrink text-90 font-normal text-2xl">Optionen</h1>
+            <button @click="openOptionModal" class="btn btn-default btn-primary">Option hinzufügen</button>
+        </div>
 
-        <portal
-                to="modals"
-                v-if="optionModalOpen"
-        >
+        <portal to="modals" v-if="optionModalOpen">
             <ShippingCostOptionCreateModal
                     v-if="optionModalOpen"
                     :shop="this.resource.shop"
@@ -16,7 +14,7 @@
             />
         </portal>
 
-        <table class="table card" style="width:calc(100% + 3rem);margin: -0.75rem -1.5rem">
+        <table class="table card w-full">
             <thead>
             <tr>
                 <th class="text-left">Preis</th>
@@ -26,8 +24,8 @@
             </thead>
             <tbody>
             <tr v-for="option in field.value" :key="option.id">
-                <td class="text-left">{{formatMoney(option.price)}}</td>
-                <td class="left">{{formatMoney(option.validation.sub)}}</td>
+                <td class="text-left">{{ formatMoney(option.price) }}</td>
+                <td class="left">{{ formatMoney(option.validation.sub) }}</td>
                 <td>
                     <button
                             @click="openDeleteModal(option.id)"
