@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('/purchases/{resourceId}/manualJTL', 'PurchaseController@manualJTL');
+Route::post('/purchases/{resourceId}/origin-status', 'PurchaseController@setOriginStatus');
 
-// Special Cases
 Route::post('/{resource}/{resourceId}/addOption', 'ShippingCostController@addOption');
 Route::post('/{resource}/{resourceId}/removeOption', 'ShippingCostController@removeOption');

@@ -6,7 +6,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Fields\Address;
 use ShopEngine\Nova\Fields\PurchaseArticles;
 use ShopEngine\Nova\Fields\PurchaseCodes;
-use ShopEngine\Nova\Fields\PurchaseManualJTL;
+use ShopEngine\Nova\Fields\PurchaseOriginStatus;
 use ShopEngine\Nova\Filter\PurchaseStatusFilter;
 use ShopEngine\Nova\Models\PurchaseModel;
 use ShopEngine\Nova\Services\ConvertMoney;
@@ -68,7 +68,7 @@ class Purchase extends ShopEngineResource
                 ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
             ]),
 
-            PurchaseManualJTL::make('Manuellen Import für ERP freigeben')
+            PurchaseOriginStatus::make('ERP Import freigeben')
                 ->onlyOnDetail(),
 
             Text::make('Zahlart', 'paymentMethod'),

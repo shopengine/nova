@@ -1,5 +1,5 @@
 <template>
-    <panel-item :field="field">
+    <panel-item :field="field" v-if="canUpdateOriginStatus">
         <template slot="value">
             <button v-on:click="send" :disabled="loading"  class="btn btn-default btn-primary">Freigeben</button>
         </template>
@@ -16,7 +16,8 @@ export default {
     ],
     data() {
         return {
-            loading: false
+            loading: false,
+            canUpdateOriginStatus: this.resource.seModel.originStatus !== 'imported'
         }
     },
     methods: {
@@ -28,7 +29,7 @@ export default {
             if (confirm('Wirklich?')) {
                 this.loading = true
 
-                Nova.request().post(`/nova-vendor/shopengine/purchases/${this.resourceId}/manualJTL`).then(response => {
+                Nova.request().post(`/nova-vendor/shopengine/purchases/${this.resourceId}/origin-status`).then(response => {
                     if (response.headers['content-type'] !== 'application/json') {
                         console.error(response)
                         return

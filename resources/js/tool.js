@@ -12,7 +12,7 @@ Nova.booting((Vue, router, store) => {
 
     Vue.component('detail-purchase-address', require('./fields/DetailAddress'))
     Vue.component('detail-purchase-articles', require('./fields/DetailPurchaseArticles'))
-    Vue.component('detail-purchase-manual-jtl', require('./fields/DetailPurchaseManualJTL'))
+    Vue.component('detail-purchase-origin-status', require('./fields/DetailPurchaseOriginStatus'))
     Vue.component('detail-purchase-codes', require('./fields/DetailCodes'))
 
     Vue.component('index-money', require('./fields/IndexMoney'))
