@@ -3,7 +3,7 @@
         <resource-index
             :field="null"
             :resource-name="resourceName"
-            :via-resource="resourceName"
+            :via-resource="null"
             :via-resource-id="null"
             :via-relationship="null"
             :relationship-type="null"
