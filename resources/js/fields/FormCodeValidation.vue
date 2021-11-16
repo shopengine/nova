@@ -77,7 +77,7 @@
             </div>
 
             <div class="pb-4">
-                <label>Email:</label>
+                <label>Email</label>
 
                 <input
                         type="email"
@@ -88,6 +88,31 @@
                 />
                 <div class="help-text help-text mt-2">
                     Code kann nur mit dieser Email Adresse benutzt werden.
+                </div>
+            </div>
+
+            <div class="pb-4"
+                v-if="this.resourceId"
+            >
+                <label>Ein mal pro Email</label>
+                <div>
+                    <input
+                        type="checkbox"
+                        class="checkbox mt-2"
+                        :class="errorClasses"
+                        v-model="emailOnce"
+                    />
+                </div>
+            </div>
+            <div class="pb-4">
+                <label>Neukunden</label>
+                <div>
+                    <input
+                        type="checkbox"
+                        class="checkbox mt-2"
+                        :class="errorClasses"
+                        v-model="newCustomer"
+                    />
                 </div>
             </div>
         </template>
@@ -107,7 +132,9 @@ export default {
                 start: null,
                 expires: null,
                 usageCount: null,
-                email: null
+                email: null,
+                emailOnce: null,
+                newCustomer: null
             }
         },
 
@@ -147,6 +174,14 @@ export default {
 
                 if (this.email) {
                     obj.email = this.email
+                }
+
+                if (this.emailOnce) {
+                    obj.emailOnce = this.resourceId
+                }
+
+                if (this.newCustomer) {
+                    obj.newCustomer = true
                 }
 
                 const json = JSON.stringify(obj)

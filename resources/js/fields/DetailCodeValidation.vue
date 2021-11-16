@@ -3,8 +3,8 @@
         <template slot="value">
             <table class="table">
                 <tr v-for="validation in field.value">
-                    <td>{{label(validation.type)}}</td>
-                    <td>{{value(validation.value)}}</td>
+                    <td>{{ label(validation.type) }}</td>
+                    <td>{{ value(validation.value) }}</td>
                 </tr>
             </table>
         </template>
@@ -24,6 +24,10 @@
                         return 'Endet (UTC)'
                     case 'usageCount':
                         return 'Verbleibende Benutzungen'
+                    case 'newCustomer':
+                        return 'Neukunden'
+                    case 'emailOnce':
+                        return 'Ein mal pro Email'
                 }
 
                 return type
