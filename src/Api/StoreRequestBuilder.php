@@ -38,14 +38,7 @@ class StoreRequestBuilder extends RequestBuilder
             }
         }
 
-
-        // todo: make an listener / event for that
-        if ($model->model instanceof Code &&
-            property_exists($model, 'quantity') &&
-            intval($model->quantity) > 1) {
-            $seRequest['quantity'] = intval($model->quantity);
-            $seRequest['code'] = '';
-        }
+        $seRequest = $model->mergePostAttributes($seRequest);
 
         return $seRequest;
     }

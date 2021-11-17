@@ -81,7 +81,7 @@ class LoadRequestBuilder extends RequestBuilder
     {
         return $this->loadedEntities->last();
     }
-    
+
     /**
      * Chunk the collection into chunks of the given size.
      *

@@ -393,4 +393,25 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 
         return $listRequest;
     }
+
+    /**
+     * Merge additional attributes that are not defined via swagger
+     *
+     * @param array $attributes
+     * @return array
+     */
+    public function mergePostAttributes(array $attributes): array
+    {
+        return array_merge($attributes, $this->getAdditionalPostAttributes());
+    }
+
+    /**
+     * Define the attributes that should be merged with the attributes defined by swagger
+     *
+     * @return array
+     */
+    public function getAdditionalPostAttributes(): array
+    {
+        return [];
+    }
 }
