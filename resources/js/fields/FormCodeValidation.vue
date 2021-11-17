@@ -147,10 +147,21 @@ export default {
                 for (let v of this.field.value) {
                     let value = v.value
 
-                    if (typeof value === 'object' && value !== null) {
-                        if (value.date) {
-                            value = moment(value.date).format('Y-MM-DD HH:mm:ss')
-                        }
+                    switch (v.type) {
+                        case 'start':
+                        case 'expires':
+                            if (typeof value === 'object' && value !== null) {
+                                if (value.date) {
+                                    value = moment(value.date).format('Y-MM-DD HH:mm:ss')
+                                }
+                            }
+                            break;
+                        case 'newCustomer':
+                            value = 1
+                            break;
+                        case 'emailOnce':
+                            value = 1
+                            break;
                     }
 
                     this[v.type] = value
