@@ -17,9 +17,6 @@ use Laravel\Nova\FilterDecoder;
 
 class ListRequestBuilder extends RequestBuilder
 {
-
-    const PER_PAGE_COUNT = 25;
-
     public function __construct(
         NovaRequest $request,
         array $filters = []
@@ -39,12 +36,13 @@ class ListRequestBuilder extends RequestBuilder
      * @return \Illuminate\Contracts\Pagination\Paginator
      */
     public function simplePaginate(
-        $perPage = self::PER_PAGE_COUNT,
+        $perPage = null,
         $columns = ['*'],
         $pageName = 'page',
         $page = null
     )
     {
+        $perPage = $this->request->perPage();
         $page = $page ?: Paginator::resolveCurrentPage($pageName);
 
         $listRequest = $this->buildFromRequest($perPage);
@@ -101,7 +99,7 @@ class ListRequestBuilder extends RequestBuilder
      * @return array
      */
     public function buildFromRequest(
-        string $perPage = "25"
+        string $perPage = "50"
     ): ListRequestStruct
     {
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
