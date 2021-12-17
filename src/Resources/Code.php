@@ -86,11 +86,15 @@ class Code extends ShopEngineResource
 
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
+            Text::make(__('se.conditionset'), function ($resource) {
+                return $this->model ? $this->model->getConditionSetName() : null;
+            })->onlyOnDetail(),
             ShopEngineModel::make(__('se.conditionset'), 'conditionSetVersionId')
                 ->model(ConditionSet::class)
                 ->valueFieldName('versionId')
                 ->labelFieldName('name')
-                ->required(true)->rules('required')
+                ->required(true)
+                ->rules('required')
                 ->onlyOnForms(),
             ShopEngineModel::make(__('se.codepool'), 'codepoolId')
                 ->model(Codepool::class)
