@@ -30,6 +30,7 @@ class SeResourceIndexRequest extends ResourceIndexRequest
             $request->resource()
         );
 
+
         return [
             $paginator,
             count($paginator->items()),

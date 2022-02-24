@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova;
 
+use Laravel\Nova\Events\ServingNova;
 use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
 use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
@@ -27,8 +28,6 @@ class NovaTool extends Tool
             "shopEngineIdentifier" => $shopService->shopEngineSettings()->getShopEngineShopIdentifier(),
             "shopCurrency" => $shopService->shopCurrency()
         ]);
-
-        Nova::script('shopengine', __DIR__.'/../dist/js/tool.js');
     }
 
     public function renderNavigation()

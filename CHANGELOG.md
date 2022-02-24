@@ -12,6 +12,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [2.0.1] - 2022-02-24
+- Update from laravel-mix 1.0 => 6.0
+- Added Hot Module loading (HMR)
+
 ## [2.0.0] - 2021-10-23
 ### Added
 - Merging of navigation
