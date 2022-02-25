@@ -21,6 +21,48 @@ abstract class Struct
         return $self;
     }
 
+    public static function createFromObject($object) : Struct
+    {
+        try {
+            $reflection = (new \ReflectionClass(static::class));
+            $self = new static();
+        }
+        catch (\ReflectionException $exception) {
+            throw new \InvalidArgumentException($exception->getMessage());
+        }
+
+        foreach ($reflection->getProperties() as $reflectionProperty) {
+            $propName = $reflectionProperty->getName();
+            if (isset($object->$propName)) {
+                $self->$propName = $object->$propName;
+            }
+        }
+
+        return $self;
+    }
+
+    public static function createFromArray($arr)
+    {
+        try {
+            $reflection = (new \ReflectionClass(static::class));
+            //$self = $reflection->newInstanceWithoutConstructor();
+            $self = new static();
+        }
+        catch (\ReflectionException $exception) {
+            throw new \InvalidArgumentException($exception->getMessage());
+        }
+
+        foreach ($reflection->getProperties() as $reflectionProperty) {
+            $propName = $reflectionProperty->getName();
+            if (!isset($arr[$propName])) {
+                throw new \Exception($propName . ' not exists in array');
+            }
+            $self->$propName = $arr[$propName];
+        }
+
+        return $self;
+    }
+
     public function assign(array $options): Struct
     {
         foreach ($options as $key => $value) {
