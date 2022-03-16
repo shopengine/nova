@@ -4,7 +4,7 @@ namespace ShopEngine\Nova\Http\Controllers;
 
 class PurchaseController extends ShopEngineNovaController
 {
-    public function originStatus(string $resourceId)
+    public function setOriginStatus(string $resourceId)
     {
         $data = [
             'originStatus' => \SSB\Api\Model\Purchase::ORIGIN_STATUS_READY_TO_IMPORT
