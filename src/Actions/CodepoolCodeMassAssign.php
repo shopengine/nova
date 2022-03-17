@@ -42,7 +42,7 @@ class CodepoolCodeMassAssign extends Action
      */
     public function handleRequest(ActionRequest $request)
     {
-        return
+        // @todo
         return Action::message('Todo');
 
         $resource = $request->input('resource');
