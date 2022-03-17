@@ -16,7 +16,12 @@ class ShopEngineNovaController extends Controller
 
     public function __construct()
     {
-        $this->shopService =  ConfiguredClassFactory::getShopEngineService();
+        $this->shopService = ConfiguredClassFactory::getShopEngineService();
+    }
+
+    protected function getShopId(): int
+    {
+        return $this->shopService->id();
     }
 
     protected function getShopSettings(): ShopEngineSettingsInterface
