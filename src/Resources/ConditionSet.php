@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Fields\Date;
 use ShopEngine\Nova\Models\ConditionSetModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
@@ -12,7 +13,7 @@ class ConditionSet extends ShopEngineResource
     public static $title = 'name';
     public static $search = ['name'];
 
-    public static $defaultSort = 'name';
+    public static $defaultSort = '-updatedAt';
     public static $id = 'aggregateId';
 
     public static function getModel(): string
@@ -45,11 +46,16 @@ class ConditionSet extends ShopEngineResource
         return $this->appendShopEngineFields([
             Text::make('Name', 'name')
                 ->rules('required')
-                ->required(),
+                ->required()
+                ->sortable(true),
             Number::make('Version Id', 'versionId')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
-                ->readonly()
+                ->readonly(),
+            Date::make('Aktualisiert am', 'updatedAt')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->sortable(true),
         ]);
     }
 }
