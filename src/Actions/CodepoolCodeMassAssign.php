@@ -42,26 +42,26 @@ class CodepoolCodeMassAssign extends Action
      */
     public function handleRequest(ActionRequest $request)
     {
-        // @todo
-        return Action::message('Todo');
-
         $resource = $request->input('resource');
+        $codepoolId =  $request->input('resources');
 
         if ($resource !== CodepoolModel::$apiEndpoint) {
-            return Action::message($resource . ' not allowed');
+            return Action::danger($resource . ' not allowed');
         }
 
-        $codes = explode(',', $request->input('codes'));
-        $codes = array_map('trim', $codes);
-        $codes = array_filter($codes, fn(string $code) => ! Str::contains($code, ' '));
-        $codes = array_filter($codes);
+        if (!is_numeric($codepoolId)) {
+            return Action::danger('Resource id is not numeric');
+        }
+
+        $codes = $this->getCodes($request);
+
+        if (empty($codes)) {
+            return Action::danger('No valid codes given');
+        }
 
         $message = [
             'Entered ' . count($codes) . ' codes'
         ];
-
-        // @todo $codepoolId
-        $codepoolId = 296;
 
         $responseMessage = $this->updateCodes($codes, $codepoolId);
         $message = array_merge($message, $responseMessage);
@@ -83,6 +83,15 @@ class CodepoolCodeMassAssign extends Action
         ];
     }
 
+    protected function getCodes(ActionRequest $request): array
+    {
+        $codes = explode(',', $request->input('codes'));
+        $codes = array_map('trim', $codes);
+        $codes = array_filter($codes, fn(string $code) => ! Str::contains($code, ' '));
+
+        return array_filter($codes);
+    }
+
     protected function updateCodes(array $codes, int $codepoolId): array
     {
         $responseMessage = [];
@@ -92,6 +101,7 @@ class CodepoolCodeMassAssign extends Action
             /** @var Code[] $codes */
             $codes = $this->client->get('code', [
                 'code-eq' => implode('|', $chunk),
+                'codepoolId-ne' => $codepoolId,
                 'properties' => 'aggregateId'
             ]);
 
