@@ -7,12 +7,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
-- Add PurchaseOriginStatusFilter
-- 
+
 ## [feature/articlebundle]
 ### Changed
 - Require shopengine/client-php feature/articlebundle
+
+## [2.1.0] - 2022-04-06
+### Added
+- Add PurchaseOriginStatusFilter
+- Show more fields for code and conditionset
+### Changed
+- Display order date in CEST timezone
 
 ## [2.0.0] - 2022-03-15
 ### Added
