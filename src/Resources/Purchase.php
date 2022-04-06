@@ -2,11 +2,13 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Carbon\Carbon;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Fields\Address;
 use ShopEngine\Nova\Fields\PurchaseArticles;
 use ShopEngine\Nova\Fields\PurchaseCodes;
 use ShopEngine\Nova\Fields\PurchaseOriginStatus;
+use ShopEngine\Nova\Filter\PurchaseOriginStatusFilter;
 use ShopEngine\Nova\Filter\PurchaseStatusFilter;
 use ShopEngine\Nova\Models\PurchaseModel;
 use ShopEngine\Nova\Services\ConvertMoney;
@@ -47,9 +49,13 @@ class Purchase extends ShopEngineResource
         return $this->appendShopEngineFields([
             Text::make('Bestellnummer', 'orderId')
                 ->sortable(true),
-            DateTime::make('Bestelldatum', 'orderDate')
-                ->format('Y-MM-DD HH:mm:ss')
-                ->sortable(true),
+            DateTime::make('Bestelldatum', function () {
+                if ($this->orderDate) {
+                    return sprintf('%s', Carbon::parse($this->orderDate)->setTimezone('Europe/Berlin')->format('Y-m-d H:i:s'));
+                }
+
+                return '';
+            }),
             Text::make('Email', 'email'),
             Badge::make('Status', 'status')->map([
                 ApiPurchase::STATUS__NEW => 'info',
@@ -115,7 +121,13 @@ class Purchase extends ShopEngineResource
         return [
             Text::make('Bestellnummer', 'orderId'),
             Text::make('Email', 'email'),
-            DateTime::make('Bestelldatum', 'orderDate'),
+            DateTime::make('Bestelldatum', function () {
+                if ($this->orderDate) {
+                    return sprintf('%s', Carbon::parse($this->orderDate)->setTimezone('Europe/Berlin')->format('Y-m-d H:i:s'));
+                }
+
+                return '';
+            }),
             Number::make('Gesamtkosten', 'grandTotal')
                 ->displayUsing(function ($money) {
                     return $money instanceof Money
