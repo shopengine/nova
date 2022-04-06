@@ -7,6 +7,7 @@
     "shopengine.conditionset"           : "Warenkorbregel",
     "shopengine.conditionsets"          : "Warenkorbregeln",
     "shopengine.filter.purchase_status" : "Bestellstatus",
+    "shopengine.filter.purchase_origin_status" : "ERP Status",
     "shopengine.shippingcost"           : "Versandart",
     "shopengine.shippingcosts"          : "Versandarten",
     "shopengine.paymentmethod"          : "Zahlungsart",

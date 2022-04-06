@@ -146,7 +146,8 @@ class Purchase extends ShopEngineResource
     public function filters(Request $request)
     {
         return [
-            new PurchaseStatusFilter()
+            new PurchaseStatusFilter(),
+            new PurchaseOriginStatusFilter(),
         ];
     }
 
