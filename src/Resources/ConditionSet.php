@@ -52,10 +52,20 @@ class ConditionSet extends ShopEngineResource
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->readonly(),
+            Number::make('Gruppe', 'group')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->readonly(),
             Date::make('Aktualisiert am', 'updatedAt')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->sortable(true),
+            \Laravel\Nova\Fields\Code::make('Regeln', 'conditions')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->readonly()
+                ->json()
+                ->autoHeight()
         ]);
     }
 }

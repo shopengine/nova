@@ -43,6 +43,7 @@ class Code extends ShopEngineResource
     {
         return $this->appendShopEngineFields([
             Text::make(__('shopengine.code'), 'code'),
+
             Badge::make('Status')->map([
                 'enabled' => 'success',
                 'disabled' => 'danger'
@@ -63,15 +64,6 @@ class Code extends ShopEngineResource
                 ->onlyOnForms()
                 ->withMeta(['value' => 'enabled']),
 
-            Date::make('Erstellt am', 'createdAt')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
-                ->sortable(true),
-            Date::make('Aktualisiert am', 'updatedAt')
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
-                ->sortable(true),
-
             Text::make(__('shopengine.codepool'), 'codepoolName')
                 ->onlyOnIndex(),
 
@@ -81,6 +73,8 @@ class Code extends ShopEngineResource
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
 
+            Text::make('Regel', 'conditionSetName')
+                ->onlyOnIndex(),
             ShopEngineModel::make(__('shopengine.conditionset'), 'conditionSetVersionId')
                 ->model(ConditionSet::class)
                 ->valueFieldName('versionId')
@@ -99,6 +93,15 @@ class Code extends ShopEngineResource
 
             CodeValidation::make('Validierungen', 'validation')
                 ->hideFromIndex(),
+
+            Date::make('Erstellt am', 'createdAt')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->sortable(true),
+            Date::make('Aktualisiert am', 'updatedAt')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->sortable(true),
         ]);
     }
 
