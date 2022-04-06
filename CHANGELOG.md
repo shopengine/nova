@@ -16,6 +16,8 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add PurchaseOriginStatusFilter
 - Show more fields for code and conditionset
+- Implementation of CodepoolCodeMassAssign
+- Sorting for ConditionSet
 ### Changed
 - Display order date in CEST timezone
 
