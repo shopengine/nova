@@ -60,6 +60,7 @@ class ConditionSet extends ShopEngineResource
             Date::make('Aktualisiert am', 'updatedAt')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
+                ->readonly()
                 ->sortable(true),
             CodeField::make('Regeln', 'conditions')
                 ->hideWhenCreating()
