@@ -9,6 +9,8 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Change SetOriginStatus to patch request 
+### Fixed
+- ActionRequest input does not contain resource class
 
 ## [feature/articlebundle]
 ### Changed
