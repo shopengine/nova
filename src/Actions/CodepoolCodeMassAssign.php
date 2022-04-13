@@ -10,7 +10,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\ActionRequest;
-use ShopEngine\Nova\CodepoolGroups\Models\CodepoolModel;
+use ShopEngine\Nova\Models\CodepoolModel;
 use SSB\Api\Client;
 use SSB\Api\Model\Code;
 
