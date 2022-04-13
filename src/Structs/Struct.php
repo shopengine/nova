@@ -9,8 +9,7 @@ abstract class Struct
         try {
             $self = (new \ReflectionClass(static::class))
                 ->newInstanceWithoutConstructor();
-        }
-        catch (\ReflectionException $exception) {
+        } catch (\ReflectionException $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
 
@@ -26,8 +25,7 @@ abstract class Struct
         try {
             $reflection = (new \ReflectionClass(static::class));
             $self = new static();
-        }
-        catch (\ReflectionException $exception) {
+        } catch (\ReflectionException $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
 
@@ -47,8 +45,7 @@ abstract class Struct
             $reflection = (new \ReflectionClass(static::class));
             //$self = $reflection->newInstanceWithoutConstructor();
             $self = new static();
-        }
-        catch (\ReflectionException $exception) {
+        } catch (\ReflectionException $exception) {
             throw new \InvalidArgumentException($exception->getMessage());
         }
 
@@ -73,8 +70,7 @@ abstract class Struct
 
             try {
                 $this->$key = $value;
-            }
-            catch (\Exception $error) {
+            } catch (\Exception $error) {
                 // @todo maybe more later
                 throw $error;
             }

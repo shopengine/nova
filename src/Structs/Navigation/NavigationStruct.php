@@ -9,20 +9,11 @@ final class NavigationStruct implements \IteratorAggregate
 {
     private Collection $groups;
 
-    /**
-     * NavigationStruct constructor.
-     *
-     * @param array $groups
-     */
-    public function __construct(
-        array $groups
-    ) {
+    public function __construct(array $groups)
+    {
         $this->groups = collect($groups);
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): Collection
     {
         return $this->groups;
@@ -43,8 +34,7 @@ final class NavigationStruct implements \IteratorAggregate
 
             if (is_numeric($key)) {
                 $this->groups->get($key)->addItems($structGroup->getItems()->toArray());
-            }
-            else {
+            } else {
                 $this->groups->add($structGroup);
             }
         }

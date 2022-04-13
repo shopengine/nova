@@ -164,8 +164,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
                     $obj = $this->mapShopEngineValue($obj);
                 }
             }
-        }
-        elseif (is_array($obj)) {
+        } elseif (is_array($obj)) {
             $newObj = [];
 
             foreach ($obj as $item) {

@@ -28,9 +28,4 @@ class CodeModel extends ShopEngineModel
 
         return [];
     }
-
-//    public function codepools()
-//    {
-//        return $this->hasManyShopEngineEntities(CodepoolModel::class, 'codeId');
-//    }
 }
