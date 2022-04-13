@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use ShopEngine\Nova\Models\CodepoolModel;
@@ -98,14 +97,14 @@ class CodepoolCodeMassAssign extends Action
         $codeAggregateIds = [];
 
         foreach (array_chunk($codes, 150) as $chunk) {
-            /** @var Code[] $codes */
-            $codes = $this->client->get('code', [
+            /** @var Code[] $shopEngineCodes */
+            $shopEngineCodes = $this->client->get('code', [
                 'code-eq' => implode('|', $chunk),
                 'codepoolId-ne' => $codepoolId,
                 'properties' => 'aggregateId'
             ]);
 
-            foreach ($codes as $code) {
+            foreach ($shopEngineCodes as $code) {
                 $codeAggregateIds[] = $code->getAggregateId();
             }
         }
