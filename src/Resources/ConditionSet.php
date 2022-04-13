@@ -5,6 +5,7 @@ namespace ShopEngine\Nova\Resources;
 use Laravel\Nova\Fields\Date;
 use ShopEngine\Nova\Models\ConditionSetModel;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Code as CodeField;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 
@@ -60,7 +61,7 @@ class ConditionSet extends ShopEngineResource
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->sortable(true),
-            \Laravel\Nova\Fields\Code::make('Regeln', 'conditions')
+            CodeField::make('Regeln', 'conditions')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->readonly()
