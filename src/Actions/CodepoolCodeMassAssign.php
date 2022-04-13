@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\ActionRequest;
-use ShopEngine\Nova\Models\CodepoolModel;
+use ShopEngine\Nova\Resources\Codepool;
 use SSB\Api\Client;
 use SSB\Api\Model\Code;
 
@@ -41,11 +41,11 @@ class CodepoolCodeMassAssign extends Action
      */
     public function handleRequest(ActionRequest $request)
     {
-        $resource = $request->input('resource');
+        $resource = $request->resource();
         $codepoolId =  $request->input('resources');
 
-        if ($resource !== CodepoolModel::$apiEndpoint) {
-            return Action::danger($resource . ' not allowed');
+        if ($resource !== Codepool::class) {
+            return Action::danger($resource . ' is not ' . Codepool::class);
         }
 
         if (!is_numeric($codepoolId)) {
