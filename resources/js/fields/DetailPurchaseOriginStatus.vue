@@ -29,7 +29,11 @@ export default {
             if (confirm('Wirklich?')) {
                 this.loading = true
 
-                Nova.request().post(`/nova-vendor/shopengine/purchases/${this.resourceId}/origin-status`).then(response => {
+                Nova.request({
+                        url: `/nova-vendor/shopengine/purchases/${this.resourceId}/origin-status`,
+                        method: 'patch'
+                    })
+                    .then(response => {
                     if (response.headers['content-type'] !== 'application/json') {
                         console.error(response)
                         return
