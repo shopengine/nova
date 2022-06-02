@@ -90,7 +90,28 @@ class LoadRequestBuilder extends RequestBuilder
      */
     public function chunk($size)
     {
-        // @todo spoof - fixe me?
         return $this;
+    }
+
+    public function tap($callback)
+    {
+        return $this->when(true, $callback);
+    }
+
+    /**
+     * Get the count of the total records for the paginator.
+     *
+     * @param  array  $columns
+     * @return int
+     */
+    public function getCountForPagination($columns = ['*'])
+    {
+        $request = app(NovaRequest::class);
+        $listRequestBuilder = new ListRequestBuilder($this->model, []);
+        $listRequest = $listRequestBuilder->buildFromRequest($request);
+        return $this->getClient()->get(
+            $this->getEndpoint() . '/count',
+            $listRequest->createCountRequest()
+        );
     }
 }

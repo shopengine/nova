@@ -12,6 +12,9 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [2.2.1] - 2022-06-02
+- Added tap and getCountForPagination implementation for Laravel Nova 3.30+
+
 ## [2.2.0] - 2022-04-13
 ### Changed
 - Change SetOriginStatus to patch request
