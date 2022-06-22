@@ -75,6 +75,8 @@ class Code extends ShopEngineResource
 
             Text::make('Regel', 'conditionSetName')
                 ->onlyOnIndex(),
+            Text::make(__('shopengine.conditionset'), 'conditionSetName')
+                ->onlyOnDetail(),
             ShopEngineModel::make(__('shopengine.conditionset'), 'conditionSetVersionId')
                 ->model(ConditionSet::class)
                 ->valueFieldName('versionId')
