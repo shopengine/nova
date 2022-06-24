@@ -7,12 +7,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Fixed
-- Show condition set name on nova detail page
 
 ## [feature/articlebundle]
 ### Changed
 - Require shopengine/client-php feature/articlebundle
+
+## [2.2.2] - 2022-06-24
+### Fixed
+- Show condition set name on nova detail page
 
 ## [2.2.1] - 2022-06-02
 - Added tap and getCountForPagination implementation for Laravel Nova 3.30+
