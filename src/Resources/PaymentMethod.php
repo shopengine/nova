@@ -55,9 +55,10 @@ class PaymentMethod extends ShopEngineResource
             ])->onlyOnForms()->required(true)->rules('required'),
 
             Number::make('Gewicht', 'weight')
-                ->min(1)
+                ->min(0)
                 ->step(1)
-                ->required(true)->rules('required')
+                ->required(true)
+                ->rules('required')
                 ->sortable()
         ]);
     }
