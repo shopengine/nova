@@ -7,7 +7,7 @@ class ListRequestStruct extends RequestStruct {
     /**
      * @var string
      */
-    private string $pageSize = "50";
+    private string $pageSize = "200";
 
     /**
      * @todo may make this also a string

@@ -12,7 +12,7 @@ class SeResourceIndexRequest extends ResourceIndexRequest
 {
     use CountsResources, QueriesResources;
 
-    const PER_PAGE_COUNT = 50;
+    const PER_PAGE_COUNT = 200;
 
     /**
      * Get the paginator instance for the index request.

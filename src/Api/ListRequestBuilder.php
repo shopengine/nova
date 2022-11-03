@@ -99,7 +99,7 @@ class ListRequestBuilder extends RequestBuilder
      * @return array
      */
     public function buildFromRequest(
-        string $perPage = "50"
+        string $perPage = "200"
     ): ListRequestStruct
     {
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
