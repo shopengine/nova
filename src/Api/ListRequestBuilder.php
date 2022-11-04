@@ -2,8 +2,11 @@
 
 namespace ShopEngine\Nova\Api;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use ShopEngine\Nova\Models\ShopEngineModel;
+use ShopEngine\Nova\Resources\Code;
 use ShopEngine\Nova\Resources\Purchase;
 use ShopEngine\Nova\Structs\Api\ListRequestStruct;
 use ShopEngine\Nova\Structs\Api\RequestFilterStruct;
@@ -25,64 +28,58 @@ class ListRequestBuilder extends RequestBuilder
         parent::__construct($model);
         $this->filters = $filters;
     }
+
     /**
-     * Paginate the given query into a simple paginator.
+     * Paginate the given query into a length-aware paginator.
      *
      * @param  int|null  $perPage
      * @param  array  $columns
      * @param  string  $pageName
      * @param  int|null  $page
-     * @return \Illuminate\Contracts\Pagination\Paginator
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function simplePaginate(
-        $perPage = null,
-        $columns = ['*'],
-        $pageName = 'page',
-        $page = null
-    ) {
+    public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null) {
         $request = app(NovaRequest::class);
 
         //$perPage = request()->perPage();
-        $page = $page ?: Paginator::resolveCurrentPage($pageName);
+        $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
         $listRequest = $this->buildFromRequest(
             $request,
             $perPage
         );
 
-        return $this->simplePaginator($this->loadItems($listRequest), $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
+        return $this->paginator($this->loadItems($listRequest), $this->count(), $perPage, $page, [
+            'path' => LengthAwarePaginator::resolveCurrentPath(),
             'pageName' => $pageName,
         ]);
     }
 
     /**
-     * Create a new simple paginator instance.
+     * Create a new length-aware paginator instance.
      *
-     * @param  \Illuminate\Support\Collection  $items
+     * @param  Collection  $items
+     * @param  int  $total
      * @param  int  $perPage
      * @param  int  $currentPage
      * @param  array  $options
-     * @return \Illuminate\Pagination\Paginator
+     * @return LengthAwarePaginator
      */
-    protected function simplePaginator($items, $perPage, $currentPage, $options): Paginator
+    protected function paginator($items, $total, $perPage, $currentPage, $options)
     {
-        return Container::getInstance()->makeWith(Paginator::class, compact(
-            'items',
-            'perPage',
-            'currentPage',
-            'options'
+        return Container::getInstance()->makeWith(LengthAwarePaginator::class, compact(
+            'items', 'total', 'perPage', 'currentPage', 'options'
         ));
     }
 
     /**
      * Execute the query statement on ShopEngine API.
      *
-     * @param \ShopEngine\Nova\Structs\Api\ListRequestStruct $listRequest
+     * @param ListRequestStruct $listRequest
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
+     * @return Collection
      */
-    public function loadItems(ListRequestStruct $listRequest): array
+    public function loadItems(ListRequestStruct $listRequest): Collection
     {
         $rawResponse = $this->getClient()->get(
             $this->getEndpoint(),
@@ -92,14 +89,13 @@ class ListRequestBuilder extends RequestBuilder
         $modelClass = $this->getModelClass();
         return collect($rawResponse)->map(function ($seModel) use ($modelClass) {
             return new $modelClass($seModel);
-        })->all();
+        });
     }
-
 
     /**
      * Builds Request for ShopEngine
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $novaRequest
+     * @param NovaRequest $novaRequest
      * @param string $perPage
      *
      * @return array
@@ -110,7 +106,6 @@ class ListRequestBuilder extends RequestBuilder
     ): ListRequestStruct {
         /** @var \ShopEngine\Nova\Resources\ShopEngineResource $resource */
         $resource = $request->resource();
-
 
         $listRequest = new ListRequestStruct();
 
@@ -149,10 +144,14 @@ class ListRequestBuilder extends RequestBuilder
             if ($resource::getFirstSearchKey()) {
                 $searchTerm = $request->get('search');
                 if ($searchTerm) {
+                    $searchTerm .= '%';
+                    if ($resource !== Code::class) {
+                        $searchTerm = '%' . $searchTerm;
+                    }
                     $listRequest->addFilter(
                         new RequestFilterStruct(
                             $resource::getFirstSearchKey(),
-                            urlencode("%{$searchTerm}%"),
+                            urlencode($searchTerm),
                             'like'
                         )
                     );
