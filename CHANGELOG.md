@@ -9,6 +9,7 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Fix pagination
+- Fix codepool code relation list
 
 ## [feature/articlebundle]
 ### Changed

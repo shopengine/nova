@@ -1,9 +1,5 @@
 <template>
-    <loading-view :loading="loading" style="margin: -0.75rem -1.5rem" class="card">
-        <router-link v-if="!isArchived" :to="`/shopengine/${inlineResourceName}/new?codepoolId=${resourceId}`" class="btn btn-default btn-primary" style="position: absolute; right: 0; top: -48px;">
-            {{ __('Create :resource', {resource: label}) }}
-        </router-link>
-
+    <loading-view :loading="loading" class="card">
         <div class="overflow-hidden overflow-x-auto relative">
             <resource-table
                 :resource-name="inlineResourceName"
@@ -11,14 +7,6 @@
                 :fields="fields"
                 @orderChange="orderChange"
             />
-        </div>
-
-        <div class="bg-20 rounded-b">
-            <nav class="flex justify-between items-center">
-                <router-link :to="`/resources/${resourceName}/${resourceId}?page=${query.page - 1}`" v-bind:disabled="!hasPreviousPage" v-bind:class="{'opacity-50': !hasPreviousPage}" tag="button" rel="prev" class="btn btn-link py-3 px-4 text-80">Previous</router-link>
-                <span class="text-sm text-80 px-4">{{query.page * query.pageSize + 1}}-{{Math.min((query.page + 1) * query.pageSize, count)}} of {{count}}</span>
-                <router-link :to="`/resources/${resourceName}/${resourceId}?page=${query.page + 1}`" v-bind:disabled="!hasNextPage" v-bind:class="{'opacity-50': !hasNextPage}" tag="button" rel="next" class="btn btn-link py-3 px-4 text-80">Next</router-link>
-            </nav>
         </div>
     </loading-view>
 </template>
