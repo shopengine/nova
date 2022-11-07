@@ -145,7 +145,7 @@ class ListRequestBuilder extends RequestBuilder
                 $searchTerm = $request->get('search');
                 if ($searchTerm) {
                     $searchTerm .= '%';
-                    if ($resource !== Code::class) {
+                    if (!in_array($resource, [Code::class, Purchase::class])) {
                         $searchTerm = '%' . $searchTerm;
                     }
                     $listRequest->addFilter(
