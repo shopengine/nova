@@ -22,7 +22,6 @@ class SeResourceIndexRequest extends ResourceIndexRequest
      */
     public function searchIndex()
     {
-        // @todo may use custom querybuilder for se
         $request = app(NovaRequest::class);
 
         $paginator = $this->paginator(
@@ -30,17 +29,16 @@ class SeResourceIndexRequest extends ResourceIndexRequest
             $request->resource()
         );
 
-
         return [
             $paginator,
-            count($paginator->items()),
-            false
+            $paginator->total(),
+            false,
         ];
     }
 
     protected function paginator(ResourceIndexRequest $request, $resource)
     {
-        return $request->toQuery()->simplePaginate(
+        return $request->toQuery()->paginate(
             $request->viaRelationship()
                 ? $resource::$perPageViaRelationship
                 : ($request->perPage ?? $resource::perPageOptions()[0])
