@@ -11,6 +11,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [2.2.4] - 2022-11-21
+## Fixed
+- Add withhold_import as option to badge
+
 ## [2.2.3] - 2022-11-09
 ### Changed
 - Add fast like search for code and purchase

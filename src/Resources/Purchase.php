@@ -24,9 +24,11 @@ use SSB\Api\Model\Purchase as ApiPurchase;
 class Purchase extends ShopEngineResource
 {
     public static $title = 'orderId';
+
     public static $search = ['orderId'];
 
     public static $defaultSort = '-orderDate';
+
     public static $id = 'aggregateId';
 
     public static function getModel(): string
@@ -64,21 +66,22 @@ class Purchase extends ShopEngineResource
             Text::make('Email', 'email'),
             Badge::make('Status', 'status')
                 ->map([
-                    ApiPurchase::STATUS__NEW => 'info',
-                    ApiPurchase::STATUS_PLACED => 'info',
-                    ApiPurchase::STATUS_PAYMENT_FAILED => 'warn',
+                    ApiPurchase::STATUS__NEW            => 'info',
+                    ApiPurchase::STATUS_PLACED          => 'info',
+                    ApiPurchase::STATUS_PAYMENT_FAILED  => 'warn',
                     ApiPurchase::STATUS_PAYMENT_PENDING => 'info',
-                    ApiPurchase::STATUS_PAYMENT_DONE => 'success',
-                    ApiPurchase::STATUS_SHIPPED => 'success',
-                    ApiPurchase::STATUS_CANCELED => 'danger',
+                    ApiPurchase::STATUS_PAYMENT_DONE    => 'success',
+                    ApiPurchase::STATUS_SHIPPED         => 'success',
+                    ApiPurchase::STATUS_CANCELED        => 'danger',
                 ]),
             Badge::make('ERP Status', 'originStatus')
                 ->map([
-                    ApiPurchase::ORIGIN_STATUS_EMPTY => 'info',
+                    ApiPurchase::ORIGIN_STATUS_EMPTY           => 'info',
                     ApiPurchase::ORIGIN_STATUS_READY_TO_IMPORT => 'info',
-                    ApiPurchase::ORIGIN_STATUS_IMPORTED => 'success',
+                    ApiPurchase::ORIGIN_STATUS_IMPORTED        => 'success',
                     ApiPurchase::ORIGIN_STATUS_ERROR_IN_IMPORT => 'danger',
                     ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
+                    ApiPurchase::ORIGIN_STATUS_WITHHOLD_IMPORT => 'danger',
                 ]),
             PurchaseOriginStatus::make('ERP Import freigeben')
                 ->onlyOnDetail(),
@@ -95,26 +98,26 @@ class Purchase extends ShopEngineResource
                 ->onlyOnDetail()
                 ->displayUsing(function ($money) {
                     return $money instanceof Money
-                        ? ConvertMoney::toRealFloat($money).' '.$money->getCurrency()
+                        ? ConvertMoney::toRealFloat($money) . ' ' . $money->getCurrency()
                         : '';
                 }),
             Number::make('Versandkosten', 'shipping')
                 ->onlyOnDetail()
                 ->displayUsing(function ($money) {
                     return $money instanceof Money
-                        ? ConvertMoney::toRealFloat($money).' '.$money->getCurrency()
+                        ? ConvertMoney::toRealFloat($money) . ' ' . $money->getCurrency()
                         : '';
                 }),
             Number::make('Gesamtkosten', 'grandTotal')
                 ->displayUsing(function ($money) {
                     return $money instanceof Money
-                        ? ConvertMoney::toRealFloat($money).' '.$money->getCurrency()
+                        ? ConvertMoney::toRealFloat($money) . ' ' . $money->getCurrency()
                         : '';
                 }),
             PurchaseCodes::make('Codes', 'codes')
                 ->hideFromIndex(),
             KeyValue::make('Weitere Informationen', 'paymentInformation')
-                ->onlyOnDetail()
+                ->onlyOnDetail(),
         ]);
     }
 
@@ -138,28 +141,29 @@ class Purchase extends ShopEngineResource
             Number::make('Gesamtkosten', 'grandTotal')
                 ->displayUsing(function ($money) {
                     return $money instanceof Money
-                        ? ConvertMoney::toRealFloat($money).' '.$money->getCurrency()
+                        ? ConvertMoney::toRealFloat($money) . ' ' . $money->getCurrency()
                         : '';
                 })->withMeta(['textAlign' => 'right']),
             Text::make('Zahlart', 'paymentMethod'),
             Text::make('Versandart', 'shippingMethod'),
             Badge::make('Status', 'status')
                 ->map([
-                    ApiPurchase::STATUS__NEW => 'info',
-                    ApiPurchase::STATUS_PLACED => 'info',
-                    ApiPurchase::STATUS_PAYMENT_FAILED => 'warn',
+                    ApiPurchase::STATUS__NEW            => 'info',
+                    ApiPurchase::STATUS_PLACED          => 'info',
+                    ApiPurchase::STATUS_PAYMENT_FAILED  => 'warn',
                     ApiPurchase::STATUS_PAYMENT_PENDING => 'info',
-                    ApiPurchase::STATUS_PAYMENT_DONE => 'success',
-                    ApiPurchase::STATUS_SHIPPED => 'success',
-                    ApiPurchase::STATUS_CANCELED => 'danger',
+                    ApiPurchase::STATUS_PAYMENT_DONE    => 'success',
+                    ApiPurchase::STATUS_SHIPPED         => 'success',
+                    ApiPurchase::STATUS_CANCELED        => 'danger',
                 ]),
             Badge::make('ERP Status', 'originStatus')
                 ->map([
-                    ApiPurchase::ORIGIN_STATUS_EMPTY => 'info',
+                    ApiPurchase::ORIGIN_STATUS_EMPTY           => 'info',
                     ApiPurchase::ORIGIN_STATUS_READY_TO_IMPORT => 'info',
-                    ApiPurchase::ORIGIN_STATUS_IMPORTED => 'success',
+                    ApiPurchase::ORIGIN_STATUS_IMPORTED        => 'success',
                     ApiPurchase::ORIGIN_STATUS_ERROR_IN_IMPORT => 'danger',
                     ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
+                    ApiPurchase::ORIGIN_STATUS_WITHHOLD_IMPORT => 'danger',
                 ]),
         ];
     }
