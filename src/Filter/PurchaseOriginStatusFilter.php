@@ -23,10 +23,11 @@ class PurchaseOriginStatusFilter extends Filter
     public function options(Request $request)
     {
         return [
-            'Importierbar' => Purchase::ORIGIN_STATUS_READY_TO_IMPORT,
-            'Importiert'   => Purchase::ORIGIN_STATUS_IMPORTED,
-            'Fehler'       => Purchase::ORIGIN_STATUS_ERROR_IN_IMPORT,
-            'Angehalten'   => Purchase::ORIGIN_STATUS_WAIT_FOR_MANUAL,
+            'Importierbar'         => Purchase::ORIGIN_STATUS_READY_TO_IMPORT,
+            'Importiert'           => Purchase::ORIGIN_STATUS_IMPORTED,
+            'Fehler'               => Purchase::ORIGIN_STATUS_ERROR_IN_IMPORT,
+            'Angehalten'           => Purchase::ORIGIN_STATUS_WAIT_FOR_MANUAL,
+            'Importieren pausiert' => Purchase::ORIGIN_STATUS_WITHHOLD_IMPORT,
         ];
     }
 }
