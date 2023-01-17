@@ -169,12 +169,15 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 
             foreach ($obj as $item) {
                 try {
-                    $interfaces = class_implements($item);
-                    if (in_array(ModelInterface::class, $interfaces)) {
-                        $newObj[] = $this->mapShopEngineValue($item);
-                    } else {
-                        $newObj[] = $item;
+                    if (!is_array($item) && !is_null($item)) {
+                        $interfaces = class_implements($item);
+                        if (in_array(ModelInterface::class, $interfaces)) {
+                            $newObj[] = $this->mapShopEngineValue($item);
+                            continue;
+                        }
                     }
+
+                    $newObj[] = $item;
                 } catch (\Exception $exception) {
                     $newObj[] = $item;
                 }
