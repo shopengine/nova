@@ -22,10 +22,13 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     use HasShopEngineFields;
 
     public static $search = [];
+
     public static $defaultSort = 'id';
 
     public static $globallySearchable = false;
+
     public static $displayInNavigation = false;
+
     public static $canImportResource = false;
 
     public static function getModel(): string
@@ -35,12 +38,14 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     public static function getShopEngineEndpoint(): string
     {
         $model = static::getModel();
+
         return $model::$apiEndpoint;
     }
 
     public static function newModel(): ShopEngineModel
     {
         $modelClass = static::getModel();
+
         return new $modelClass();
     }
 
@@ -66,7 +71,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
 
     public static function redirectAfterUpdate(NovaRequest $request, $resource)
     {
-        $uriKey = static::uriKey();
+        $uriKey      = static::uriKey();
         $resourceKey = $request->resourceId;
 
         return "/resources/$uriKey/$resourceKey";
@@ -75,18 +80,19 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     /**
      * Injecting seModel to js environment.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function serializeForDetail(NovaRequest $request, Resource $resource = null)
     {
         $serialized = parent::serializeForDetail($request, $resource);
-        $seModel = null;
+        $seModel    = null;
         if (!empty($serialized['fields'])) {
             $seModel = (new ShopEngineModel($serialized['fields'][0]->resource->model))->jsonSerialize();
         }
+
         return array_merge($serialized, [
-            'seModel' => $seModel
+            'seModel' => $seModel,
         ]);
     }
 
@@ -109,16 +115,7 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
         array $filters = [],
         array $orderings = [],
         $withTrashed = TrashedStatus::DEFAULT
-    )
-    {
-        if ($request->has('id-eq')) {
-            $filters[] = new RequestFilterStruct(
-                'id',
-                $request->get('id-eq'),
-                'eq'
-            );
-        }
-
-        return ListRequestBuilder::fromResource($request->resource(), $filters);
+    ) {
+        return ListRequestBuilder::fromResource($request->resource());
     }
 }

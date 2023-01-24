@@ -11,6 +11,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [2.2.6] - 2023-01-20
+## Fixed
+- Move id-eq filter to list request builder
+
 ## [2.2.5] - 2023-01-17
 ## Fixed
 - Fixed not allowed types for class_implements()

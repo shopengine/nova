@@ -155,6 +155,14 @@ class ListRequestBuilder extends RequestBuilder
             }
         }
 
+        if ($request->has('id-eq')) {
+            $listRequest->addFilter(new RequestFilterStruct(
+                'id',
+                $request->get('id-eq'),
+                'eq'
+            ));
+        }
+
         foreach ($this->filters as $filter) {
             if ($filter instanceof RequestFilterStruct) {
                 $listRequest->addFilter($filter);
