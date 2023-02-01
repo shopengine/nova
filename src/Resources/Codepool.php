@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use ShopEngine\Nova\Actions\CodepoolCodeMassAssign;
+use ShopEngine\Nova\Actions\CodepoolCopyCodes;
 use ShopEngine\Nova\Filter\CodepoolArchive;
 use ShopEngine\Nova\Models\CodepoolModel;
 
@@ -73,7 +74,8 @@ class Codepool extends ShopEngineResource
     public function actions(Request $request)
     {
         return [
-            (new CodepoolCodeMassAssign())->onlyOnDetail()
+            (new CodepoolCodeMassAssign())->onlyOnDetail(),
+            (new CodepoolCopyCodes($this->id))->onlyOnDetail(),
         ];
     }
 }
