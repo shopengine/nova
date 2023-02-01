@@ -71,9 +71,9 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     /**
      * @param mixed $offset
      *
-     * @return array|mixed|\SSB\Api\Model\Article|string|null
+     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->offsetExists($offset)
             ? $this->fromModel($offset)
@@ -324,7 +324,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!isset($this->model::setters()[$offset])) {
             throw \Exception('Cant find setter for  '.$offset. ' on '. get_class($this->model));
@@ -336,7 +336,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
     }
 

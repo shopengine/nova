@@ -11,6 +11,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [3.0.0] - 2023-02-01
+## Changed
+- Add compatibility for laravel 9
+
 ## [2.2.6] - 2023-01-20
 ## Fixed
 - Move id-eq filter to list request builder
