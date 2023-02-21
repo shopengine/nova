@@ -65,21 +65,38 @@ class CodepoolCopyCodes extends Action
      */
     public function handleRequest(ActionRequest $request)
     {
-        $resource       = $request->resource();
-        $fromCodepoolId = $request->input('resources');
-        $toShopId       = $request->input('shopId');
-        $toConditionId  = $request->input('conditionId');
-        $toCodepoolId   = $request->input('codepoolId');
+        $requestInputs = $request->collect();
+
+        $fromCodepoolId = $requestInputs->get('resources');
+        $toShopId       = $requestInputs->get('shopId');
+        $toCodepoolId   = $requestInputs->get('codepoolId');
+
+        // Todo: validate if condition select is empty -> don't close the modal -> error notification for required field
+        $conditions   = $requestInputs->filter(fn($value, $key) => startsWith($key, 'condition_') && !empty($value));
+        $conditionIds = $conditions->mapWithKeys(fn($value, $key) => [
+            str_replace('condition_', '', $key) => $value,
+        ])->toArray();
+
+        if ($conditions->count() > 1) {
+            // Todo: copy in a batch for any condition
+        } else {
+            // Todo: copy in one batch
+        }
+
+
+        Log::debug('Data', [$fromCodepoolId, $toShopId, $toCodepoolId, $conditionIds, $conditions->count()]);
+
+        return Action::danger('Nothing to do.');
 
         // TODO: Check if destination Codepool is empty eg. add only new codes
 
-        if ($resource !== Codepool::class) {
+        /*if ($resource !== Codepool::class) {
             return Action::danger($resource . ' is not ' . Codepool::class);
         }
 
         if (!is_numeric($fromCodepoolId)) {
             return Action::danger('Resource id is not numeric');
-        }
+        }*/
 
         // Get codes from current shop
         /* $fromCodes = $this->client->get('code', [
@@ -91,11 +108,11 @@ class CodepoolCopyCodes extends Action
          $countFromCodes = count($fromCodes);*/
 
         /** @var Shop $destinationShop */
-        $destinationShop = \Shop::find($toShopId);
+        /*$destinationShop = \Shop::find($toShopId);*/
 
         // TODO: Check if shopId is allowed
 
-        $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
+        /*$destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
 
         $destinationShopEngineClient->post('codepool/copy', [
             'from_codepool_id'         => $fromCodepoolId,
@@ -107,7 +124,7 @@ class CodepoolCopyCodes extends Action
             'note'                     => '',
             'hidden'                   => '',
             'from_usage_count'         => '',
-        ]);
+        ]);*/
 
         return true;
     }
@@ -137,57 +154,28 @@ class CodepoolCopyCodes extends Action
 
     protected function getShopFieldContainer($shopId): NovaDependencyContainer
     {
-        $conditionSelect = [
+        $codepoolSelect = [
             Select::make('Ziel Codepool', 'codepoolId')
                 ->searchable()
                 ->options($this->getCodepoolOptions($shopId))
                 ->rules('required'),
         ];
 
-        if (count((array) $this->fromConditions) < 5) {
-            $conditionSelect2 = [];
-
+        if (count((array) $this->fromConditions) <= 5) {
+            $conditionSelect = [];
             foreach ($this->fromConditions as $condition) {
-                Log::debug('B', [$condition->name, $condition->id]);
-                $conditionSelect2[] = Select::make($condition->name, 'condition_'.$condition->id)
+                $conditionSelect[] = Select::make($condition->name, 'condition_' . $condition->id)
                     ->searchable()
                     ->options($this->getConditionOptions($shopId))
                     ->rules('required');
             }
 
-            $new = array_merge($conditionSelect, $conditionSelect2);
+            $fields = array_merge($codepoolSelect, $conditionSelect);
         } else {
-            $new = $conditionSelect;
+            $fields = $codepoolSelect;
         }
 
-
-
-        Log::debug('A', [$new]);
-
-        /*foreach ($this->fromConditions as $condition) {
-            Select::make($condition->name, $condition->id)
-                ->searchable()
-                ->options($this->getConditionOptions($shopId))
-                ->rules('required')
-        }
-
-        Log::debug('B', [count($conditionSelect)]);*/
-
-        /*$fields = array_merge([
-            Select::make('Ziel Codepool', 'codepoolId')
-                ->searchable()
-                ->options($this->getCodepoolOptions($shopId))
-                ->rules('required')
-        ], $conditionSelect);*/
-
-        /*$fields = array_merge($conditionSelect, [
-            Select::make('Ziel Codepool', 'codepoolId')
-                ->searchable()
-                ->options($this->getCodepoolOptions($shopId))
-                ->rules('required')
-        ]);*/
-
-        return NovaDependencyContainer::make($new)->dependsOn('shopId', $shopId);
+        return NovaDependencyContainer::make($fields)->dependsOn('shopId', $shopId);
     }
 
     protected function getShopOptions(): array
@@ -203,23 +191,16 @@ class CodepoolCopyCodes extends Action
         return $shopOptions;
     }
 
-    protected function getConditionOptions($shopId = 1): array
+    protected function getConditionOptions(int $shopId): array
     {
         /** @var Shop $destinationShop */
         $destinationShop = \Shop::find($shopId);
-
-        // TODO: Check if shopId is allowed
 
         $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
 
         $conditions = $destinationShopEngineClient->get('conditionset', [
             'name-nlike' => 'Generated - %',
             'properties' => 'name|versionId',
-        ]);
-
-        Log::debug('TEST', [
-            $this->modelId,
-            $destinationShopEngineClient->post('codepool/copyAdvanced', []),
         ]);
 
         $conditionOptions = [];
@@ -230,15 +211,14 @@ class CodepoolCopyCodes extends Action
         return $conditionOptions;
     }
 
-    protected function getCodepoolOptions($shopId = 1): array
+    protected function getCodepoolOptions(int $shopId): array
     {
         /** @var Shop $destinationShop */
         $destinationShop = \Shop::find($shopId);
 
-        // TODO: Check if shopId is allowed
-
         $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
 
+        // Todo: maybe only empty codepools? asked in ticket and waiting for response
         $codepools = $destinationShopEngineClient->get('codepool', [
             'properties' => 'name|id',
         ]);
