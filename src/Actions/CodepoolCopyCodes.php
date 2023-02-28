@@ -9,13 +9,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Heading;
-use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\ActionRequest;
-use ShopEngine\Nova\Resources\Codepool;
 use SSB\Api\Client;
 
 class CodepoolCopyCodes extends Action
@@ -75,7 +71,7 @@ class CodepoolCopyCodes extends Action
         $conditions   = $requestInputs->filter(fn($value, $key) => startsWith($key, 'condition_') && !empty($value));
         $conditionIds = $conditions->mapWithKeys(fn($value, $key) => [
             str_replace('condition_', '', $key) => $value,
-        ])->toArray();
+        ]);
 
         if ($conditions->count() > 1) {
             // Todo: copy in a batch for any condition
@@ -83,8 +79,33 @@ class CodepoolCopyCodes extends Action
             // Todo: copy in one batch
         }
 
+        Log::debug('Data', [
+            $this->client->shop,
+            $fromCodepoolId,
+            $toShopId,
+            $toCodepoolId,
+            $conditionIds,
+            $conditions->count(),
+            $conditionIds->take(1)->keys()->first(),
+        ]);
 
-        Log::debug('Data', [$fromCodepoolId, $toShopId, $toCodepoolId, $conditionIds, $conditions->count()]);
+        /** @var Shop $destinationShop */
+        $destinationShop = \Shop::find($toShopId);
+
+        $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
+
+        $destinationShopEngineClient->post('codepool/copyAdvanced', [
+            'from_shop'                 => $this->client->shop,
+            'from_codepool_id'          => $fromCodepoolId,
+            'from_status'               => 'enabled',
+            'condition_set_version_ids' => $conditionIds->toArray(),
+            'status'                    => 'enabled',
+            'validation'                => '',
+            'to_codepool_id'            => $toCodepoolId,
+            'note'                      => '',
+            'hidden'                    => '',
+            'from_usage_count'          => 1,
+        ]);
 
         return Action::danger('Nothing to do.');
 
@@ -230,44 +251,4 @@ class CodepoolCopyCodes extends Action
 
         return $codepoolOptions;
     }
-
-    /*protected function getCodes(ActionRequest $request): array
-    {
-        $codes = explode(',', $request->input('codes'));
-        $codes = array_map('trim', $codes);
-        $codes = array_filter($codes, fn(string $code) => ! Str::contains($code, ' '));
-
-        return array_filter($codes);
-    }*/
-    /*protected function updateCodes(array $codes, int $codepoolId): array
-    {
-        $responseMessage = [];
-        $codeAggregateIds = [];
-
-        foreach (array_chunk($codes, 150) as $chunk) {
-
-            $shopEngineCodes = $this->client->get('code', [
-                'code-eq' => implode('|', $chunk),
-                'codepoolId-ne' => $codepoolId,
-                'properties' => 'aggregateId'
-            ]);
-
-            foreach ($shopEngineCodes as $code) {
-                $codeAggregateIds[] = $code->getAggregateId();
-            }
-        }
-
-        $responseMessage[] = 'Requested ' . count($codeAggregateIds) . ' codes';
-
-        if (!empty($codeAggregateIds)) {
-            $this->client->patch('code/updateBatch', [
-                'aggregateIds' => implode('|', $codeAggregateIds),
-                'data' => [
-                    'codepoolId' => $codepoolId,
-                ],
-            ]);
-        }
-
-        return $responseMessage;
-    }*/
 }
