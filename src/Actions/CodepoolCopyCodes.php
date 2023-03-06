@@ -3,7 +3,6 @@
 namespace ShopEngine\Nova\Actions;
 
 use App\Models\Shop;
-use App\Models\Shop as ShopModel;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Actions\Action;
@@ -43,15 +42,7 @@ class CodepoolCopyCodes extends Action
         }
     }
 
-    /**
-     * Perform the action on the given models.
-     *
-     * @param ActionRequest $request
-     *
-     * @return array|string[]
-     * @throws \Exception
-     */
-    public function handleRequest(ActionRequest $request)
+    public function handleRequest(ActionRequest $request): array
     {
         $requestInputs = $request->collect();
 
@@ -59,13 +50,12 @@ class CodepoolCopyCodes extends Action
         $toShopId       = $requestInputs->get('shopId');
         $toCodepoolId   = $requestInputs->get('codepoolId');
         $conditions     = $requestInputs->filter(fn($value, $key) => startsWith($key, 'condition_'));
-        $conditionIds   = $conditions->mapWithKeys(fn($value, $key) => [
+
+        $conditionIds = $conditions->mapWithKeys(fn($value, $key) => [
             str_replace('condition_', '', $key) => $value,
         ]);
 
-        Validator::make($request->all(), $conditions->map(function () {
-            return 'required';
-        })->toArray())->validate();
+        Validator::make($request->all(), $conditions->map(fn() => 'required')->toArray())->validate();
 
         /** @var Shop $destinationShop */
         $destinationShop = \Shop::find($toShopId);
@@ -88,15 +78,10 @@ class CodepoolCopyCodes extends Action
         return Action::danger($response->msg);
     }
 
-    /**
-     * Get the fields available on the action.
-     *
-     * @return array
-     */
-    public function fields()
+    public function fields(): array
     {
         return [
-            Heading::make('<b>Aktueller Shop: </b>' . \Shop::current()->name)->asHtml(),
+            Heading::make('<b>Aktueller Shop:</b> ' . \Shop::current()->name)->asHtml(),
 
             Select::make('Ziel Shop', 'shopId')
                 ->options($this->getShopOptions())
@@ -137,8 +122,7 @@ class CodepoolCopyCodes extends Action
 
     protected function getShopOptions(): array
     {
-        $shops = \Shop::allShops()
-            ->filter(fn(ShopModel $shop) => $shop->id !== \Shop::current()->id);
+        $shops = \Shop::allShops()->filter(fn(Shop $shop) => $shop->id !== \Shop::current()->id);
 
         $shopOptions = [];
         foreach ($shops as $shop) {
@@ -146,6 +130,25 @@ class CodepoolCopyCodes extends Action
         }
 
         return $shopOptions;
+    }
+
+    protected function getCodepoolOptions(int $shopId): array
+    {
+        /** @var Shop $destinationShop */
+        $destinationShop = \Shop::find($shopId);
+
+        $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
+
+        $codepools = $destinationShopEngineClient->get('codepool', [
+            'properties' => 'name|id',
+        ]);
+
+        $codepoolOptions = [];
+        foreach ($codepools as $codepool) {
+            $codepoolOptions[$codepool['id']] = $codepool['name'];
+        }
+
+        return $codepoolOptions;
     }
 
     protected function getConditionOptions(int $shopId): array
@@ -166,24 +169,5 @@ class CodepoolCopyCodes extends Action
         }
 
         return $conditionOptions;
-    }
-
-    protected function getCodepoolOptions(int $shopId): array
-    {
-        /** @var Shop $destinationShop */
-        $destinationShop = \Shop::find($shopId);
-
-        $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
-
-        $codepools = $destinationShopEngineClient->get('codepool', [
-            'properties' => 'name|id',
-        ]);
-
-        $codepoolOptions = [];
-        foreach ($codepools as $codepool) {
-            $codepoolOptions[$codepool['id']] = $codepool['name'];
-        }
-
-        return $codepoolOptions;
     }
 }
