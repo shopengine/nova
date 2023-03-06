@@ -11,6 +11,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Require shopengine/client-php feature/articlebundle
 
+## [3.1.0] - 2023-03-06
+## Added
+- Copy all codes from codepool to another shop codepool
+
 ## [3.0.0] - 2023-02-01
 ## Changed
 - Add compatibility for laravel 9
