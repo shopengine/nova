@@ -5,6 +5,7 @@ namespace ShopEngine\Nova\Actions;
 use App\Models\Shop;
 use App\Models\Shop as ShopModel;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Select;
@@ -57,15 +58,14 @@ class CodepoolCopyCodes extends Action
         $fromCodepoolId = $requestInputs->get('resources');
         $toShopId       = $requestInputs->get('shopId');
         $toCodepoolId   = $requestInputs->get('codepoolId');
-        $conditions     = $requestInputs->filter(fn($value, $key) => startsWith($key, 'condition_') && !empty($value));
+        $conditions     = $requestInputs->filter(fn($value, $key) => startsWith($key, 'condition_'));
         $conditionIds   = $conditions->mapWithKeys(fn($value, $key) => [
             str_replace('condition_', '', $key) => $value,
         ]);
 
-        if (empty($conditionIds->toArray())) {
-            //Todo[simon] Hätte lieber ein 'return Action::danger()' dann wird aber das Modal geschlossen.
-            throw new \Exception('Warenkorbregel wurde nicht zugewiesen.');
-        }
+        Validator::make($request->all(), $conditions->map(function () {
+            return 'required';
+        })->toArray())->validate();
 
         /** @var Shop $destinationShop */
         $destinationShop = \Shop::find($toShopId);
