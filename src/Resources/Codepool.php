@@ -16,9 +16,11 @@ use ShopEngine\Nova\Models\CodepoolModel;
 class Codepool extends ShopEngineResource
 {
     public static $title = 'orderId';
+
     public static $search = ['name'];
 
     public static $defaultSort = '-updatedAt';
+
     public static $id = 'id';
 
     public static function getModel(): string
@@ -52,30 +54,34 @@ class Codepool extends ShopEngineResource
                 ->format('Y-MM-DD HH:mm:ss')
                 ->onlyOnIndex(),
             Badge::make('Archiviert', function () {
-                    return $this->model->getDeletedAt() !== null;
-                })
-                ->map([
-                   false => 'success',
-                   true => 'danger'
-                ])
-                ->onlyOnDetail(),
+                return $this->model->getDeletedAt() !== null;
+            })->map([
+                false => 'success',
+                true  => 'danger',
+            ])->onlyOnDetail(),
 
-            HasMany::make('Codes', 'codes')
+            HasMany::make('Codes', 'codes'),
         ]);
     }
 
     public function filters(Request $request)
     {
         return [
-            new CodepoolArchive()
+            new CodepoolArchive(),
         ];
     }
 
     public function actions(Request $request)
     {
-        return [
+        $actions = [
             (new CodepoolCodeMassAssign())->onlyOnDetail(),
-            (new CodepoolCopyCodes($this->id))->onlyOnDetail(),
         ];
+
+        if ($request->get('resourceId') !== null
+            || $request->get('action') === (new CodepoolCopyCodes(null))->uriKey()) {
+            $actions[] = (new CodepoolCopyCodes($this->id))->onlyOnDetail();
+        }
+
+        return $actions;
     }
 }
