@@ -62,7 +62,7 @@ class CodepoolCopyCodes extends Action
 
         $destinationShopEngineClient = \Shop::shopEngineClient($destinationShop->settings);
 
-        $response = $destinationShopEngineClient->post('codepool/copyAdvanced', [
+        $response = $destinationShopEngineClient->post('codepool/copy-advanced', [
             'from_shop'                 => $this->client->shop,
             'from_codepool_id'          => $fromCodepoolId,
             'from_status'               => 'enabled',
