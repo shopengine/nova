@@ -75,7 +75,13 @@ class CodepoolCopyCodes extends Action
             'from_usage_count'          => 1,
         ]);
 
-        return Action::danger($response->msg);
+        if (isset($response->msg)) {
+            return Action::message($response->msg);
+        } elseif (isset($response->error)) {
+            return Action::danger($response->error);
+        }
+
+        return Action::danger('Wer holt mir ein Kaffee?');
     }
 
     public function fields(): array
