@@ -1,12 +1,39 @@
-Nova.booting((Vue, router, store) => {
-     // alias for resources/:resourceName
+import List from './components/List.vue';
+import Klicktipp from './components/Klicktipp/Klicktipps.vue'
+import Show from './components/Klicktipp/Show.vue'
+import Edit from './components/Klicktipp/Edit.vue'
+import Create from './components/Klicktipp/Create.vue'
 
-     router.addRoutes([
+Nova.booting((Vue, router, store) => {
+    // alias for resources/:resourceName
+
+    router.addRoutes([
+        {
+            name: 'klicktipps',
+            path: '/novashopengine/klicktipps',
+            component: Klicktipp
+        },
+        {
+            name: 'klicktipps.create',
+            path: '/novashopengine/klicktipps/create',
+            component: Create
+        },
+        {
+            name: 'klicktipps.show',
+            path: '/novashopengine/klicktipps/:klicktipp',
+            component: Show
+        },
+        {
+            name: 'klicktipps.edit',
+            path: '/novashopengine/klicktipps/:klicktipp/edit',
+            component: Edit
+        },
         {
             path: '/novashopengine/:resourceName',
-            component: require('./components/List'),
-        }
-     ])
+            component: List
+        },
+
+    ])
 
     // custom fields
     Vue.component('detail-shippingcostoptions', require('./fields/DetailShippingCostOptions'))

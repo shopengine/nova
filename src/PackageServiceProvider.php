@@ -26,6 +26,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             Resources\PaymentMethod::class,
             Resources\Codepool::class,
             Resources\Code::class,
+//            Resources\Klicktipp::class
         ];
     }
 
@@ -100,14 +101,18 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         $adminNavigation = [
             new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs', Resources\ShippingCost::class),
             new NavigationItemStruct('payments', '/novashopengine/payment-methods',
-                Resources\PaymentMethod::class)
+                Resources\PaymentMethod::class),
+            new NavigationItemStruct('klicktipp', '/novashopengine/klicktipps', Resources\ConditionSet::class),
+
+
+
         ];
 
         $codepoolNavigation = [
             new NavigationItemStruct('codepools', '/novashopengine/codepools',
                 Resources\Codepool::class),
             new NavigationItemStruct('codes', '/novashopengine/codes',
-                Resources\Code::class)
+                Resources\Code::class),
         ];
 
         $struct = new NavigationStruct(
