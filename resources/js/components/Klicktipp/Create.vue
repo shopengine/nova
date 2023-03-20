@@ -83,11 +83,11 @@
 },
 
   methods: {
-    now(){
-    return new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]
+  now(){
+  return new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]
 },
   async submit() {
-      if(this.tag === '' || this.from ==='' || this.to === '')
+  if(this.tag === '' || this.from ==='' || this.to === '')
 {
   this.$toasted.show(`Error: All Fields are required`, {type: 'error'})
   return
@@ -102,7 +102,14 @@
   const {data} = await Nova.request().post(`/nova-vendor/novashopengine/klicktipps`, {
   value: klicktipp
 })
+
+  if(data.message) {
+  this.$toasted.show(`Duplicated Tag`, {type: 'error'})
+  return
+
+}
   if (data.success) {
+  console.log(data.success)
   this.value = data.data
   this.$router.push('/novashopengine/klicktipps');
   this.$toasted.show(`Gespeichert`, {type: 'success'})
