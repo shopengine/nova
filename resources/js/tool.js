@@ -1,32 +1,32 @@
 import List from './components/List.vue';
-import Klicktipp from './components/Klicktipp/Klicktipps.vue'
-import Show from './components/Klicktipp/Show.vue'
-import Edit from './components/Klicktipp/Edit.vue'
-import Create from './components/Klicktipp/Create.vue'
+import TagsPeriodsIndex from './components/settings/newsletter-provider/klicktipps/tags-periods/Index.vue'
+import tagPeriodShow from './components/settings/newsletter-provider/klicktipps/tags-periods/Show.vue'
+import tagPeriodEdit from './components/settings/newsletter-provider/klicktipps/tags-periods/Edit.vue'
+import tagPeriodCreate from './components/settings/newsletter-provider/klicktipps/tags-periods/Create.vue'
 
 Nova.booting((Vue, router, store) => {
     // alias for resources/:resourceName
 
     router.addRoutes([
         {
-            name: 'klicktipps',
-            path: '/novashopengine/klicktipps',
-            component: Klicktipp
+            name: 'settings.newsletter-provider.klicktipps.tags-periods.index',
+            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods',
+            component: TagsPeriodsIndex
         },
         {
-            name: 'klicktipps.create',
-            path: '/novashopengine/klicktipps/create',
-            component: Create
+            name: 'settings.newsletter-provider.klicktipps.tags-periods.create',
+            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/create',
+            component: tagPeriodCreate
         },
         {
-            name: 'klicktipps.show',
-            path: '/novashopengine/klicktipps/:klicktipp',
-            component: Show
+            name: 'settings.newsletter-provider.klicktipps.tags-periods.show',
+            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/:tag',
+            component: tagPeriodShow
         },
         {
-            name: 'klicktipps.edit',
-            path: '/novashopengine/klicktipps/:klicktipp/edit',
-            component: Edit
+            name: 'settings.newsletter-provider.klicktipps.tags-periods.edit',
+            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/:tag/edit',
+            component: tagPeriodEdit
         },
         {
             path: '/novashopengine/:resourceName',

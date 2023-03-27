@@ -6,13 +6,13 @@
     <div dusk="codepools-detail-component" class="mb-8">
       <div>
         <div class="flex items-center mb-3"><h1
-            class="flex-auto truncate text-90 font-normal text-2xl">Klicktipp-Details: </h1>
+            class="flex-auto truncate text-90 font-normal text-2xl">Klicktipp Tag Details: </h1>
           <div class="ml-3 flex items-center">
             <div class="flex w-full justify-end items-center"></div>
             <div class="ml-3"><!---->
               <div class="v-portal" transition="fade-transition" style="display: none;"></div>
             </div>
-            <router-link :to="'/novashopengine/klicktipps/' + data.tag + '/edit'"
+            <router-link :to="'/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/' + tagPeriod.tag + '/edit'""
                class="btn btn-default btn-icon bg-primary"
                data-testid="edit-resource" dusk="edit-resource-button" title="Edit">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="edit"
@@ -26,7 +26,7 @@
           <div class="flex border-b border-40 -mx-6 px-6">
             <div class="w-1/4 py-4"><h4 class="font-normal text-80">Tag</h4></div>
             <div class="w-3/4 py-4 break-words"><p class="text-90">
-              {{data.tag}}
+              {{tagPeriod.tag}}
             </p></div>
           </div>
 
@@ -34,7 +34,7 @@
             <div class="w-1/4 py-4"><h4 class="font-normal text-80">From</h4></div>
             <div class="w-3/4 py-4 break-words">
               <div>
-                <div class="markdown leading-normal whitespace-pre-wrap">{{data.from}}</div>
+                <div class="markdown leading-normal whitespace-pre-wrap">{{tagPeriod.from}}</div>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
             <div class="w-1/4 py-4"><h4 class="font-normal text-80">To</h4></div>
             <div class="w-3/4 py-4 break-words">
               <div>
-                <div class="markdown leading-normal whitespace-pre-wrap">{{data.to}}</div>
+                <div class="markdown leading-normal whitespace-pre-wrap">{{tagPeriod.to}}</div>
               </div>
             </div>
           </div>
@@ -63,19 +63,20 @@
   return {
   isLoading: true,
   isSaving: false,
-  klicktipp: this.$route.params.klicktipp,
-  data: {},
-  tagPeriods: {},
-  tags: {},
-  tagsCodes: {},
+  tag: this.$route.params.tag,
+  tagPeriod: {},
 }
 },
   async mounted() {
   this.isLoading = true
-  const {data} = await Nova.request().get(`/nova-vendor/novashopengine/klicktipps/` +this.klicktipp);
-  this.data = data
-  // this.tags = data.tags_periods.tags
-  this.tagPeriods = data.tags_periods
+  const {data} = await Nova.request().get(`/nova-vendor/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/` + this.tag);
+  if(data.hasOwnProperty('notApplicable'))
+  {
+    this.$toasted.show(`Error: ${data.message}`, {type: "error"});
+    this.$router.go(-1);
+    return;
+  }
+  this.tagPeriod = data
   this.isLoading = false
 },
 
