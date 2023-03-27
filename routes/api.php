@@ -3,13 +3,21 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/klicktipps', 'KlicktippController@index');
-Route::get('/klicktipps/{klicktipp}', 'KlicktippController@show');
-Route::post('/klicktipps', 'KlicktippController@store');
-Route::patch('/klicktipps', 'KlicktippController@update');
+Route::group(['prefix' => '/settings'], function(){
+    Route::group(['prefix' => '/newsletter-provider'], function(){
+        Route::group(['prefix' => 'klicktipp'], function(){
+            Route::group(['prefix' => 'tags-periods'],function(){
+                Route::get('/', 'KlicktippTagsPeriodsController@index')->name('settings.newsletter-provider.klicktipp.tags-periods.index');
+                Route::get('{tag}', 'KlicktippTagsPeriodsController@show')->name('settings.newsletter-provider.klicktipp.tags-periods.show');
+                Route::get('{tag}/edit', 'KlicktippTagsPeriodsController@edit')->name('settings.newsletter-provider.klicktipp.tags-periods.edit');
+                Route::post('/', 'KlicktippTagsPeriodsController@store');
+                Route::patch('/', 'KlicktippTagsPeriodsController@update');
+                Route::post('/{tag}/delete', 'KlicktippTagsPeriodsController@destroy');
+            });
+        });
+    });
+});
 
-//TODO  convert it to a delete request
-Route::get('/klicktipps/{tag}/delete', 'KlicktippController@destroy');
 
 
 
