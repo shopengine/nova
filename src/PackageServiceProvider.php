@@ -102,7 +102,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs', Resources\ShippingCost::class),
             new NavigationItemStruct('payments', '/novashopengine/payment-methods',
                 Resources\PaymentMethod::class),
-            new NavigationItemStruct('klicktipp', '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods', Resources\ConditionSet::class),
+            new NavigationItemStruct('tags-periods', '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods', Resources\ConditionSet::class),
 
 
 
