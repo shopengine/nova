@@ -68,6 +68,14 @@ abstract class RequestBuilder {
                 return ['amount' => intval($v->amount), 'currency' => $v->currency];
             case '\SSB\Api\Model\Validation[]':
                 return json_decode($value, true);
+            case '\DateTime':
+                if (empty($value)) {
+                    return null;
+                }
+                return Carbon::parse($value)->format('Y-m-d H:i:s');
+            default:
+                Log::info('Type not supported ' . $type);
+                break;
         }
 
         return null;
