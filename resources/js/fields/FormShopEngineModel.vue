@@ -44,7 +44,7 @@ export default {
         },
         created() {
             Nova.request().get(`/nova-api/${this.field.uriKey}`, {}).then(response => {
-                if (response.headers['content-type'] !== 'application/json') {
+                if (response.headers['content-type'] !== 'application/json' && response.headers['content-type'] !== 'application/json; charset=utf-8') {
                     console.error(response)
                     return
                 }

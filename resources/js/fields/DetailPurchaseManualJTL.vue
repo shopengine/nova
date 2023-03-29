@@ -29,7 +29,7 @@ export default {
                 this.loading = true
 
                 Nova.request().post(`/nova-vendor/novashopengine/purchases/${this.resourceId}/manualJTL`).then(response => {
-                    if (response.headers['content-type'] !== 'application/json') {
+                    if (response.headers['content-type'] !== 'application/json' && response.headers['content-type'] !== 'application/json; charset=utf-8') {
                         console.error(response)
                         return
                     }
