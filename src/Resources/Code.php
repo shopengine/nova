@@ -2,6 +2,8 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Heading;
 use ShopEngine\Nova\Fields\CodepoolLink;
 use ShopEngine\Nova\Fields\CodeValidation;
 use ShopEngine\Nova\Fields\ShopEngineModel;
@@ -106,6 +108,48 @@ class Code extends ShopEngineResource
 
             CodeValidation::make('Validierungen', 'validation')
                 ->hideFromIndex(),
+            Heading::make('Guthaben-Aufladung')
+                ->canSee(function () {
+                    return is_array($this->validation) && array_key_exists('leftOver', $this->validation);
+                }),
+            Number::make('Wert in Cent', 'rechargeAmount')
+                ->nullable()
+                ->rules('required_unless:rechargeType,null|required_unless:rechargeFrequency,null|required_unless:rechargeAt,null')
+                ->min(0)
+                ->step(1)
+                ->resolveUsing(function ($value) {
+                    return empty($value) || $value <= 0 ? null : $value;
+                })
+                ->canSee(function () {
+                    return is_array($this->validation) && array_key_exists('leftOver', $this->validation);
+                }),
+            Select::make('Typ', 'rechargeType')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeFrequency,null|required_unless:rechargeAt,null')
+                ->options([
+                    'absolute' => 'Absolut',
+                    'relative' => 'Relativ',
+                ])
+                ->displayUsingLabels()
+                ->canSee(function () {
+                    return is_array($this->validation) && array_key_exists('leftOver', $this->validation);
+                }),
+            Select::make('Häufigkeit', 'rechargeFrequency')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeAt,null')
+                ->options([
+                    'monthly' => 'Monatlich',
+                ])
+                ->displayUsingLabels()
+                ->canSee(function () {
+                    return is_array($this->validation) && array_key_exists('leftOver', $this->validation);
+                }),
+            DateTime::make('Nächster Termin', 'rechargeAt')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeFrequency,null')
+                ->canSee(function () {
+                    return is_array($this->validation) && array_key_exists('leftOver', $this->validation);
+                })
         ]);
     }
 
