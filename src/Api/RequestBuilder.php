@@ -56,6 +56,10 @@ abstract class RequestBuilder {
      */
     protected function fixTypes($value, string $type)
     {
+        if ($value === null) {
+            return null;
+        }
+
         switch ($type) {
             case 'string':
                 return "$value";
