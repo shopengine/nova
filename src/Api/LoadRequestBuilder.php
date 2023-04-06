@@ -41,7 +41,7 @@ class LoadRequestBuilder extends RequestBuilder
         }
 
         if (!$resourceId) {
-            throwException(new \Exception('Missing Resource Id'));
+            throw new Exception('Missing Resource Id');
         }
 
         return new LoadRequestStruct($resourceId);
