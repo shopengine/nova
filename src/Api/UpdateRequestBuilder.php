@@ -1,16 +1,27 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
-
+use Exception;
 use ShopEngine\Nova\Models\ShopEngineModel;
 use SSB\Api\Model\Code;
 
 class UpdateRequestBuilder extends RequestBuilder
 {
+    /**
+     * @param ShopEngineModel $model
+     * @return bool
+     * @throws Exception
+     */
+    public function save(ShopEngineModel $model): bool
+    {
+        $parameters = $this->buildFromModel($model);
+        $aggregateId = $this->request->resourceId;
+        $endpoint = $this->getShopEnginePath() . '/' . $aggregateId;
 
-    public function save(ShopEngineModel $model) {
-        $seRequest = $this->buildFromModel($model);
-        $this->getClient()->patch($this->getShopEnginePath().'/'.$this->request->resourceId, $seRequest);
+        $this->getClient()->patch($endpoint, $parameters);
+
+        return true;
     }
 
     public function buildFromModel(ShopEngineModel $model)
@@ -35,7 +46,6 @@ class UpdateRequestBuilder extends RequestBuilder
             $seRequest['quantity'] = intval($model->quantity);
             $seRequest['code'] = '';
         }
-
 
         return $seRequest;
     }
