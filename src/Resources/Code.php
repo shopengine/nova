@@ -115,8 +115,8 @@ class Code extends ShopEngineResource
                 ->nullable()
                 ->rules('required_unless:rechargeAmount,null|required_unless:rechargeFrequency,null|required_unless:rechargeAt,null')
                 ->options([
-                    'absolute' => 'Absolut',
-                    'relative' => 'Relativ',
+                    'absolute' => 'Setzt das Guthaben auf den angegeben Wert',
+                    'relative' => 'Addiert den angegeben Wert mit dem verbleibenden Guthaben',
                 ])
                 ->displayUsingLabels()
                 ->hideFromIndex(),
