@@ -111,8 +111,8 @@ export default {
             const params = {...this.query, 'codepoolId-eq': this.resourceId}
 
             Nova.request().get(`/nova-vendor/novashopengine/codes`, {params}).then(response => {
-                if (response.headers['content-type'] !== 'application/json') {
-                    console.error(response)
+                if (response.headers['content-type'].indexOf('application/json') === -1) {
+                  console.error(response, response.headers['content-type'])
                     return
                 }
 

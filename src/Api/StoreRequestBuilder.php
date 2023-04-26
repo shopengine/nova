@@ -1,16 +1,23 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
-
+use Exception;
 use ShopEngine\Nova\Models\ShopEngineModel;
 use SSB\Api\Model\Code;
 
 class StoreRequestBuilder extends RequestBuilder
 {
+    /**
+     * @param ShopEngineModel $model
+     * @return bool
+     * @throws Exception
+     */
+    public function save(ShopEngineModel $model): bool
+    {
+        $this->getClient()->post($this->getShopEnginePath(), $this->buildFromModel($model));
 
-    public function save(ShopEngineModel $model) {
-        $seRequest = $this->buildFromModel($model);
-        $this->getClient()->post($this->getShopEnginePath(), $seRequest);
+        return true;
     }
 
     public function buildFromModel(ShopEngineModel $model)

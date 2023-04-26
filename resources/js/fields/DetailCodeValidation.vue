@@ -28,6 +28,8 @@
                         return 'Neukunden'
                     case 'emailOnce':
                         return 'Ein mal pro Email'
+                    case 'leftOver':
+                        return 'Guthaben'
                 }
 
                 return type

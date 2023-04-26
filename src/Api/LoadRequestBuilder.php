@@ -1,21 +1,23 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
-
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use ShopEngine\Nova\Models\ShopEngineModel;
 use ShopEngine\Nova\Structs\Api\LoadRequestStruct;
 
 class LoadRequestBuilder extends RequestBuilder
 {
-
     /**
      * Execute the query statement on ShopEngine API.
      *
-     * @param \ShopEngine\Nova\Structs\Api\LoadRequestStruct $loadRequestStruct
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder[]
+     * @param LoadRequestStruct $loadRequestStruct
+     * @return Collection|Builder[]
+     * @throws Exception
      */
-    public function loadItem(LoadRequestStruct $loadRequestStruct) : ShopEngineModel
+    public function loadItem(LoadRequestStruct $loadRequestStruct): ShopEngineModel
     {
         $rawResponse = $this->getClient()->get(
             $this->getShopEnginePath() . '/' . $loadRequestStruct->createApiRequest()
@@ -25,7 +27,10 @@ class LoadRequestBuilder extends RequestBuilder
         return new $modelClass($rawResponse);
     }
 
-    public function buildFromRequest() : LoadRequestStruct
+    /**
+     * @throws Exception
+     */
+    public function buildFromRequest(): LoadRequestStruct
     {
         // @todo investigate why named route properties are not defined
         // this is a interim solution
@@ -36,7 +41,7 @@ class LoadRequestBuilder extends RequestBuilder
         }
 
         if (!$resourceId) {
-            throwException(new \Exception('Missing Resource Id'));
+            throw new Exception('Missing Resource Id');
         }
 
         return new LoadRequestStruct($resourceId);

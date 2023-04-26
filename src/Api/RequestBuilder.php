@@ -1,11 +1,15 @@
 <?php
+
 namespace ShopEngine\Nova\Api;
 
-use ShopEngine\Nova\Services\ConfiguredClassFactory;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
 use SSB\Api\Client;
 
-abstract class RequestBuilder {
+abstract class RequestBuilder
+{
 
     /**
      * @var \Laravel\Nova\Http\Requests\NovaRequest
@@ -22,7 +26,8 @@ abstract class RequestBuilder {
      *
      * @return string
      */
-    protected function getShopEnginePath() : string {
+    protected function getShopEnginePath(): string
+    {
         return $this->request->resource()::getShopEngineEndpoint();
     }
 
@@ -30,6 +35,7 @@ abstract class RequestBuilder {
      *  Get Api Client
      *
      * @return \SSB\Api\Client
+     * @throws \Exception
      */
     protected function getClient(): Client
     {
@@ -46,16 +52,16 @@ abstract class RequestBuilder {
     }
 
     /**
-     * A really ugly function
-     * @todo fix me please
-     *
      * @param $value
      * @param string $type
-     *
      * @return array|bool|int|mixed|string|null
      */
     protected function fixTypes($value, string $type)
     {
+        if ($value === null) {
+            return null;
+        }
+
         switch ($type) {
             case 'string':
                 return "$value";
@@ -68,6 +74,14 @@ abstract class RequestBuilder {
                 return ['amount' => intval($v->amount), 'currency' => $v->currency];
             case '\SSB\Api\Model\Validation[]':
                 return json_decode($value, true);
+            case '\DateTime':
+                if (empty($value)) {
+                    return null;
+                }
+                return Carbon::parse($value)->format('Y-m-d H:i:s');
+            default:
+                Log::info('Type not supported ' . $type);
+                break;
         }
 
         return null;

@@ -8,7 +8,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.3.0",
-        "shopengine/client-php": "dev-feature/articlebundle",
+        "shopengine/client-php": "3.0.0",
         "optimistdigital/nova-translations-loader": "^3.1.2"
     },
     "autoload": {

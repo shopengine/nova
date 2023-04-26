@@ -2,6 +2,8 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Heading;
 use ShopEngine\Nova\Fields\CodepoolLink;
 use ShopEngine\Nova\Fields\CodeValidation;
 use ShopEngine\Nova\Fields\ShopEngineModel;
@@ -53,7 +55,6 @@ class Code extends ShopEngineResource
                 'enabled' => 'success',
                 'disabled' => 'danger'
             ]),
-
             Number::make('Quantität', 'quantity')
                 ->min(1)
                 ->step(0)
@@ -61,14 +62,14 @@ class Code extends ShopEngineResource
                 ->onlyOnForms()
                 ->hideWhenUpdating()
                 ->help('Werden mehrere erstellt, wird der Code-Name generiert.'),
-
+            Text::make(__('se.codepool'), 'codepoolName')
+                ->onlyOnIndex(),
             Select::make('Status')->options([
-                'enabled' => 'Aktiv',
-                'disabled' => 'Deaktiviert'
-            ])
+                    'enabled' => 'Aktiv',
+                    'disabled' => 'Deaktiviert'
+                ])
                 ->onlyOnForms()
                 ->withMeta(['value' => 'enabled']),
-
             Date::make('Erstellt am', 'createdAt')
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
@@ -77,13 +78,8 @@ class Code extends ShopEngineResource
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
                 ->sortable(true),
-
-            Text::make(__('se.codepool'), 'codepoolName')
-                ->onlyOnIndex(),
-
             CodepoolLink::make(__('se.codepool'), 'codepoolId')
                 ->onlyOnDetail(),
-
             Textarea::make('Notiz', 'note')
                 ->alwaysShow(),
             Text::make(__('se.conditionset'), function ($resource) {
@@ -103,9 +99,39 @@ class Code extends ShopEngineResource
                 ->onlyOnForms(),
             Boolean::make('Versteckt', 'hidden')
                 ->hideFromIndex(),
-
             CodeValidation::make('Validierungen', 'validation')
                 ->hideFromIndex(),
+            Heading::make('Guthaben-Aufladung'),
+            Number::make('Wert in Cent', 'rechargeAmount')
+                ->nullable()
+                ->rules('required_unless:rechargeType,null|required_unless:rechargeFrequency,null|required_unless:rechargeAt,null')
+                ->min(0)
+                ->step(1)
+                ->resolveUsing(function ($value) {
+                    return empty($value) || $value <= 0 ? null : $value;
+                })
+                ->hideFromIndex(),
+            Select::make('Typ', 'rechargeType')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeFrequency,null|required_unless:rechargeAt,null')
+                ->options([
+                    'absolute' => 'Setzt das Guthaben auf den angegeben Wert',
+                    'relative' => 'Addiert den angegeben Wert mit dem verbleibenden Guthaben',
+                ])
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+            Select::make('Häufigkeit', 'rechargeFrequency')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeAt,null')
+                ->options([
+                    'monthly' => 'Monatlich',
+                ])
+                ->displayUsingLabels()
+                ->hideFromIndex(),
+            DateTime::make('Nächster Termin', 'rechargeAt')
+                ->nullable()
+                ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeFrequency,null')
+                ->hideFromIndex()
         ]);
     }
 

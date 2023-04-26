@@ -3,6 +3,10 @@
 namespace ShopEngine\Nova\Models;
 
 use ArrayAccess;
+use Exception;
+use Illuminate\Validation\ValidationException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use ShopEngine\Nova\Api\LoadRequestBuilder;
 use ShopEngine\Nova\Api\StoreRequestBuilder;
 use ShopEngine\Nova\Api\UpdateRequestBuilder;
@@ -166,7 +170,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
                         $newObj[] = $item;
                     }
                 }
-                catch (\Exception $exception) {
+                catch (Exception $exception) {
                     $newObj[] = $item;
                 }
             }
@@ -206,20 +210,24 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
 
     /**
      * @param array $options
+     * @return bool
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws Exception
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         $request = app(NovaRequest::class);
 
         if ($request->get('editMode') === 'update') {
-            (new UpdateRequestBuilder($request))->save($this);
-            return;
+            return (new UpdateRequestBuilder($request))->save($this);
         }
 
         if ($request->get('editMode') === 'create') {
-            (new StoreRequestBuilder($request))->save($this);
-            return;
+            return (new StoreRequestBuilder($request))->save($this);
         }
+
+        return true;
     }
 
     /** -- for faking an eloquent model --  */

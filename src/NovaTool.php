@@ -2,14 +2,13 @@
 
 namespace ShopEngine\Nova;
 
-use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
-use ShopEngine\Nova\Services\ConfiguredClassFactory;
-use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
-use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
-use ShopEngine\Nova\Traits\UseNovaTranslations;
 use Illuminate\Support\Arr;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
+use ShopEngine\Nova\Services\ConfiguredClassFactory;
+use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
+use ShopEngine\Nova\Traits\UseNovaTranslations;
 
 
 class NovaTool extends Tool
@@ -28,8 +27,6 @@ class NovaTool extends Tool
             "shopEngineIdentifier" => $shopService->shopEngineSettings()->getShopEngineShopIdentifier(),
             "shopCurrency" => $shopService->shopCurrency()
         ]);
-
-        Nova::script('novashopengine', __DIR__.'/../dist/js/tool.js');
     }
 
     public function renderNavigation()
@@ -42,7 +39,7 @@ class NovaTool extends Tool
     /**
      * @return NavigationStruct[]
      */
-    private function buildNavigation() : array
+    private function buildNavigation(): array
     {
         $providers = $this->getShopengineProviders();
 
@@ -72,22 +69,22 @@ class NovaTool extends Tool
         ];
     }
 
-    private function getShopengineProviders() : array {
+    private function getShopengineProviders(): array
+    {
         return Arr::where(
             array_keys(app()->getLoadedProviders()),
             fn($provider) => is_a($provider, ShopEnginePackageInterface::class, true)
         );
     }
 
-    private function loadTranslationsAllPlugins() : void
+    private function loadTranslationsAllPlugins(): void
     {
-
         $seProviders = $this->getShopengineProviders();
 
         foreach ($seProviders as $providerClass) {
             try {
-                $file = call_user_func($providerClass .'::getLanguagePath');
-                    $this->loadTranslations($file, 'nova-shopengine', true);
+                $file = call_user_func($providerClass . '::getLanguagePath');
+                $this->loadTranslations($file, 'nova-shopengine', true);
             } catch (\Exception $e) {
             }
         }

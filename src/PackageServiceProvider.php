@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova;
 
+use Laravel\Nova\Events\ServingNova;
 use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
 use ShopEngine\Nova\Http\Middleware\Authorize;
 use ShopEngine\Nova\Http\Requests\SeResourceIndexRequest;
@@ -53,6 +54,17 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
                 return $value ?: $default;
             });
         });
+
+
+        Nova::serving(function (ServingNova $event) {
+            $files = app('files');
+            if ($files->exists(__DIR__ . '/../dist/hot')) {
+                Nova::remoteScript('http://localhost:8080/js/tool.js');
+            } else {
+                Nova::script('shopengine', __DIR__ . '/../dist/js/tool.js');
+            }
+        });
+
     }
 
     /**

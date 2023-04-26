@@ -115,6 +115,38 @@
                     />
                 </div>
             </div>
+          <div class="pb-4">
+            <label>Guthaben</label>
+            <div>
+              <input
+                  type="checkbox"
+                  class="checkbox mt-2"
+                  :class="errorClasses"
+                  v-model="showLeftOver"
+              />
+              <div class="flex items-center my-2"
+                   v-if="showLeftOver"
+              >
+                <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    class="w-30 form-control form-input form-input-bordered"
+                    :class="errorClasses"
+                    :placeholder="''"
+                    v-model="leftOverAmount"
+                />
+                <div class="px-2 whitespace-no-wrap">{{ currency }} auf</div>
+                <select v-model="leftOverTarget"
+                        class="w-30 form-control form-select form-input-bordered"
+                        :class="errorClasses"
+                >
+                  <option value="totals">Summe</option>
+                  <option value="sub">Warenkorb</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </template>
     </default-field>
 </template>
@@ -134,7 +166,11 @@ export default {
                 usageCount: null,
                 email: null,
                 emailOnce: null,
-                newCustomer: null
+                newCustomer: null,
+                showLeftOver: null,
+                leftOverAmount: 100,
+                leftOverTarget: 'totals',
+                currency: Nova.config.shopCurrency,
             }
         },
 
@@ -161,6 +197,11 @@ export default {
                             break;
                         case 'emailOnce':
                             value = 1
+                            break;
+                        case 'leftOver':
+                            this.showLeftOver = true
+                            this.leftOverAmount = value.amount / 100.0
+                            this.leftOverTarget = v.target
                             break;
                     }
 
@@ -189,6 +230,17 @@ export default {
 
                 if (this.emailOnce) {
                     obj.emailOnce = this.resourceId
+                }
+
+                if (this.showLeftOver && this.leftOverAmount > 0 && this.leftOverTarget) {
+                    const currency = Nova.config.shopCurrency
+                    obj.leftOver = {
+                      value: {
+                        amount: Math.round(this.leftOverAmount * 100),
+                        currency
+                      },
+                      target: this.leftOverTarget
+                    }
                 }
 
                 if (this.newCustomer) {
