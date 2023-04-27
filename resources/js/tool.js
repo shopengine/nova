@@ -12,10 +12,10 @@ import DetailCodeValidation from './fields/DetailCodeValidation'
 import FormCodeValidation from './fields/FormCodeValidation'
 import FormShopEngineModel from './fields/FormShopEngineModel'
 import List from './components/List'
-import TagsPeriodsIndex from './components/settings/newsletter-provider/klicktipps/tags-periods/Index.vue'
-import tagPeriodShow from './components/settings/newsletter-provider/klicktipps/tags-periods/Show.vue'
-import tagPeriodEdit from './components/settings/newsletter-provider/klicktipps/tags-periods/Edit.vue'
-import tagPeriodCreate from './components/settings/newsletter-provider/klicktipps/tags-periods/Create.vue'
+import PeriodTagIndex from './components/shop/marketing-provider/klicktipp/period-tags/Index.vue'
+import PeriodTagShow from './components/shop/marketing-provider/klicktipp/period-tags/Show.vue'
+import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period-tags/Edit.vue'
+import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
 
 Nova.booting((Vue, router) => {
     router.addRoutes([
@@ -24,24 +24,24 @@ Nova.booting((Vue, router) => {
             component: List,
         },
         {
-            name: 'settings.newsletter-provider.klicktipps.tags-periods.index',
-            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods',
-            component: TagsPeriodsIndex
+            name: 'shop.marketing-provider.klicktipp.period-tags.index',
+            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags',
+            component: PeriodTagIndex
         },
         {
-            name: 'settings.newsletter-provider.klicktipps.tags-periods.create',
-            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/create',
-            component: tagPeriodCreate
+            name: 'shop.marketing-provider.klicktipp.period-tags.create',
+            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/create',
+            component: PeriodTagCreate
         },
         {
-            name: 'settings.newsletter-provider.klicktipps.tags-periods.show',
-            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/:tag',
-            component: tagPeriodShow
+            name: 'shop.marketing-provider.klicktipp.period-tags.show',
+            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/:tag',
+            component: PeriodTagShow
         },
         {
-            name: 'settings.newsletter-provider.klicktipps.tags-periods.edit',
-            path: '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/:tag/edit',
-            component: tagPeriodEdit
+            name: 'shop.marketing-provider.klicktipp.period-tags.edit',
+            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/:tag/edit',
+            component: PeriodTagEdit
         },
     ])
 

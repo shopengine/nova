@@ -2,7 +2,13 @@
 
 namespace ShopEngine\Nova;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
+use Laravel\Nova\Nova;
 use ShopEngine\Nova\Contracts\ShopEnginePackageInterface;
 use ShopEngine\Nova\Http\Middleware\Authorize;
 use ShopEngine\Nova\Http\Requests\SeResourceIndexRequest;
@@ -10,16 +16,11 @@ use ShopEngine\Nova\Resources;
 use ShopEngine\Nova\Structs\Navigation\NavigationGroupStruct;
 use ShopEngine\Nova\Structs\Navigation\NavigationItemStruct;
 use ShopEngine\Nova\Structs\Navigation\NavigationStruct;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-use Laravel\Nova\Nova;
 
 class PackageServiceProvider extends ServiceProvider implements ShopEnginePackageInterface
 {
-    protected static function ShopEngineResources() {
+    protected static function ShopEngineResources()
+    {
         return [
             Resources\ShippingCost::class,
             Resources\Purchase::class,
@@ -27,7 +28,6 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             Resources\PaymentMethod::class,
             Resources\Codepool::class,
             Resources\Code::class,
-//            Resources\Klicktipp::class
         ];
     }
 
@@ -64,7 +64,6 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
                 Nova::script('shopengine', __DIR__ . '/../dist/js/tool.js');
             }
         });
-
     }
 
     /**
@@ -72,7 +71,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
      *
      * @return void
      */
-    private function registerPublishing() : void
+    private function registerPublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -82,7 +81,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         }
     }
 
-    protected function routes() : void
+    protected function routes(): void
     {
         if ($this->app->routesAreCached()) {
             return;
@@ -105,26 +104,21 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         $this->mergeConfigFrom($configPath, 'nova-shopengine');
     }
 
-    public static function getShopengineNavigation() : ?NavigationStruct {
+    public static function getShopengineNavigation(): ?NavigationStruct
+    {
         $baseNavigation = [
             new NavigationItemStruct('orders', '/novashopengine/purchases', Resources\Purchase::class)
         ];
 
         $adminNavigation = [
             new NavigationItemStruct('shippingcosts', '/novashopengine/shipping-costs', Resources\ShippingCost::class),
-            new NavigationItemStruct('payments', '/novashopengine/payment-methods',
-                Resources\PaymentMethod::class),
-            new NavigationItemStruct('tags-periods', '/novashopengine/settings/newsletter-provider/klicktipp/tags-periods', Resources\ConditionSet::class),
-
-
-
+            new NavigationItemStruct('payments', '/novashopengine/payment-methods', Resources\PaymentMethod::class),
+            new NavigationItemStruct('period-tags', '/novashopengine/shop/marketing-provider/klicktipp/period-tags', Resources\ShippingCost::class),
         ];
 
         $codepoolNavigation = [
-            new NavigationItemStruct('codepools', '/novashopengine/codepools',
-                Resources\Codepool::class),
-            new NavigationItemStruct('codes', '/novashopengine/codes',
-                Resources\Code::class),
+            new NavigationItemStruct('codepools', '/novashopengine/codepools', Resources\Codepool::class),
+            new NavigationItemStruct('codes', '/novashopengine/codes', Resources\Code::class),
         ];
 
         $struct = new NavigationStruct(
@@ -148,7 +142,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         return $struct->getAvailableStruct(Nova::availableResources(request()));
     }
 
-    private function isSeResourceRequest() : bool
+    private function isSeResourceRequest(): bool
     {
         $request = NovaRequest::createFrom(request());
         $resource = $request->viaResource();

@@ -15,7 +15,7 @@
       <form autocomplete="off">
         <div class="mb-8">
           <h1 class="text-90 font-normal text-2xl mb-3">
-            Tag Periods bearbeiten:
+            Zeitliche Tags bearbeiten:
           </h1>
           <!---->
           <div class="card">
@@ -36,7 +36,7 @@
                     type="number"
                     placeholder="Tag"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.tag"
+                    v-model="periodTag.tag"
                     disabled="disabled"
                 />
               </div>
@@ -59,7 +59,7 @@
                     placeholder="beginnt am"
                     step="any"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.from"
+                    v-model="periodTag.from"
                 />
               </div>
             </div>
@@ -81,7 +81,7 @@
                     placeholder="endet am"
                     step="any"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.to"
+                    v-model="periodTag.to"
                 />
               </div>
             </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="flex items-center">
           <router-link
-              to="/novashopengine/settings/newsletter-provider/klicktipp/tags-periods"
+              to="/novashopengine/shop/marketing-provider/klicktipp/period-tags"
               tabIndex="0"
               class="btn btn-link dim cursor-pointer text-80 ml-auto mr-6"
           >
@@ -99,63 +99,61 @@
               type="button"
               class="btn btn-default btn-primary inline-flex items-center relative"
               dusk="update-button"
-          @click="submit"
+              @click="submit"
           >
-          <span class=""> Tag Periods aktualisieren </span>
-        </button>
+            <span class="">Zeitlichen Tag aktualisieren</span>
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-</div>
+  </div>
 </template>
 
 <script>
-  export default {
+export default {
   data() {
-  return {
-  isLoading: true,
-  isSaving: false,
-  tag: this.$route.params.tag,
-  tagPeriod: {},
-};
-},
+    return {
+      isLoading: true,
+      isSaving: false,
+      tag: this.$route.params.tag,
+      periodTag: {},
+    };
+  },
   async mounted() {
-  this.isLoading = true;
-  const { data } = await Nova.request().get(
-  `/nova-vendor/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/` +
-  this.tag
-  );
-  if(data.hasOwnProperty('notApplicable'))
-    {
+    this.isLoading = true;
+    const {data} = await Nova.request().get(
+        `/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/` + this.tag
+    );
+    if (data.hasOwnProperty('notApplicable')) {
       this.$toasted.show(`Error: ${data.message}`, {type: "error"});
       this.$router.go(-1);
       return;
     }
-  this.tagPeriod = data;
-  this.isLoading = false;
-},
+    this.periodTag = data;
+    this.isLoading = false;
+  },
 
   methods: {
-  async submit(e) {
-  this.isSaving = true;
-  const { data } = await Nova.request().patch(
-  `/nova-vendor/novashopengine/settings/newsletter-provider/klicktipp/tags-periods`,
-  {
-    tagPeriod: this.tagPeriod,
-  }
-  );
-  if (data.success) {
-  this.value = data.data;
-  this.$router.push(
-  "/novashopengine/settings/newsletter-provider/klicktipp/tags-periods"
-  );
-  this.$toasted.show(`${data.message}`, { type: "success" });
-} else {
-  this.$toasted.show(`Error: ${data.message}`, { type: "error" });
-}
-  this.isSaving = false;
-},
-},
+    async submit(e) {
+      this.isSaving = true;
+      const {data} = await Nova.request().patch(
+          `/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags`,
+          {
+            periodTag: this.periodTag,
+          }
+      );
+      if (data.success) {
+        this.value = data.data;
+        this.$router.push(
+            "/novashopengine/shop/marketing-provider/klicktipp/period-tags"
+        );
+        this.$toasted.show(`${data.message}`, {type: "success"});
+      } else {
+        this.$toasted.show(`Error: ${data.message}`, {type: "error"});
+      }
+      this.isSaving = false;
+    },
+  },
 };
 </script>
 <template>
@@ -175,7 +173,7 @@
       <form autocomplete="off">
         <div class="mb-8">
           <h1 class="text-90 font-normal text-2xl mb-3">
-            Tag Periods bearbeiten:
+            Zeitlichen Tag bearbeiten:
           </h1>
           <!---->
           <div class="card">
@@ -196,7 +194,7 @@
                     type="number"
                     placeholder="Tag"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.tag"
+                    v-model="periodTag.tag"
                     disabled="disabled"
                 />
               </div>
@@ -219,7 +217,7 @@
                     placeholder="beginnt am"
                     step="any"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.from"
+                    v-model="periodTag.from"
                 />
               </div>
             </div>
@@ -241,7 +239,7 @@
                     placeholder="endet am"
                     step="any"
                     class="w-full form-control form-input form-input-bordered"
-                    v-model="tagPeriod.to"
+                    v-model="periodTag.to"
                 />
               </div>
             </div>
@@ -249,7 +247,7 @@
         </div>
         <div class="flex items-center">
           <router-link
-              to="/novashopengine/settings/newsletter-provider/klicktipp/tags-periods"
+              to="/novashopengine/shop/marketing-provider/klicktipp/period-tags"
               tabIndex="0"
               class="btn btn-link dim cursor-pointer text-80 ml-auto mr-6"
           >
@@ -259,56 +257,56 @@
               type="button"
               class="btn btn-default btn-primary inline-flex items-center relative"
               dusk="update-button"
-          @click="submit"
+              @click="submit"
           >
-          <span class=""> Tag Periods aktualisieren </span>
-        </button>
+            <span class="">Zeitlichen Tag aktualisieren</span>
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-</div>
+  </div>
 </template>
 
 <script>
-  export default {
+export default {
   data() {
-  return {
-  isLoading: true,
-  isSaving: false,
-  tag: this.$route.params.tag,
-  tagPeriod: {},
-};
-},
+    return {
+      isLoading: true,
+      isSaving: false,
+      tag: this.$route.params.tag,
+      periodTag: {},
+    };
+  },
   async mounted() {
-  this.isLoading = true;
-  const { data } = await Nova.request().get(
-  `/nova-vendor/novashopengine/settings/newsletter-provider/klicktipp/tags-periods/` +
-  this.tag
-  );
-  this.tagPeriod = data;
-  this.isLoading = false;
-},
+    this.isLoading = true;
+    const {data} = await Nova.request().get(
+        `/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/` +
+        this.tag
+    );
+    this.periodTag = data;
+    this.isLoading = false;
+  },
 
   methods: {
-  async submit(e) {
-  this.isSaving = true;
-  const { data } = await Nova.request().patch(
-  `/nova-vendor/novashopengine/settings/newsletter-provider/klicktipp/tags-periods`,
-{
-  tagPeriod: this.tagPeriod,
-}
-  );
-  if (data.success) {
-  this.value = data.data;
-  this.$router.push(
-  "/novashopengine/settings/newsletter-provider/klicktipp/tags-periods"
-  );
-  this.$toasted.show(`${data.message}`, { type: "success" });
-} else {
-  this.$toasted.show(`Error: ${data.message}`, { type: "error" });
-}
-  this.isSaving = false;
-},
-},
+    async submit(e) {
+      this.isSaving = true;
+      const {data} = await Nova.request().patch(
+          `/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags`,
+          {
+            periodTag: this.periodTag,
+          }
+      );
+      if (data.success) {
+        this.value = data.data;
+        this.$router.push(
+            "/novashopengine/shop/marketing-provider/klicktipp/period-tags"
+        );
+        this.$toasted.show(`${data.message}`, {type: "success"});
+      } else {
+        this.$toasted.show(`Error: ${data.message}`, {type: "error"});
+      }
+      this.isSaving = false;
+    },
+  },
 };
 </script>
