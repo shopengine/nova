@@ -10,7 +10,7 @@
       <form autocomplete="off">
         <div class="mb-8">
           <h1 class="text-90 font-normal text-2xl mb-3">
-            Tag Period erstellen:
+            Zeitlichen Tag erstellen:
           </h1>
           <!---->
           <div class="card">
@@ -25,9 +25,6 @@
               </div>
               <div class="py-6 px-8 w-1/2">
                 <input
-                    id="class"
-                    dusk="tag"
-                    list="tag-list"
                     type="text"
                     placeholder="Tag"
                     class="w-full form-control form-input form-input-bordered"
@@ -46,9 +43,6 @@
               </div>
               <div class="py-6 px-8 w-1/2">
                 <input
-                    id="class"
-                    dusk="tag"
-                    list="tag-list"
                     type="datetime-local"
                     placeholder="Tag"
                     step="any"
@@ -68,9 +62,6 @@
               </div>
               <div class="py-6 px-8 w-1/2">
                 <input
-                    id="class"
-                    dusk="tag"
-                    list="tag-list"
                     type="datetime-local"
                     placeholder="Tag"
                     step="any"
@@ -111,15 +102,16 @@ export default {
       isSaving: false,
       tag: "",
       from: this.now(),
-      to: this.now(),
+      to: this.tomorrow(),
     };
   },
 
   methods: {
     now() {
-      return new Date(new Date().toString().split("GMT")[0] + " UTC")
-          .toISOString()
-          .split(".")[0];
+      return moment().format(moment.HTML5_FMT.DATETIME_LOCAL)
+    },
+    tomorrow() {
+      return moment().add(1, 'days').format(moment.HTML5_FMT.DATETIME_LOCAL)
     },
     async submit() {
       if (this.tag === "" || this.from === "" || this.to === "") {
@@ -128,40 +120,28 @@ export default {
         });
         return;
       }
-      this.isSaving = true;
-      const periodTag = {
-        tag: this.tag,
-        from: this.from,
-        to: this.to,
-      };
 
-      const {data} = await Nova.request().post(
-          `/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/`,
-          {
-            periodTag: periodTag,
-          }
-      );
-      console.log(data)
-      if (data.hasOwnProperty('notApplicable')) {
-        this.$toasted.show(`Error: ${data.message}`, {type: "error"});
-        this.$router.go(-1);
-        return;
-      }
-      if (!data.success) {
-        this.$toasted.show(`${data.message}`, {type: "error"});
-        return
-      }
-      if (data.success) {
-        this.value = data.data;
-        this.$router.push(
-            "/novashopengine/shop/marketing-provider/klicktipp/period-tags"
-        );
-        this.$toasted.show(`${data.message}`, {type: "success"});
-      } else {
-        this.$toasted.show(`Error: ${data.message}`, {type: "error"});
-        return
-      }
-      this.isSaving = false;
+      this.isSaving = true;
+
+      Nova.request()
+          .post('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags', {
+            periodTag: {
+              tag: this.tag,
+              from: moment(this.from).toISOString(),
+              to: moment(this.to).toISOString(),
+            },
+          })
+          .then(response => {
+            this.$router.push(
+                "/novashopengine/shop/marketing-provider/klicktipp/period-tags"
+            );
+          })
+          .catch((error) => {
+            this.$router.go(-1);
+          })
+          .finally(() => {
+            this.isSaving = false
+          });
     },
   },
 };

@@ -37,7 +37,7 @@
               <div class="w-1/4 py-4"><h4 class="font-normal text-80">From</h4></div>
               <div class="w-3/4 py-4 break-words">
                 <div>
-                  <div class="markdown leading-normal whitespace-pre-wrap">{{ periodTag.from }}</div>
+                  <div class="markdown leading-normal whitespace-pre-wrap">{{ formatDate(periodTag.from) }}</div>
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
               <div class="w-1/4 py-4"><h4 class="font-normal text-80">To</h4></div>
               <div class="w-3/4 py-4 break-words">
                 <div>
-                  <div class="markdown leading-normal whitespace-pre-wrap">{{ periodTag.to }}</div>
+                  <div class="markdown leading-normal whitespace-pre-wrap">{{ formatDate(periodTag.to) }}</div>
                 </div>
               </div>
             </div>
@@ -56,7 +56,6 @@
     </loading-view>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -70,33 +69,23 @@ export default {
   },
   async mounted() {
     this.isLoading = true
-    const {data} = await Nova.request().get(`/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/` + this.tag);
-    if (data.hasOwnProperty('notApplicable')) {
-      this.$toasted.show(`Error: ${data.message}`, {type: "error"});
-      this.$router.go(-1);
-      return;
-    }
-    this.periodTag = data
-    this.isLoading = false
-  },
 
+    Nova.request()
+        .get(`/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/` + this.tag)
+        .then(response => {
+          this.periodTag = response.data
+        })
+        .catch((error) => {
+          this.$router.go(-1)
+        })
+        .finally(() => {
+          this.isLoading = false
+        });
+  },
   methods: {
-    async submit() {
-      this.isSaving = true
-      const {data} = await Nova.request().post(`/nova-vendor/novashopengine/klicktipps`, {
-        value: this.value
-      })
-
-      if (data.success) {
-        this.value = data.data
-        this.$toasted.show(`Gespeichert`, {type: 'success'})
-      } else {
-        this.$toasted.show(`Error: ${data.data}`, {type: 'error'})
-      }
-
-
-      this.isSaving = false
-    },
-  },
+    formatDate(date) {
+      return moment(date).format('DD.MM.YYYY HH:mm:ss', 'de')
+    }
+  }
 }
 </script>
