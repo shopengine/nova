@@ -30,7 +30,7 @@
               </div>
               <div class="py-6 px-8 w-1/2">
                 <input
-                    type="number"
+                    type="text"
                     placeholder="Tag"
                     class="w-full form-control form-input form-input-bordered"
                     v-model="periodTag.tag"
