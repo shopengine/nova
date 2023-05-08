@@ -4,9 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## [dev-feature/articlebundle]
-### Changed
-- Require shopengine/client-php dev-feature/articlebundle
-- Add EmailOnceValidation and NewCustomerValidation
+## [4.1.0]
+### Added
+- Klicktipp settings
 
-## [2.0.0]
+## [4.0.1]
+### Fixed
+- Require shopengine/client-php 3.0.1
+
+## [4.0.0]
+### Added
+- Recharge types
