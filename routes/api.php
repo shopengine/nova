@@ -7,6 +7,7 @@ Route::group(['prefix' => 'shop'], function () {
         Route::group(['prefix' => 'klicktipp'], function () {
             Route::group(['prefix' => 'period-tags'], function () {
                 Route::get('/', 'MarketingProvider\KlicktippPeriodTagController@index');
+                Route::get('/options', 'MarketingProvider\KlicktippPeriodTagController@options');
                 Route::get('/{tag}', 'MarketingProvider\KlicktippPeriodTagController@show');
                 Route::post('/', 'MarketingProvider\KlicktippPeriodTagController@store');
                 Route::patch('/', 'MarketingProvider\KlicktippPeriodTagController@update');

@@ -60,13 +60,15 @@
         <div class="border-b border-40">
           <table class="table w-full">
             <tr align="left">
-              <th>Tag</th>
+              <th>Id</th>
+              <th>Name</th>
               <th>From</th>
               <th>To</th>
               <th></th>
             </tr>
             <tr v-for="periodTag in periodTags">
-              <td>{{ periodTag.tag }}</td>
+              <td>{{ periodTag.id }}</td>
+              <td>{{ periodTag.name }}</td>
               <td>{{ formatDate(periodTag.from) }}</td>
               <td>{{ formatDate(periodTag.to) }}</td>
               <td class="td-fit text-right pr-6 align-middle">

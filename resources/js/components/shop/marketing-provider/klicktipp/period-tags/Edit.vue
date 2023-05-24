@@ -15,7 +15,7 @@
       <form autocomplete="off">
         <div class="mb-8">
           <h1 class="text-90 font-normal text-2xl mb-3">
-            Zeitliche Tags bearbeiten:
+            Zeitliche Tags bearbeiten: {{ periodTag.name }}
           </h1>
           <!---->
           <div class="card">
@@ -24,14 +24,14 @@
                 <label
                     htmlFor="class"
                     class="inline-block text-80 pt-2 leading-tight"
-                >
-                  Tag <span class="text-danger text-sm">*</span></label
+                >Id <span class="text-danger text-sm">*</span>
+                </label
                 >
               </div>
               <div class="py-6 px-8 w-1/2">
                 <input
                     type="text"
-                    placeholder="Tag"
+                    placeholder="Id"
                     class="w-full form-control form-input form-input-bordered"
                     v-model="periodTag.tag"
                     disabled="disabled"

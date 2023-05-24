@@ -24,12 +24,12 @@
                 >
               </div>
               <div class="py-6 px-8 w-1/2">
-                <input
-                    type="text"
-                    placeholder="Tag"
-                    class="w-full form-control form-input form-input-bordered"
-                    v-model="tag"
-                />
+                <select v-model="tag"
+                        class="w-full form-control form-select form-input-bordered"
+                >
+                  <option v-for="(value, key) in tagOptions" :value="key" :key="key">{{ value }}</option>
+                </select>
+                <div class="text-xs my-4">Tag Id: <span v-html="tag" class="font-bold"></span></div>
               </div>
             </div>
             <div class="flex border-b border-40">
@@ -100,10 +100,19 @@ export default {
     return {
       isLoading: true,
       isSaving: false,
+      tagOptions: {},
       tag: "",
       from: this.now(),
       to: this.tomorrow(),
     };
+  },
+
+  async mounted() {
+    Nova.request()
+        .get('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/options')
+        .then((response) => {
+          this.tagOptions = response.data
+        })
   },
 
   methods: {

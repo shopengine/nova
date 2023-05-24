@@ -27,10 +27,17 @@
           </div>
           <div class="card mb-6 py-3 px-6">
             <div class="flex border-b border-40 -mx-6 px-6">
-              <div class="w-1/4 py-4"><h4 class="font-normal text-80">Tag</h4></div>
-              <div class="w-3/4 py-4 break-words"><p class="text-90">
-                {{ periodTag.tag }}
-              </p></div>
+              <div class="w-1/4 py-4"><h4 class="font-normal text-80">Id</h4></div>
+              <div class="w-3/4 py-4 break-words">
+                <p class="text-90">{{ periodTag.id }}</p>
+              </div>
+            </div>
+
+            <div class="flex border-b border-40 -mx-6 px-6">
+              <div class="w-1/4 py-4"><h4 class="font-normal text-80">Name</h4></div>
+              <div class="w-3/4 py-4 break-words">
+                <p class="text-90">{{ periodTag.name }}</p>
+              </div>
             </div>
 
             <div class="flex border-b border-40 -mx-6 px-6">
