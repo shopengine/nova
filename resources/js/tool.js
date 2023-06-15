@@ -1,12 +1,20 @@
+import List from './components/List.vue';
+import Codeless from './components/Codeless.vue'
 Nova.booting((Vue, router, store) => {
-     // alias for resources/:resourceName
+    // alias for resources/:resourceName
 
-     router.addRoutes([
+    router.addRoutes([
+        {
+            name: 'shopengine.codeless.index',
+            path: '/novashopengine/codeless',
+            component: Codeless
+        },
+
         {
             path: '/novashopengine/:resourceName',
-            component: require('./components/List'),
+            component: List,
         }
-     ])
+    ])
 
     // custom fields
     Vue.component('detail-shippingcostoptions', require('./fields/DetailShippingCostOptions'))

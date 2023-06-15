@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/purchases/{resourceId}/manualJTL', 'PurchaseController@manualJTL');
 
+Route::get('/codeless', 'CodelessController@index');
 
 // Special Cases
 Route::post('/{resource}/{resourceId}/addOption', 'ShippingCostController@addOption');
