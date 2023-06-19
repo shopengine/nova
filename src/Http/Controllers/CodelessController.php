@@ -8,6 +8,6 @@ class CodelessController extends ShopEngineNovaController
 {
     public function index(NovaRequest $request)
     {
-        return $this->getClient()->get('codepools');
+        return $this->getClient()->get('codeless', [], 'true');
     }
 }
