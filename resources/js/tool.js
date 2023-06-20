@@ -1,5 +1,6 @@
 import List from './components/List.vue';
-import Codeless from './components/Codeless.vue'
+import CodelessIndex from './components/Codeless/Index.vue'
+import CodelessShow from './components/Codeless/Show.vue'
 Nova.booting((Vue, router, store) => {
     // alias for resources/:resourceName
 
@@ -7,9 +8,13 @@ Nova.booting((Vue, router, store) => {
         {
             name: 'shopengine.codeless.index',
             path: '/novashopengine/codeless',
-            component: Codeless
+            component: CodelessIndex
         },
-
+        {
+            name: 'shopengine.codeless.show',
+            path: '/novashopengine/codeless/:id',
+            component: CodelessShow
+        },
         {
             path: '/novashopengine/:resourceName',
             component: List,

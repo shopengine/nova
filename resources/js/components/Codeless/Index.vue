@@ -108,8 +108,8 @@
                   disabled
                 </span>
               </td>
-              <td>{{codeless.start }}</td>
-              <td>{{ codeless.end }}</td>
+              <td>{{ formatDate(codeless.start) }}</td>
+              <td>{{ formatDate(codeless.end) }}</td>
               <td class="td-fit text-right pr-6 align-middle">
                 <div class="inline-flex items-center">
                     <span class="inline-flex">
@@ -152,21 +152,29 @@
   export default {
   data() {
   return {
-  isLoading: true,
-  CodelessCollection: {},
+  isLoading: false,
+  codelessCollection: {},
 };
 },
   async mounted() {
-  this.isLoading = true;
-  const { data } = await Nova.request().get(
-  `/nova-vendor/novashopengine/codeless`
-  );
-  this.codelessCollection = data;
-  this.isLoading = false;
-},
+  this.isLoading = true
 
+  Nova.request()
+  .get(`/nova-vendor/novashopengine/codeless`)
+  .then(response => {
+  this.codelessCollection = response.data
+})
+  .catch((error) => {
+  this.$router.go(-1)
+})
+  .finally(() => {
+  this.isLoading = false
+});
+},
   methods: {
-
-},
+  formatDate(date) {
+  return moment(date).format('DD.MM.YYYY HH:mm:ss', 'de')
+}
+}
 };
 </script>
