@@ -117,7 +117,6 @@
 })
   .catch((error) => {
   console.log(error)
-// this.$router.go(-1)
 })
   .finally(() => {
   this.isLoading = false
