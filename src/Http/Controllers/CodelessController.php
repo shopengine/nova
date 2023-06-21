@@ -2,8 +2,7 @@
 
 namespace ShopEngine\Nova\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CodelessController extends ShopEngineNovaController
@@ -19,10 +18,8 @@ class CodelessController extends ShopEngineNovaController
         return $this->getClient()->get('codeless/' . $id , [], 'true');
     }
 
-    public function update(Request $request): JsonResponse
+    public function update(Request $request)
     {
-        return response()->json($request);
-        return $this->getClient()->patch('codeless', $request->aggregateId);
-
+        return $this->getClient()->post('codeless/update-status', $request->codeless);
     }
 }

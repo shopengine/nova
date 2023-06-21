@@ -1,8 +1,6 @@
 <template>
   <div>
-    <loading-view
-    :loading="isLoading">
-
+    <loading-view :loading="isLoading">
     <div dusk="codeless-detail-component" class="mb-8">
       <div>
         <div class="flex items-center mb-3">
@@ -16,9 +14,11 @@
         <div class="card mb-6 py-3 px-6">
           <div class="flex border-b border-40 -mx-6 px-6">
             <div class="w-1/4 py-4"><h4 class="font-normal text-80">Name</h4></div>
-            <div class="w-3/4 py-4 break-words"><p class="text-90">
+            <div class="w-3/4 py-4 break-words">
+              <p class="text-90">
               {{ codeless.name }}
-            </p></div>
+            </p>
+            </div>
           </div>
 
           <div class="flex border-b border-40 -mx-6 px-6">
@@ -43,7 +43,7 @@
             <div class="w-1/4 py-4"><h4 class="font-normal text-80">Note</h4></div>
             <div class="w-3/4 py-4 break-words">
               <div>
-                <div class="markdown leading-normal whitespace-pre-wrap">{{codeless.note}}</div>
+                <div class="markdown leading-normal whitespace-pre-wrap">{{ codeless.note }}</div>
               </div>
             </div>
           </div>
@@ -66,12 +66,10 @@
             </div>
           </div>
 
-
-
-
         </div>
         <div class="w-full flex justify-end">
-          <button @click="toggleCodelessStatus" type="submit" class="btn btn-default btn-primary inline-flex items-end relative"
+          <button
+          @click="toggleCodelessStatus" type="submit" class="btn btn-default btn-primary inline-flex items-end relative"
           dusk="update-button">
           <span class="" v-if="enabled">
                 Disable Codeless
@@ -80,7 +78,7 @@
                 Enable Codeless
                </span>
 
-          <!----></button>
+        </button>
       </div>
     </div>
   </div>
@@ -134,16 +132,15 @@
 
   Nova.request()
   .patch('/nova-vendor/novashopengine/codeless', {
-  data: {
+  codeless: {
   aggregateId: this.id
 },
 })
   .then(response => {
   this.codeless = response.data
-  Nova.success('Updated')
-  // this.$router.push(
-  // "/novashopengine/codeless"
-  // );
+  this.$router.push(
+  "/novashopengine/codeless?update=success"
+  );
 })
   .catch((error) => {
 })
