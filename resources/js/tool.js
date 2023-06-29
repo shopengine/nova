@@ -37,8 +37,6 @@ Nova.booting((Vue, router, store) => {
     Vue.component('detail-codepool-codes', require('./fields/CodepoolCodes'))
     Vue.component('detail-codepool-link', require('./fields/DetailCodepoolLink'))
 
-    //Vue.component('detail-codepool-actions', require('./fields/CodepoolActions'))
-
     Vue.component('detail-code-validation', require('./fields/DetailCodeValidation'))
     Vue.component('form-code-validation', require('./fields/FormCodeValidation'))
 
