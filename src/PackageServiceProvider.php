@@ -27,6 +27,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             Resources\PaymentMethod::class,
             Resources\Codepool::class,
             Resources\Code::class,
+            Resources\Codeless::class,
         ];
     }
 
@@ -118,7 +119,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
             ),
             new NavigationItemStruct(
                 'codeless', '/novashopengine/codeless',
-                Resources\ShippingCost::class
+                Resources\Codeless::class
             )
         ];
 
