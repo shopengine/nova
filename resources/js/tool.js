@@ -16,9 +16,21 @@ import PeriodTagIndex from './components/shop/marketing-provider/klicktipp/perio
 import PeriodTagShow from './components/shop/marketing-provider/klicktipp/period-tags/Show.vue'
 import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period-tags/Edit.vue'
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
+import CodelessIndex from './components/codeless/Index.vue'
+import CodelessShow from './components/codeless/Show.vue'
 
 Nova.booting((Vue, router) => {
     router.addRoutes([
+        {
+            name: 'shopengine.codeless.index',
+            path: '/novashopengine/codeless',
+            component: CodelessIndex
+        },
+        {
+            name: 'shopengine.codeless.show',
+            path: '/novashopengine/codeless/:id',
+            component: CodelessShow
+        },
         {
             path: '/novashopengine/:resourceName',
             component: List,

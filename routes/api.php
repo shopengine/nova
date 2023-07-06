@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/codeless', 'CodelessController@index');
+Route::get('/codeless/{id}', 'CodelessController@show');
+Route::patch('/codeless/toggle-status', 'CodelessController@toggleStatus');
+
 Route::group(['prefix' => 'shop'], function () {
     Route::group(['prefix' => 'marketing-provider'], function () {
         Route::group(['prefix' => 'klicktipp'], function () {
