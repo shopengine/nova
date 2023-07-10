@@ -120,7 +120,7 @@ class PackageServiceProvider extends ServiceProvider implements ShopEnginePackag
         $codepoolNavigation = [
             new NavigationItemStruct('codepools', '/novashopengine/codepools', Resources\Codepool::class),
             new NavigationItemStruct('codes', '/novashopengine/codes', Resources\Code::class),
-            new NavigationItemStruct('codeless', '/novashopengine/codeless', Resources\Codeless::class)
+            new NavigationItemStruct('codeless', '/novashopengine/codelesses', Resources\Codeless::class)
         ];
 
         $struct = new NavigationStruct(
