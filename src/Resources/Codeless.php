@@ -2,9 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
-use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use ShopEngine\Nova\Fields\ToggleCodelessStatus;

@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/codeless', 'CodelessController@index');
-Route::get('/codeless/{id}', 'CodelessController@show');
-Route::patch('/codeless/toggle-status', 'CodelessController@toggleStatus');
-
 Route::group(['prefix' => 'shop'], function () {
     Route::group(['prefix' => 'marketing-provider'], function () {
         Route::group(['prefix' => 'klicktipp'], function () {
@@ -26,4 +22,4 @@ Route::post('/purchases/{resourceId}/manualJTL', 'PurchaseController@manualJTL')
 // Special Cases
 Route::post('/{resource}/{resourceId}/addOption', 'ShippingCostController@addOption');
 Route::post('/{resource}/{resourceId}/removeOption', 'ShippingCostController@removeOption');
-
+Route::patch('/codeless/toggle-status', 'CodelessController@toggleStatus');
