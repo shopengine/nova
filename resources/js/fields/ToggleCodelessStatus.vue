@@ -86,12 +86,7 @@ export default {
     },
   },
   methods: {
-    toggleStatusButton() {
-      return (this.status = this.status === "enabled" ? "disabled" : "enabled");
-    },
     async toggleCodelessStatus(aggregateId) {
-      this.isSaving = true;
-
       Nova.request()
         .patch("/nova-vendor/novashopengine/codeless/toggle-status", {
           codeless: {
@@ -109,5 +104,4 @@ export default {
     },
   },
 };
-
 </script>
