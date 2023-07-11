@@ -47,10 +47,6 @@ class Codeless extends ShopEngineResource
             Text::make('Codeless', 'name')
                 ->hideWhenUpdating()
                 ->sortable(true),
-            Badge::make('Status')->map([
-                'enabled' => 'success',
-                'disabled' => 'danger'
-            ]),
             Date::make('Erstellt am', 'createdAt')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
@@ -59,8 +55,8 @@ class Codeless extends ShopEngineResource
                 ->sortable(true),
             Textarea::make('Notiz', 'note')
                 ->hideWhenUpdating(),
-            ToggleCodelessStatus::make('', 'status')
-            ->withMeta(['aggregateId' => $this->attributes('aggregateId')->data['aggregateId']])
+            ToggleCodelessStatus::make('Status', 'status')
+                ->withMeta(['aggregateId' => $this->attributes('aggregateId')->data['aggregateId']]),
         ]);
     }
 
