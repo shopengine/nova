@@ -1091,7 +1091,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    toggleStatusButton: function toggleStatusButton() {
+      this.field.value = this.field.value === "enabled" ? "disabled" : "enabled";
+    },
     toggleCodelessStatus: function toggleCodelessStatus(aggregateId) {
+      var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
@@ -1103,7 +1107,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }).then(function (response) {
                 if (response.status === 200) {
                   Nova.success("Updated");
-                  window.location.reload();
+                  _this.toggleStatusButton();
                 } else {
                   Nova.error("Something went wrong");
                 }

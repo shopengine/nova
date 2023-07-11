@@ -2,6 +2,7 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -55,6 +56,12 @@ class Codeless extends ShopEngineResource
                 ->hideWhenUpdating(),
             ToggleCodelessStatus::make('Status', 'status')
                 ->withMeta(['aggregateId' => $this->attributes('aggregateId')->data['aggregateId']]),
+            Badge::make('Status', 'status')
+                ->map([
+                    'enabled' => 'success',
+                    'disabled' => 'danger'
+                ])
+                ->onlyOnDetail(),
         ]);
     }
 
