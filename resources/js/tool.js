@@ -18,7 +18,6 @@ import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
 
 Nova.booting((Vue, router) => {
-    Vue.config.devtools = true
     router.addRoutes([
         {
             path: '/novashopengine/:resourceName',

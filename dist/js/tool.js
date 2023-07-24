@@ -32952,7 +32952,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 Nova.booting(function (Vue, router) {
-  Vue.config.devtools = true;
   router.addRoutes([{
     path: '/novashopengine/:resourceName',
     component: _components_List__WEBPACK_IMPORTED_MODULE_13__["default"]
