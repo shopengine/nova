@@ -16,6 +16,7 @@ import PeriodTagIndex from './components/shop/marketing-provider/klicktipp/perio
 import PeriodTagShow from './components/shop/marketing-provider/klicktipp/period-tags/Show.vue'
 import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period-tags/Edit.vue'
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
+
 Nova.booting((Vue, router) => {
     Vue.config.devtools = true
     router.addRoutes([

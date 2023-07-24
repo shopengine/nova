@@ -105,8 +105,8 @@ export default {
     return {
       isLoading: true,
       isSaving: false,
-      tag: "",
       tagOptions: [],
+      tag: "",
       from: this.now(),
       to: this.tomorrow(),
     };
@@ -116,7 +116,7 @@ export default {
     Nova.request()
         .get('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/options')
         .then((response) => {
-          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id: id, name }))
+          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id, name }))
         })
   },
 
@@ -165,37 +165,3 @@ export default {
 
 };
 </script>
-
-
-<style>
-.dropdown .dropdown-input[data-v-6149e08a]
-{
-  position: relative;
-  width: 100%;
-  margin: 0;
-  font-size: inherit;
-  max-width: 100%;
-  background-color: var(--white);
-  border-width: 1px;
-  border-color: var(--60);
-  padding-left: 0.75rem;
-  padding-right: 2rem;
-  border-radius: 0.5rem;
-  color: var(--80);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-repeat: no-repeat;
-  background-size: 10px 6px;
-  background-position: center right 0.75rem;
-  background-image: url(data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="%2335393C" fill-rule="nonzero" d="M8.293.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 0 1 1.707.293L5 3.586 8.293.293z"/></svg>);
-}
-
-.dropdown-content {
-  max-width: 95%;
-  font-size: 20px;
-  font-family: 'Nunito',serif;
-  font-weight: 600;
-}
-
-</style>
