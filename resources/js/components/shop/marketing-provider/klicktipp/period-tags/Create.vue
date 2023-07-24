@@ -26,8 +26,8 @@
               <div class="py-6 px-8 w-1/2">
                 <SearchableDropDown
                     :options="tagOptions"
-                    v-on:selected="updateTag"
-                    :maxItem="10"
+                    v-on:selected="setTag"
+                    :disabled="false"
                     placeholder="Please select an option">
                 </SearchableDropDown>
                 <div class="text-xs my-4">Tag Id: <span v-html="tag" class="font-bold"></span></div>
@@ -96,10 +96,10 @@
 </template>
 
 <script>
-import SearchableDropDown from "vue-simple-search-dropdown";
+import SearchableDropDown from "../../../../Dropdown.vue";
 export default {
   components: {
-    'SearchableDropDown' : SearchableDropDown
+    SearchableDropDown
   },
   data() {
     return {
@@ -121,7 +121,7 @@ export default {
   },
 
   methods: {
-    updateTag(tag) {
+    setTag(tag) {
       this.tag = tag.id
     },
     now() {
@@ -172,15 +172,30 @@ export default {
 {
   position: relative;
   width: 100%;
-  padding: 8px;
   margin: 0;
-  border: none;
-  outline: none;
   font-size: inherit;
+  max-width: 100%;
+  background-color: var(--white);
+  border-width: 1px;
+  border-color: var(--60);
+  padding-left: 0.75rem;
+  padding-right: 2rem;
+  border-radius: 0.5rem;
+  color: var(--80);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-size: 10px 6px;
+  background-position: center right 0.75rem;
+  background-image: url(data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="%2335393C" fill-rule="nonzero" d="M8.293.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 0 1 1.707.293L5 3.586 8.293.293z"/></svg>);
 }
 
-.dropdown-input[data-v-6149e08a] input {
-  width: 100%;
-  color: red;
+.dropdown-content {
+  max-width: 95%;
+  font-size: 20px;
+  font-family: 'Nunito',serif;
+  font-weight: 600;
 }
+
 </style>
