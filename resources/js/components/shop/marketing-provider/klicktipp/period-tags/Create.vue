@@ -24,11 +24,12 @@
                 >
               </div>
               <div class="py-6 px-8 w-1/2">
-                <select v-model="tag"
-                        class="w-full form-control form-select form-input-bordered"
-                >
-                  <option v-for="(value, key) in tagOptions" :value="key" :key="key">{{ value }}</option>
-                </select>
+                <SearchableDropDown
+                    :options="tagOptions"
+                    v-on:selected="updateTag"
+                    :maxItem="10"
+                    placeholder="Please select an option">
+                </SearchableDropDown>
                 <div class="text-xs my-4">Tag Id: <span v-html="tag" class="font-bold"></span></div>
               </div>
             </div>
@@ -95,13 +96,17 @@
 </template>
 
 <script>
+import SearchableDropDown from "vue-simple-search-dropdown";
 export default {
+  components: {
+    'SearchableDropDown' : SearchableDropDown
+  },
   data() {
     return {
       isLoading: true,
       isSaving: false,
-      tagOptions: {},
       tag: "",
+      tagOptions: [],
       from: this.now(),
       to: this.tomorrow(),
     };
@@ -111,11 +116,14 @@ export default {
     Nova.request()
         .get('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/options')
         .then((response) => {
-          this.tagOptions = response.data
+          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id: parseInt(id), name }))
         })
   },
 
   methods: {
+    updateTag(tag) {
+      this.tag = tag.id
+    },
     now() {
       return moment().format(moment.HTML5_FMT.DATETIME_LOCAL)
     },
@@ -153,5 +161,7 @@ export default {
           });
     },
   },
+
+
 };
 </script>

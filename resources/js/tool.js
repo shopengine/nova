@@ -16,8 +16,10 @@ import PeriodTagIndex from './components/shop/marketing-provider/klicktipp/perio
 import PeriodTagShow from './components/shop/marketing-provider/klicktipp/period-tags/Show.vue'
 import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period-tags/Edit.vue'
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
-
+import SearchableDropDown from 'vue-simple-search-dropdown'
 Nova.booting((Vue, router) => {
+    Vue.config.devtools = true
+    Vue.use(SearchableDropDown)
     router.addRoutes([
         {
             path: '/novashopengine/:resourceName',
