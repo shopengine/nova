@@ -116,7 +116,7 @@ export default {
     Nova.request()
         .get('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/options')
         .then((response) => {
-          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id: parseInt(id), name }))
+          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id: id, name }))
         })
   },
 
@@ -165,3 +165,22 @@ export default {
 
 };
 </script>
+
+
+<style>
+.dropdown .dropdown-input[data-v-6149e08a]
+{
+  position: relative;
+  width: 100%;
+  padding: 8px;
+  margin: 0;
+  border: none;
+  outline: none;
+  font-size: inherit;
+}
+
+.dropdown-input[data-v-6149e08a] input {
+  width: 100%;
+  color: red;
+}
+</style>
