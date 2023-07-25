@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import SearchableDropDown from "../../../../Dropdown.vue";
+import SearchableDropDown from "./Components/Dropdown.vue";
 export default {
   components: {
     SearchableDropDown
