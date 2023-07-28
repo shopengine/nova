@@ -87,7 +87,7 @@
               dusk="update-button"
               @click="submit"
           >
-            <span class="">Klicktipp erstellen</span>
+            <span class="">Zeitliches Tag erstellen</span>
           </button>
         </div>
       </form>
