@@ -1,7 +1,7 @@
 <template>
   <div class="inline-flex items-center">
     <label class="switch mr-3">
-      <input type="checkbox" :checked="status === 'enabled'" @change="toggleCodelessStatus(aggregateId)">
+      <input type="checkbox" v-model="checked" @change="toggleCodelessStatus(aggregateId)">
       <span class="slider round"></span>
     </label>
   </div>
@@ -81,6 +81,9 @@ export default {
     status() {
       return this.field.value;
     },
+    checked() {
+      return this.field.value === "enabled";
+    },
     aggregateId() {
       return this.field.aggregateId;
     },
@@ -97,9 +100,10 @@ export default {
           },
         })
         .then((response) => {
-          if (response.status === 200) {
+          if (response.data.success) {
             Nova.success("Updated");
             this.toggleStatusButton()
+            location.reload();
           } else {
             Nova.error("Something went wrong");
           }
