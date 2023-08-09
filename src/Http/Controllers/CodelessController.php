@@ -9,6 +9,6 @@ class CodelessController extends ShopEngineNovaController
 {
     public function toggleStatus(Request $request)
     {
-        return $this->getClient()->post('codeless/toggle-status', $request->codeless);
+        return $this->getClient()->post('codeless/toggle-status', $request->aggregateId);
     }
 }

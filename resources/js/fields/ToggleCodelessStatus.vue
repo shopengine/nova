@@ -95,7 +95,7 @@ export default {
     async toggleCodelessStatus(aggregateId) {
       Nova.request()
         .patch("/nova-vendor/novashopengine/codeless/toggle-status", {
-          codeless: {
+          aggregateId: {
             aggregateId,
           },
         })
