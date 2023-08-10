@@ -5,6 +5,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.0] - 2023-08-10
+### Added
+- Added Codeless Resource
+
 ## [4.3.0] - 2023-07-28
 ### Added
 - Searchable select component
