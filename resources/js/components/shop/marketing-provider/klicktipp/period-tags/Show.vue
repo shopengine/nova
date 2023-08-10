@@ -6,7 +6,7 @@
       <div dusk="codepools-detail-component" class="mb-8">
         <div>
           <div class="flex items-center mb-3"><h1
-              class="flex-auto truncate text-90 font-normal text-2xl">Klicktipp Tag Details:</h1>
+              class="flex-auto truncate text-90 font-normal text-2xl">Zeitliches Tag Details:</h1>
             <div class="ml-3 flex items-center">
               <div class="flex w-full justify-end items-center"></div>
               <div class="ml-3">

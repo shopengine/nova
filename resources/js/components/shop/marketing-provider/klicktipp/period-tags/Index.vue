@@ -166,8 +166,8 @@
               @submit.prevent="deleteTag()"
           >
             <div class="p-8">
-              <h2 class="mb-6 text-90 font-normal text-xl">Klicktipp löschen</h2>
-              <p class="text-80 leading-normal">Möchtest du den Tag wirklich löschen?</p>
+              <h2 class="mb-6 text-90 font-normal text-xl">Zeitliches Tag löschen</h2>
+              <p class="text-80 leading-normal">Möchtest du das Tag wirklich löschen?</p>
             </div>
             <div class="bg-30 px-6 py-3 flex">
               <div class="ml-auto">

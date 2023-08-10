@@ -24,11 +24,12 @@
                 >
               </div>
               <div class="py-6 px-8 w-1/2">
-                <select v-model="tag"
-                        class="w-full form-control form-select form-input-bordered"
-                >
-                  <option v-for="(value, key) in tagOptions" :value="key" :key="key">{{ value }}</option>
-                </select>
+                <SearchableDropDown
+                    :options="tagOptions"
+                    v-on:selected="setTag"
+                    :disabled="false"
+                    placeholder="Please select an option">
+                </SearchableDropDown>
                 <div class="text-xs my-4">Tag Id: <span v-html="tag" class="font-bold"></span></div>
               </div>
             </div>
@@ -86,7 +87,7 @@
               dusk="update-button"
               @click="submit"
           >
-            <span class="">Klicktipp erstellen</span>
+            <span class="">Zeitliches Tag erstellen</span>
           </button>
         </div>
       </form>
@@ -95,12 +96,16 @@
 </template>
 
 <script>
+import SearchableDropDown from "./Components/Dropdown.vue";
 export default {
+  components: {
+    SearchableDropDown
+  },
   data() {
     return {
       isLoading: true,
       isSaving: false,
-      tagOptions: {},
+      tagOptions: [],
       tag: "",
       from: this.now(),
       to: this.tomorrow(),
@@ -111,11 +116,14 @@ export default {
     Nova.request()
         .get('/nova-vendor/novashopengine/shop/marketing-provider/klicktipp/period-tags/options')
         .then((response) => {
-          this.tagOptions = response.data
+          this.tagOptions = Object.entries(response.data).map(([id, name]) => ({ id, name }))
         })
   },
 
   methods: {
+    setTag(tag) {
+      this.tag = tag.id
+    },
     now() {
       return moment().format(moment.HTML5_FMT.DATETIME_LOCAL)
     },

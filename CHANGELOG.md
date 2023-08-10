@@ -5,10 +5,14 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [4.2.1] - 2ß23-07-04
+## [4.3.0] - 2023-07-28
+### Added
+- Searchable select component
 
-### Updated
+## [4.2.1] - 2023-07-04
+### Changed
 - Updated Shopengine PHP client
+
 ## [4.2.0] - 2023-05-24
 ### Added
 - Klicktipp tags as named options
