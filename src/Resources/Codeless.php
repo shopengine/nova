@@ -2,8 +2,10 @@
 
 namespace ShopEngine\Nova\Resources;
 
+use Carbon\Carbon;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use ShopEngine\Nova\Fields\ToggleCodelessStatus;
@@ -54,6 +56,19 @@ class Codeless extends ShopEngineResource
                 ->sortable(true),
             Textarea::make('Notiz', 'note')
                 ->hideWhenUpdating(),
+            DateTime::make('Beginnt Am', 'start')
+                ->hideWhenUpdating()
+                ->sortable(true)
+                ->displayUsing(function ($value) {
+                    $value = Carbon::parse($value);
+                    return $value->tz(config('app.timezone'))->format('Y-m-d H:i:s');
+                }),
+            DateTime::make('Endet Am', 'end')
+                ->hideWhenUpdating()
+                ->sortable(true)
+                ->displayUsing(function ($value) {
+                    return (Carbon::parse($value))->tz(config('app.timezone'))->format('Y-m-d H:i:s');
+                }),
             ToggleCodelessStatus::make('Status', 'status')
                 ->withMeta(['aggregateId' => $this->attributes('aggregateId')->data['aggregateId']]),
             Badge::make('Status', 'status')
