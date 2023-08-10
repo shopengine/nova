@@ -16,6 +16,7 @@ import PeriodTagIndex from './components/shop/marketing-provider/klicktipp/perio
 import PeriodTagShow from './components/shop/marketing-provider/klicktipp/period-tags/Show.vue'
 import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period-tags/Edit.vue'
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
+import ToggleCodelessStatus from './fields/ToggleCodelessStatus.vue'
 
 Nova.booting((Vue, router) => {
     router.addRoutes([
@@ -58,4 +59,5 @@ Nova.booting((Vue, router) => {
     Vue.component('detail-code-validation', DetailCodeValidation)
     Vue.component('form-code-validation', FormCodeValidation)
     Vue.component('form-shop-engine-model', FormShopEngineModel)
+    Vue.component('index-toggle-codeless-status', ToggleCodelessStatus)
 })
