@@ -5,6 +5,8 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.2] - 2023-08-17
+- Fixed bug where update and continue would throw an error because the models key was allways 0
 ## [4.4.1] - 2023-08-10
 - Added start and end dates for Codeless resource
 

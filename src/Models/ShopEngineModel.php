@@ -336,6 +336,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function getKey()
     {
-        return '0';
+        return $this->{$this->getKeyName()};
     }
 }
