@@ -12,6 +12,7 @@ use ShopEngine\Nova\Api\StoreRequestBuilder;
 use ShopEngine\Nova\Api\UpdateRequestBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SSB\Api\Model\Article;
 use SSB\Api\Model\ModelInterface;
@@ -336,6 +337,6 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      */
     public function getKey()
     {
-        return $this->{$this->getKeyName()};
+        return Request::method() == 'PUT' ? $this->{$this->getKeyName()} : 0;
     }
 }
