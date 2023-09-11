@@ -5,13 +5,17 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.4] - 2023-09-11
+### Changed
+- Increase per page options for codeless resource
+
 ## [4.4.3] - 2023-08-24
 ### Fixed
-- Fixed bug where saving shopengine resources results in a actionalble_id required error
+- Fixed bug where saving shopengine resources results in a actionable_id required error
 
 ## [4.4.2] - 2023-08-17
 ### Fixed
-- Fixed bug where update and continue would throw an error because the models key was allways 0
+- Fixed bug where update and continue would throw an error because the models key was always 0
 
 ## [4.4.1] - 2023-08-10
 ### Added

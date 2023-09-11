@@ -27,6 +27,8 @@ abstract class ShopEngineResource extends Resource implements ShopEngineResource
     public static $displayInNavigation = false;
     public static $canImportResource = false;
 
+    public static $perPageOptions = [100];
+
     public function getKey() : string
     {
         return $this->model[$this::$id] || '';
