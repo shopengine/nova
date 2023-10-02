@@ -24,7 +24,7 @@ class PaymentMethod extends ShopEngineResource
 
     public static function getShopEngineEndpoint(): string
     {
-        return 'paymentmethod';
+        return 'payment-method';
     }
 
     public static function label()

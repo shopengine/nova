@@ -28,7 +28,7 @@ class ShippingCost extends ShopEngineResource
 
     public static function getShopEngineEndpoint(): string
     {
-        return 'shippingcost';
+        return 'shipping-cost';
     }
 
     public static function label()

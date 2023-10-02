@@ -22,7 +22,7 @@ class ConditionSet extends ShopEngineResource
 
     public static function getShopEngineEndpoint(): string
     {
-        return 'conditionset';
+        return 'condition-set';
     }
 
     public function authorizedToDelete(Request $request)
