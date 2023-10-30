@@ -5,6 +5,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.5] - 2023-09-11
+### Changed
+- Add import_pending badge mapping for shopengine purchases
+
 ## [4.4.4] - 2023-09-11
 ### Changed
 - Increase per page options for codeless resource
