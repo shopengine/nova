@@ -70,6 +70,7 @@ class Purchase extends ShopEngineResource
                 ApiPurchase::ORIGIN_STATUS_IMPORTED => 'success',
                 ApiPurchase::ORIGIN_STATUS_ERROR_IN_IMPORT => 'danger',
                 ApiPurchase::ORIGIN_STATUS_WAIT_FOR_MANUAL => 'danger',
+                ApiPurchase::ORIGIN_STATUS_IMPORT_PENDING => 'info',
             ]),
 
             PurchaseManualJTL::make('Manuellen Import für ERP freigeben')
