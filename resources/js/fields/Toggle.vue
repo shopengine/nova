@@ -1,7 +1,7 @@
 <template>
   <div class="inline-flex items-center">
     <label class="switch mr-3">
-      <input type="checkbox" v-model="checked" @change="toggleCodelessStatus(aggregateId)">
+      <input type="checkbox" v-model="checked" @change="toggle(aggregateId)">
       <span class="slider round"></span>
     </label>
   </div>
@@ -87,14 +87,17 @@ export default {
     aggregateId() {
       return this.field.aggregateId;
     },
+    singularResourceName() {
+      return this.field.singularResourceName || this.resourceName
+    }
   },
   methods: {
     toggleStatusButton() {
       this.field.value = this.field.value === "enabled" ? "disabled" : "enabled";
     },
-    async toggleCodelessStatus(aggregateId) {
+    async toggle(aggregateId) {
       Nova.request()
-        .patch("/nova-vendor/novashopengine/codeless/toggle-status", {
+        .patch(`/nova-vendor/novashopengine/${this.singularResourceName}/toggle-status`, {
           aggregateId: {
             aggregateId,
           },

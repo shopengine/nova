@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\Heading;
 use ShopEngine\Nova\Fields\CodepoolLink;
 use ShopEngine\Nova\Fields\CodeValidation;
 use ShopEngine\Nova\Fields\ShopEngineModel;
+use ShopEngine\Nova\Fields\Toggle;
 use ShopEngine\Nova\Filter\ActiveCodes;
 use ShopEngine\Nova\Models\CodeModel;
 use Illuminate\Http\Request;
@@ -128,6 +129,11 @@ class Code extends ShopEngineResource
                 ])
                 ->displayUsingLabels()
                 ->hideFromIndex(),
+            Toggle::make('Status', 'status')
+                ->withMeta([
+                    'singularResourceName' => 'code',
+                    'aggregateId' => $this->attributes('aggregateId')->data['aggregateId']
+                ]),
             DateTime::make('Nächster Termin', 'rechargeAt')
                 ->nullable()
                 ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeFrequency,null')

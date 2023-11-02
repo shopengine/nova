@@ -5,10 +5,10 @@ namespace ShopEngine\Nova\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class CodelessController extends ShopEngineNovaController
+class CodeController extends ShopEngineNovaController
 {
     public function toggleStatus(Request $request)
     {
-        return $this->getClient()->post('codeless/toggle-status', $request->aggregateId);
+        return $this->getClient()->post('code/toggle-status', $request->aggregateId);
     }
 }

@@ -8,7 +8,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use ShopEngine\Nova\Fields\ToggleCodelessStatus;
+use ShopEngine\Nova\Fields\Toggle;
 use ShopEngine\Nova\Models\CodelessModel;
 use Illuminate\Http\Request;
 
@@ -69,8 +69,11 @@ class Codeless extends ShopEngineResource
                 ->displayUsing(function ($value) {
                     return (Carbon::parse($value))->tz(config('app.timezone'))->format('Y-m-d H:i:s');
                 }),
-            ToggleCodelessStatus::make('Status', 'status')
-                ->withMeta(['aggregateId' => $this->attributes('aggregateId')->data['aggregateId']]),
+            Toggle::make('Status', 'status')
+                ->withMeta([
+                    'singularResourceName' => 'codeless',
+                    'aggregateId' => $this->attributes('aggregateId')->data['aggregateId']
+                ]),
             Badge::make('Status', 'status')
                 ->map([
                     'enabled' => 'success',
