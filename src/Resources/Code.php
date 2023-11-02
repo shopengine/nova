@@ -24,7 +24,7 @@ class Code extends ShopEngineResource
     public static $title = 'code';
     public static $search = ['code'];
 
-    public static $defaultSort = '-updatedAt';
+    public static $defaultSort = '-createdAt';
     public static $id = 'aggregateId';
 
 
@@ -133,7 +133,7 @@ class Code extends ShopEngineResource
                 ->withMeta([
                     'singularResourceName' => 'code',
                     'aggregateId' => $this->attributes('aggregateId')->data['aggregateId']
-                ]),
+                ])->onlyOnIndex(),
             DateTime::make('Nächster Termin', 'rechargeAt')
                 ->nullable()
                 ->rules('required_unless:rechargeAmount,null|required_unless:rechargeType,null|required_unless:rechargeFrequency,null')
