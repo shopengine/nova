@@ -45,7 +45,7 @@ export default {
             count: 0,
 
             query: {
-                pageSize: 200,
+                pageSize: 1000,
                 page: 0
             },
 
