@@ -40,7 +40,7 @@ export default {
             inlineResourceName: 'codes',
             resources: [],
 
-            perPage: 200,
+            perPage: 1000,
             perPageOptions: [],
             count: 0,
 
@@ -82,7 +82,7 @@ export default {
             }
 
             let newQuery = {
-                pageSize: 200,
+                pageSize: 1000,
                 page: 0,
             }
 
