@@ -5,6 +5,10 @@ This project does adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.5.1] - 2023-11-02
+### Changed
+- Increased number of possible results in dropdowns to 1000
+
 ## [4.5.0] - 2023-11-02
 ### Added
 - Toggle button to change the status of a code resource
