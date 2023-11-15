@@ -34,7 +34,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
     public function __construct(ModelInterface $model = null)
     {
         if ($model === null) {
-            $model = new static::$apiModel;
+            $model = new static::$apiModel();
         }
 
         $this->seModel = $model;
@@ -66,7 +66,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      *
      * @return array|mixed|\SSB\Api\Model\Article|string|null
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->offsetExists($offset) ?
             $this->fromModel($offset) :
@@ -157,8 +157,7 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
                     $obj = $this->mapShopEngineValue($obj);
                 }
             }
-        }
-        else if (is_array($obj)) {
+        } else if (is_array($obj)) {
             $newObj = [];
 
             foreach ($obj as $item) {
@@ -280,7 +279,8 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
         return [];
     }
 
-    public function getDirty() {
+    public function getDirty()
+    {
         return parent::getDirty();
     }
 
@@ -304,16 +304,17 @@ class ShopEngineModel extends Model implements ArrayAccess, \JsonSerializable
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value){
-
+    public function offsetSet($offset, $value): void
+    {
+        return;
     }
 
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
-
+        return;
     }
 
     /**

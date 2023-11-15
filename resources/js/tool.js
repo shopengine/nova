@@ -18,33 +18,15 @@ import PeriodTagEdit from './components/shop/marketing-provider/klicktipp/period
 import PeriodTagCreate from './components/shop/marketing-provider/klicktipp/period-tags/Create.vue'
 import Toggle from './fields/Toggle.vue'
 
-Nova.booting((Vue, router) => {
-    router.addRoutes([
-        {
-            path: '/novashopengine/:resourceName',
-            component: List,
-        },
-        {
-            name: 'shop.marketing-provider.klicktipp.period-tags.index',
-            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags',
-            component: PeriodTagIndex
-        },
-        {
-            name: 'shop.marketing-provider.klicktipp.period-tags.create',
-            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/create',
-            component: PeriodTagCreate
-        },
-        {
-            name: 'shop.marketing-provider.klicktipp.period-tags.show',
-            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/:tag',
-            component: PeriodTagShow
-        },
-        {
-            name: 'shop.marketing-provider.klicktipp.period-tags.edit',
-            path: '/novashopengine/shop/marketing-provider/klicktipp/period-tags/:tag/edit',
-            component: PeriodTagEdit
-        },
-    ])
+Nova.booting((Vue, router, store) => {
+
+    /*
+    Nova.inertia("ShopengineList", List.default);
+    Nova.inertia("PeriodTagIndex", PeriodTagIndex.default);
+    Nova.inertia("PeriodTagCreate", PeriodTagCreate.default);
+    Nova.inertia("PeriodTagShow", PeriodTagShow.default);
+    Nova.inertia("PeriodTagEdit", PeriodTagEdit.default);
+    */
 
     Vue.component('detail-shippingcostoptions', DetailShippingCostOptions)
     Vue.component('detail-shippingcostvalidations', DetailShippingCostValidaton)
