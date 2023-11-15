@@ -8,7 +8,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1|^8.1",
-        "shopengine/client-php": "dev-master",
+        "shopengine/client-php": "4.0.0",
         "brainspin/laravel-klicktipp": "1.0.0",
         "outl1ne/nova-translations-loader": "^3.1.2|^5.0.1"
     },
